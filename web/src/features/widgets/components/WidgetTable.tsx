@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import useProjectIdFromURL from "@/src/hooks/useProjectIdFromURL";
 import { useOrderByState } from "@/src/features/orderBy/hooks/useOrderByState";
 import { NumberParam, useQueryParams, withDefault } from "use-query-params";
@@ -49,6 +50,7 @@ export function DeleteWidget({
 }) {
   const projectId = useProjectIdFromURL();
   const utils = api.useUtils();
+  const { t } = useTranslation("dashboard");
   const [isOpen, setIsOpen] = useState(false);
   const hasAccess =
     useHasProjectAccess({ projectId, scope: "dashboards:CUD" }) &&
@@ -80,7 +82,7 @@ export function DeleteWidget({
         </Button>
       </PopoverTrigger>
       <PopoverContent>
-        <h2 className="mb-3 font-semibold">Please confirm</h2>
+        <h2 className="mb-3 font-semibold">{t("widgetTable.pleaseConfirm")}</h2>
         <p className="mb-3 text-sm">
           This action permanently deletes this widget. If the widget is
           currently used in any dashboard, you will need to remove it from those

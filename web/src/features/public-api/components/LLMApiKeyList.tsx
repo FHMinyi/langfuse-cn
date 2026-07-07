@@ -1,5 +1,6 @@
 import { TrashIcon } from "lucide-react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import Header from "@/src/components/layouts/header";
 import { Button } from "@/src/components/ui/button";
 import { Card } from "@/src/components/ui/card";
@@ -42,11 +43,13 @@ export function LlmApiKeyList(props: { projectId: string }) {
   );
 
   if (!hasAccess) {
+  const { t } = useTranslation("api");
+
     return (
       <div>
-        <Header title="LLM Connections" />
+        <Header title={t("llm.title")} />
         <Alert>
-          <AlertTitle>Access Denied</AlertTitle>
+          <AlertTitle>{t("common.accessDenied")}</AlertTitle>
           <AlertDescription>
             You do not have permission to view LLM API keys for this project.
           </AlertDescription>
@@ -57,7 +60,7 @@ export function LlmApiKeyList(props: { projectId: string }) {
 
   return (
     <div id="llm-api-keys">
-      <Header title="LLM Connections" />
+      <Header title={t("llm.title")} />
       <p className="mb-4 text-sm">
         Connect your LLM services to enable evaluations and playground features.
         Your provider will charge based on usage.
@@ -77,7 +80,7 @@ export function LlmApiKeyList(props: { projectId: string }) {
               </TableHead>
               <TableHead className="text-primary">API Key</TableHead>
               {hasExtraHeaderKeys ? (
-                <TableHead className="text-primary">Extra headers</TableHead>
+                <TableHead className="text-primary">{t("llm.extraHeaders")}</TableHead>
               ) : null}
               <TableHead />
             </TableRow>
@@ -180,7 +183,7 @@ function DeleteApiKeyButton(props: { projectId: string; apiKeyId: string }) {
           <TrashIcon className="h-4 w-4" />
         </Button>
       }
-      title="Delete LLM Connection"
+      title={t("llm.deleteTitle")}
       description="Are you sure you want to delete this connection? This action cannot be undone."
       confirmLabel="Permanently delete"
       loading={mutDeleteApiKey.isPending}

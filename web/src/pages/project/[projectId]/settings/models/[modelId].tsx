@@ -18,6 +18,7 @@ import { getMaxDecimals } from "@/src/features/models/utils";
 import Decimal from "decimal.js";
 import { PriceUnitSelector } from "@/src/features/models/components/PriceUnitSelector";
 import { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { usePriceUnitMultiplier } from "@/src/features/models/hooks/usePriceUnitMultiplier";
 import Generations from "@/src/components/table/use-cases/observations";
 import Page from "@/src/components/layouts/page";
@@ -97,9 +98,11 @@ export default function ModelDetailPage() {
 
   // If not found, redirect to models page
   if (!isLoading && !model) {
+  const { t } = useTranslation("pages");
+
     return (
       <div className="flex min-h-screen flex-col items-center justify-center">
-        <div className="mb-4 text-xl font-medium">Model not found</div>
+        <div className="mb-4 text-xl font-medium">{t("modelDetail.notFound")}</div>
         <Button variant="outline" asChild>
           <Link href={`/project/${projectId}/settings/models`}>
             Return to Models page
@@ -163,7 +166,7 @@ export default function ModelDetailPage() {
       <div className="grid grid-cols-2 gap-6 p-2">
         <Card>
           <CardHeader>
-            <CardTitle>Model configuration</CardTitle>
+            <CardTitle>{t("modelDetail.configuration")}</CardTitle>
           </CardHeader>
           <CardContent className="grid gap-4">
             <div>
@@ -216,7 +219,7 @@ export default function ModelDetailPage() {
                     onValueChange={setSelectedTierId}
                   >
                     <SelectTrigger className="w-[200px]">
-                      <SelectValue placeholder="Select tier" />
+                      <SelectValue placeholder={t("modelDetail.selectTier")} />
                     </SelectTrigger>
                     <SelectContent>
                       {model.pricingTiers.map((tier) => (
@@ -272,7 +275,7 @@ export default function ModelDetailPage() {
           <CardContent>
             <div className="flex flex-col gap-2">
               <div className="border-border text-muted-foreground grid grid-cols-2 gap-2 border-b text-sm font-medium">
-                <span>Usage Type</span>
+                <span>{t("modelDetail.usageType")}</span>
                 <span className="flex items-center gap-2">
                   <span>Price {priceUnit}</span>
                   <PriceUnitSelector />
@@ -303,13 +306,13 @@ export default function ModelDetailPage() {
         <Card className="col-span-2">
           <CardHeader>
             <CardTitle className="flex items-center justify-between">
-              <span>Model observations</span>
+              <span>{t("modelDetail.observations")}</span>
               <Button variant="ghost" asChild>
                 <Link
                   href={`/project/${projectId}/observations`}
                   className="flex items-center gap-1"
                 >
-                  <span className="text-sm">View all</span>
+                  <span className="text-sm">{t("modelDetail.viewAll")}</span>
                   <SquareArrowOutUpRight className="h-4 w-4" />
                 </Link>
               </Button>

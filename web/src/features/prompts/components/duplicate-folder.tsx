@@ -2,6 +2,7 @@ import { Button } from "@/src/components/ui/button";
 import { useHasProjectAccess } from "@/src/features/rbac/utils/checkProjectAccess";
 import { api } from "@/src/utils/api";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Dialog,
   DialogBody,
@@ -42,7 +43,9 @@ const formSchema = z.object({
   rewritePromptReferences: z.boolean(),
 });
 
-export function DuplicateFolder({ folderPath }: { folderPath: string }) {
+export function DuplicateFolder({
+  const { t } = useTranslation("prompt");
+ folderPath }: { folderPath: string }) {
   const projectId = useProjectIdFromURL();
   const utils = api.useUtils();
   const [isOpen, setIsOpen] = useState(false);
@@ -111,7 +114,7 @@ export function DuplicateFolder({ folderPath }: { folderPath: string }) {
           variant="ghost"
           size="xs"
           disabled={!hasAccess}
-          title="Duplicate folder including prompts"
+          title={t("duplicateFolder.title")}
           onClick={() => capture("prompt_detail:duplicate_button_click")}
         >
           <Copy className="h-4 w-4" />
@@ -145,7 +148,7 @@ export function DuplicateFolder({ folderPath }: { folderPath: string }) {
                 name="targetPath"
                 render={({ field }) => (
                   <FormItem className="flex flex-col gap-2">
-                    <FormLabel>Target folder path</FormLabel>
+                    <FormLabel>{t("duplicateFolder.targetPath")}</FormLabel>
                     <FormControl>
                       <Input {...field} type="text" />
                     </FormControl>
@@ -158,7 +161,7 @@ export function DuplicateFolder({ folderPath }: { folderPath: string }) {
                 name="copySettings"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Version settings</FormLabel>
+                    <FormLabel>{t("duplicateFolder.versionSettings")}</FormLabel>
                     <FormControl>
                       <RadioGroup
                         {...field}

@@ -10,6 +10,7 @@ import {
 import { ArrowLeft, ArrowRight, Keyboard, SearchXIcon } from "lucide-react";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/src/components/ui/button";
 import { KeyboardShortcut } from "@/src/components/ui/keyboard-shortcut";
 import {
@@ -367,7 +368,9 @@ export const AnnotationQueueItemPage: React.FC<{
   }
 
   if (!relevantItem && !(itemId && seenItemIds.includes(itemId))) {
-    return <div>No more items left to annotate!</div>;
+  const { t } = useTranslation("workflow");
+
+    return <div>{t("queue.noMoreItems")}</div>;
   }
 
   const renderContent = () => {
@@ -449,7 +452,7 @@ export const AnnotationQueueItemPage: React.FC<{
                 </Button>
               </TooltipTrigger>
               <TooltipContent>
-                <span>Previous item</span>
+                <span>{t("queue.previousItem")}</span>
                 <KeyboardShortcut className="ml-2">←</KeyboardShortcut>
               </TooltipContent>
             </Tooltip>
@@ -500,7 +503,7 @@ export const AnnotationQueueItemPage: React.FC<{
                 </Button>
               </TooltipTrigger>
               <TooltipContent>
-                <span>Skip to next item</span>
+                <span>{t("queue.skipToNext")}</span>
                 <KeyboardShortcut className="ml-2">→</KeyboardShortcut>
               </TooltipContent>
             </Tooltip>
@@ -522,7 +525,7 @@ export const AnnotationQueueItemPage: React.FC<{
                       objectData.isError
                     }
                   >
-                    <span>Mark Completed</span>
+                    <span>{t("queue.markCompleted")}</span>
                     {!isSingleItem && (
                       <KeyboardShortcut
                         className="bg-primary-foreground/20 text-primary-foreground border-primary-foreground/30"

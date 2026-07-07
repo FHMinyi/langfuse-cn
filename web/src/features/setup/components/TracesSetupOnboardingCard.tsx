@@ -12,6 +12,7 @@ import { usePostHogClientCapture } from "@/src/features/posthog-analytics/usePos
 import { Check, Copy, LockIcon, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 
 const SKILLS_INSTALL_COMMAND =
@@ -83,6 +84,8 @@ export function TracesSetupOnboardingCard({
     try {
       await mutCreateApiKey.mutateAsync({ projectId });
     } catch (error) {
+  const { t } = useTranslation("api");
+
       console.error("Error creating API key:", error);
       toast.error("Failed to create API key");
     }
@@ -91,7 +94,7 @@ export function TracesSetupOnboardingCard({
   return (
     <SplashScreen
       waitingFor="Waiting for first trace"
-      title="Time to log your first trace, it only takes a minute"
+      title={t("setup.tracingCardTitle")}
       description="Get your API keys first, then ask your coding agent to add observability with Langfuse to your application."
       videoSrc="https://static.langfuse.com/prod-assets/onboarding/traces-overview-v1.mp4"
       videoPosition="bottom"

@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { Button } from "@/src/components/ui/button";
 import { FormDescription } from "@/src/components/ui/form";
 import type { UseFormReturn } from "react-hook-form";
@@ -14,11 +15,13 @@ export function TierPrefillButtons({
   tierIndex,
   form,
 }: TierPrefillButtonsProps) {
+  const { t } = useTranslation("model");
+
   const prices = form.watch(`pricingTiers.${tierIndex}.prices`) || {};
 
   return (
     <div className="space-y-2">
-      <FormDescription>Prefill usage types from template:</FormDescription>
+      <FormDescription>{t("tierPrefill.hint")}</FormDescription>
       <div className="flex gap-2">
         <Button
           type="button"

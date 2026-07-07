@@ -1,4 +1,5 @@
 import { type RefObject, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import type { EditorView, ReactCodeMirrorRef } from "@uiw/react-codemirror";
 import { type Extension } from "@codemirror/state";
 import { Check, Copy, Loader2, Paperclip } from "lucide-react";
@@ -165,6 +166,8 @@ export function createMediaDropPasteExtension({
  * in flight; failures surface via toast from the upload hook.
  */
 export function DatasetItemMediaUploadButton({
+  const { t } = useTranslation("dataset");
+
   onSelectFile,
   disabled,
 }: {
@@ -198,7 +201,7 @@ export function DatasetItemMediaUploadButton({
         size="icon-xs"
         className="text-muted-foreground"
         disabled={disabled || isUploading}
-        title="Attach media"
+        title={t("media.attach")}
         onClick={() => inputRef.current?.click()}
       >
         {isUploading ? (
@@ -225,7 +228,7 @@ function CopyFieldValueButton({ value }: { value: string }) {
       variant="ghost"
       size="icon-xs"
       className="text-muted-foreground"
-      title="Copy to clipboard"
+      title={t("common.copyToClipboard")}
       onClick={async () => {
         await copyTextToClipboard(value);
         setCopied(true);

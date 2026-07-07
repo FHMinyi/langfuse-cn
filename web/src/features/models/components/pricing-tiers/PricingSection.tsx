@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { PlusCircle } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import { FormDescription, FormLabel } from "@/src/components/ui/form";
@@ -27,11 +28,13 @@ export function PricingSection({
   const defaultTierIndex = fields.findIndex((f) => f.isDefault);
 
   if (!hasMultipleTiers) {
+  const { t } = useTranslation("model");
+
     // SIMPLE VIEW: Just show prices for the single default tier
     return (
       <div className="space-y-4">
         <div>
-          <FormLabel>Prices</FormLabel>
+          <FormLabel>{t("pricing.prices")}</FormLabel>
           <FormDescription>
             Set prices per usage type for this model. Usage types must exactly
             match the keys of the ingested usage details.
@@ -57,7 +60,7 @@ export function PricingSection({
   return (
     <div className="space-y-4">
       <div>
-        <FormLabel>Pricing Tiers</FormLabel>
+        <FormLabel>{t("pricing.tiers")}</FormLabel>
         <FormDescription>
           Define pricing rules evaluated in priority order. Tiers are checked
           from top to bottom until conditions match.

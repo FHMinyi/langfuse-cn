@@ -11,6 +11,7 @@ import { useEvaluationModel } from "@/src/features/evals/hooks/useEvaluationMode
 import { DeleteEvaluationModelButton } from "@/src/components/deleteButton";
 import { ManageDefaultEvalModel } from "@/src/features/evals/components/manage-default-eval-model";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { DialogContent, DialogTrigger } from "@/src/components/ui/dialog";
 import { getFinalModelParams } from "@/src/utils/getFinalModelParams";
 import { Dialog } from "@/src/components/ui/dialog";
@@ -300,6 +301,8 @@ function UpdateButton({
   isLoading: boolean;
   executeUpsertMutation: () => void;
 }) {
+  const { t } = useTranslation("evaluation");
+
   const [confirmationInput, setConfirmationInput] = useState("");
   const hasWriteAccess = useHasProjectAccess({
     projectId,
@@ -324,7 +327,7 @@ function UpdateButton({
         onClick={(e) => e.stopPropagation()}
         className="w-fit max-w-[500px]"
       >
-        <h2 className="mb-3 font-semibold">Please confirm</h2>
+        <h2 className="mb-3 font-semibold">{t("common.pleaseConfirm")}</h2>
         <p className="mb-3 text-sm">
           Updating the default model will impact any currently running
           evaluators that use it. Please confirm that you want to proceed with

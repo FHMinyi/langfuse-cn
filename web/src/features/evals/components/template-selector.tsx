@@ -26,6 +26,7 @@ import {
 import { cn } from "@/src/utils/tailwind";
 import { Button } from "@/src/components/ui/button";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import Link from "next/link";
 import { useExperimentEvaluatorSelection } from "@/src/features/experiments/hooks/useExperimentEvaluatorSelection";
 import { useTemplatesValidation } from "@/src/features/evals/hooks/useTemplatesValidation";
@@ -146,6 +147,8 @@ export const TemplateSelector = ({
     }
 
     if (onConfigureTemplate) {
+  const { t } = useTranslation("evaluation");
+
       onConfigureTemplate(templateId);
     }
   };
@@ -180,7 +183,7 @@ export const TemplateSelector = ({
         <PopoverContent className="w-[300px] p-0" align="start">
           <InputCommand>
             <InputCommandInput
-              placeholder="Search evaluators..."
+              placeholder={t("selector.searchEvaluators")}
               className="h-9"
               value={search}
               onValueChange={setSearch}
@@ -197,7 +200,7 @@ export const TemplateSelector = ({
             >
               <InputCommandList className="max-h-full overflow-visible overflow-x-hidden">
                 {!hasResults && (
-                  <InputCommandEmpty>No evaluator found.</InputCommandEmpty>
+                  <InputCommandEmpty>{t("selector.noEvaluatorFound")}</InputCommandEmpty>
                 )}
 
                 {filteredTemplates.custom.length > 0 && (
@@ -243,7 +246,7 @@ export const TemplateSelector = ({
                                   <AlertCircle className="ml-1 h-4 w-4 text-yellow-500" />
                                 </TooltipTrigger>
                                 <TooltipContent className="max-h-[50dvh] overflow-y-auto text-xs break-normal whitespace-normal">
-                                  <p>Requires project-level evaluation model</p>
+                                  <p>{t("selector.requiresModel")}</p>
                                   <Link
                                     href={`/project/${projectId}/evals/default-model`}
                                     className="mt-2 flex items-center gap-1 text-blue-600 hover:underline"
@@ -258,7 +261,7 @@ export const TemplateSelector = ({
                             )}
                             {isInactive && (
                               <div
-                                title="The evaluator has been used in the past but is currently paused. It will not run against outputs created in this dataset run. You can reactivate it if you wish"
+                                title={t("selector.pausedHint")}
                                 className="text-muted-foreground ml-2 text-xs"
                               >
                                 Paused
@@ -335,7 +338,7 @@ export const TemplateSelector = ({
                                 <AlertCircle className="ml-1 h-4 w-4 text-yellow-500" />
                               </TooltipTrigger>
                               <TooltipContent className="max-h-[50dvh] overflow-y-auto text-xs break-normal whitespace-normal">
-                                <p>Requires project-level evaluation model</p>
+                                <p>{t("selector.requiresModel")}</p>
                                 <Link
                                   href={`/project/${projectId}/evals/default-model`}
                                   className="mt-2 flex items-center gap-1 text-blue-600 hover:underline"
@@ -350,7 +353,7 @@ export const TemplateSelector = ({
                           )}
                           {isInactive && (
                             <div
-                              title="The evaluator has been used in the past but is currently paused. It will not run against outputs created in this dataset run. You can reactivate it if you wish"
+                              title={t("selector.pausedHint")}
                               className="text-muted-foreground ml-2 text-xs"
                             >
                               Paused

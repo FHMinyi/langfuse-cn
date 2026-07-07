@@ -1,5 +1,6 @@
 // Langfuse Cloud only
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { nanoid } from "nanoid";
@@ -64,17 +65,19 @@ export const BillingSwitchPlanDialog = ({
     <Dialog
       onOpenChange={(open) => {
         if (open) {
+  const { t } = useTranslation("ee");
+
           capture("project_settings:pricing_dialog_opened");
         }
       }}
     >
       <DialogTrigger asChild>
-        <Button disabled={disabled}>Change plan</Button>
+        <Button disabled={disabled}>{t("billing.changePlan")}</Button>
       </DialogTrigger>
       <DialogContent className="max-w-5xl">
         <DialogHeader>
           <div className="flex flex-row items-center justify-between">
-            <DialogTitle>Plans</DialogTitle>
+            <DialogTitle>{t("billing.plans")}</DialogTitle>
             <ActionButton
               variant="secondary"
               href="https://langfuse.com/pricing"
@@ -104,11 +107,11 @@ export const BillingSwitchPlanDialog = ({
                     <div className="mb-4">
                       {/* Labels above plan title */}
                       <div className="mb-1 h-5 text-xs font-medium text-blue-700">
-                        {isCurrentPlan && <span>Current Plan</span>}
+                        {isCurrentPlan && <span>{t("billing.currentPlan")}</span>}
                         {scheduledPlanSwitch &&
                           scheduledPlanSwitch.newPlanId ===
                             product.stripeProductId && (
-                            <span className="ml-1">Starts next period</span>
+                            <span className="ml-1">{t("billing.startsNextPeriod")}</span>
                           )}
                         {scheduledPlanSwitch &&
                           organization?.cloudConfig?.stripe?.activeProductId ===
@@ -146,7 +149,7 @@ export const BillingSwitchPlanDialog = ({
                       {product.checkout?.description}
                     </div>
                     <div className="space-y-2">
-                      <div className="text-sm font-medium">Main features:</div>
+                      <div className="text-sm font-medium">{t("billing.mainFeatures")}</div>
                       <ul className="text-muted-foreground list-inside list-disc space-y-1 text-sm">
                         {product.checkout?.mainFeatures.map(
                           (feature, index) => (

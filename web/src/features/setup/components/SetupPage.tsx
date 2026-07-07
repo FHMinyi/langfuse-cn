@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import Header from "@/src/components/layouts/header";
 import ContainerPage from "@/src/components/layouts/container-page";
 import {
@@ -20,6 +21,8 @@ import { useRouter } from "next/router";
 // 1. Create Organization: /setup
 // 2. Create Project: /organization/:orgId/setup?orgstep=create-project
 export function SetupPage() {
+  const { t } = useTranslation("api");
+
   const { organization } = useQueryProjectOrOrganization();
   const router = useRouter();
 
@@ -77,7 +80,7 @@ export function SetupPage() {
           // 1. Create Org
           stepInt === 1 && (
             <div>
-              <Header title="New Organization" />
+              <Header title={t("setup.newOrganization")} />
               <p className="text-muted-foreground mb-4 text-sm">
                 Organizations are used to manage your projects and teams.
               </p>
@@ -93,7 +96,7 @@ export function SetupPage() {
           // 2. Create Project
           stepInt === 2 && organization && (
             <div>
-              <Header title="New Project" />
+              <Header title={t("setup.newProject")} />
               <p className="text-muted-foreground mb-4 text-sm">
                 Projects are used to group traces, datasets, evals and prompts.
                 Environments can be separated using the built-in environment

@@ -6,6 +6,7 @@ import {
   DialogTitle,
 } from "@/src/components/ui/dialog";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { NewDatasetItemForm } from "@/src/features/datasets/components/NewDatasetItemForm";
 import { DialogTrigger } from "@radix-ui/react-dialog";
 import { useHasProjectAccess } from "@/src/features/rbac/utils/checkProjectAccess";
@@ -17,6 +18,8 @@ export const NewDatasetItemButton = (props: {
   datasetId?: string;
   className?: string;
 }) => {
+  const { t } = useTranslation("dataset");
+
   const [open, setOpen] = useState(false);
   const hasAccess = useHasProjectAccess({
     projectId: props.projectId,
@@ -38,7 +41,7 @@ export const NewDatasetItemButton = (props: {
       </DialogTrigger>
       <DialogContent size="xl">
         <DialogHeader>
-          <DialogTitle>Create new dataset item</DialogTitle>
+          <DialogTitle>{t("newItem.create")}</DialogTitle>
         </DialogHeader>
         <NewDatasetItemForm
           projectId={props.projectId}

@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 /**
  * TraceSettingsDropdown - View preferences dropdown component
  *
@@ -38,13 +39,15 @@ export interface TraceSettingsDropdownProps {
 export function TraceSettingsDropdown({
   isGraphViewAvailable,
 }: TraceSettingsDropdownProps) {
+  const { t } = useTranslation("components");
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
           size="icon"
-          title="View Options"
+          title={t("trace.viewOptions")}
           className="h-7 w-7"
         >
           <Settings2 className="h-3.5 w-3.5" />
@@ -104,7 +107,7 @@ export function TraceViewOptionsMenuItems({
             className="space-y-0 px-2 py-1"
           >
             <div className="flex w-full items-center justify-between">
-              <span className="mr-2">Show Graph</span>
+              <span className="mr-2">{t("trace.showGraph")}</span>
               <Switch
                 size="sm"
                 checked={showGraph}
@@ -121,7 +124,7 @@ export function TraceViewOptionsMenuItems({
           className="px-2 py-1"
         >
           <div className="flex w-full items-center justify-between">
-            <span className="mr-2">Show Comments</span>
+            <span className="mr-2">{t("trace.showComments")}</span>
             <Switch
               size="sm"
               checked={showComments}
@@ -137,7 +140,7 @@ export function TraceViewOptionsMenuItems({
           className="px-2 py-1"
         >
           <div className="flex w-full items-center justify-between">
-            <span className="mr-2">Show Scores</span>
+            <span className="mr-2">{t("trace.showScores")}</span>
             <Switch
               size="sm"
               checked={showScores}
@@ -158,7 +161,7 @@ export function TraceViewOptionsMenuItems({
           className="px-2 py-1"
         >
           <div className="flex w-full items-center justify-between">
-            <span className="mr-2">Show Duration</span>
+            <span className="mr-2">{t("trace.showDuration")}</span>
             <Switch
               size="sm"
               checked={showDuration}
@@ -174,7 +177,7 @@ export function TraceViewOptionsMenuItems({
           className="px-2 py-1"
         >
           <div className="flex w-full items-center justify-between">
-            <span className="mr-2">Show Cost/Tokens</span>
+            <span className="mr-2">{t("trace.showCostTokens")}</span>
             <Switch
               size="sm"
               checked={showCostTokens}

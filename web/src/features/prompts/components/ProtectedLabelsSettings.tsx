@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { Card } from "@/src/components/ui/card";
 import { Button } from "@/src/components/ui/button";
 import { api } from "@/src/utils/api";
@@ -45,6 +46,8 @@ const AddLabelFormSchema = z.object({
 type AddLabelFormSchemaType = z.infer<typeof AddLabelFormSchema>;
 
 export default function ProtectedLabelsSettings({
+  const { t } = useTranslation("prompt");
+
   projectId,
 }: {
   projectId: string;
@@ -108,7 +111,7 @@ export default function ProtectedLabelsSettings({
 
   return (
     <div>
-      <Header title="Protected Prompt Labels" />
+      <Header title={t("protectedLabels.title")} />
       <Card className="mb-4 p-3">
         <p className="text-primary mb-4 text-sm">
           Protected labels can only be modified by users with admin or owner
@@ -175,12 +178,12 @@ export default function ProtectedLabelsSettings({
                     <PopoverContent className="w-full p-0">
                       <Command>
                         <CommandInput
-                          placeholder="Search or enter a new label..."
+                          placeholder={t("protectedLabels.searchOrEnter")}
                           onValueChange={(value) => {
                             field.onChange(value);
                           }}
                         />
-                        <CommandEmpty>No label found</CommandEmpty>
+                        <CommandEmpty>{t("protectedLabels.noLabelFound")}</CommandEmpty>
                         <CommandGroup>
                           {availableLabels.map((label) => (
                             <CommandItem

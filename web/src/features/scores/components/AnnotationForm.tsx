@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/src/components/ui/button";
 import {
   MessageCircleMore,
@@ -102,7 +103,7 @@ function CommentField({
   return (
     <div className="relative">
       <div className="mb-1 flex items-center justify-between">
-        <FormLabel className="text-sm">Score Comment</FormLabel>
+        <FormLabel className="text-sm">{t("score.comment")}</FormLabel>
         <div className="relative">
           {savedComment && (
             <PopoverClose asChild>
@@ -186,7 +187,7 @@ function AnnotateHeader({
 }) {
   return (
     <Header
-      title="Annotate"
+      title={t("score.annotate")}
       help={{
         description,
         href: "https://langfuse.com/docs/evaluation/evaluation-methods/annotation",
@@ -670,6 +671,8 @@ function InnerAnnotationForm<Target extends ScoreTarget>({
           target.type === "number" &&
           (target.validity.rangeOverflow || target.validity.rangeUnderflow)
         ) {
+  const { t } = useTranslation("evaluation");
+
           event.preventDefault();
           target.reportValidity();
           return;
@@ -837,7 +840,7 @@ function InnerAnnotationForm<Target extends ScoreTarget>({
         {allowManualSelection ? (
           <div className="grid grid-flow-col items-center">
             <MultiSelectKeyValues
-              placeholder="Value"
+              placeholder={t("score.valuePlaceholder")}
               align="end"
               items="empty scores"
               className="grid grid-cols-[auto_1fr_auto_auto] gap-2"
@@ -951,7 +954,7 @@ function InnerAnnotationForm<Target extends ScoreTarget>({
                                 variant="link"
                                 type="button"
                                 size="xs"
-                                title="Add or view score comment"
+                                title={t("score.addOrViewComment")}
                                 // LFE-7628: center the comment icon vertically
                                 // against the score label instead of stretching
                                 // to the full (possibly multi-line) row height,
@@ -1015,7 +1018,7 @@ function InnerAnnotationForm<Target extends ScoreTarget>({
                                         maxLength={TEXT_SCORE_MAX_LENGTH}
                                         className="text-xs"
                                         disabled={isInputDisabled(config)}
-                                        placeholder="Enter free form text..."
+                                        placeholder={t("score.freeFormPlaceholder")}
                                         onBlur={() => handleTextUpsert(index)}
                                       />
                                     </FormControl>
@@ -1086,7 +1089,7 @@ function InnerAnnotationForm<Target extends ScoreTarget>({
                                           value: category.label,
                                           disabled: category.isOutdated,
                                         }))}
-                                        placeholder="Select category"
+                                        placeholder={t("score.selectCategory")}
                                         searchPlaceholder="Search categories..."
                                         emptyText="No category found."
                                       />
@@ -1182,7 +1185,7 @@ function InnerAnnotationForm<Target extends ScoreTarget>({
                                   variant="link"
                                   type="button"
                                   className="px-0 pl-1"
-                                  title="Delete archived score"
+                                  title={t("score.deleteArchived")}
                                   disabled={isScoreUnsaved(score.id)}
                                 >
                                   <Archive className="h-4 w-4"></Archive>
@@ -1213,7 +1216,7 @@ function InnerAnnotationForm<Target extends ScoreTarget>({
                               variant="link"
                               type="button"
                               className="px-0 pl-1"
-                              title="Delete score from trace/observation"
+                              title={t("score.deleteFromTrace")}
                               disabled={
                                 isScoreUnsaved(score.id) ||
                                 updateMutation.isPending

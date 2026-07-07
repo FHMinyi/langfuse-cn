@@ -1,6 +1,7 @@
 "use client";
 
 import { type KeyboardEvent, useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   BotMessageSquare,
   History,
@@ -227,6 +228,8 @@ export function InAppAgentWindow(props: InAppAgentWindowProps) {
     const input = inputRef.current;
 
     if (!input) {
+  const { t } = useTranslation("ee");
+
       return;
     }
 
@@ -251,7 +254,7 @@ export function InAppAgentWindow(props: InAppAgentWindowProps) {
         <div className="flex min-w-0 flex-1 items-center gap-2">
           <p
             className="shrink-0 truncate text-sm font-semibold"
-            title="Assistant"
+            title={t("agent.assistant")}
           >
             Assistant
           </p>
@@ -277,7 +280,7 @@ export function InAppAgentWindow(props: InAppAgentWindowProps) {
                 <Plus className="size-3" />
               </Button>
             </TooltipTrigger>
-            <TooltipContent>Start new conversation</TooltipContent>
+            <TooltipContent>{t("agent.startNew")}</TooltipContent>
           </Tooltip>
           <DropdownMenu
             open={isConversationHistoryOpen}
@@ -304,13 +307,13 @@ export function InAppAgentWindow(props: InAppAgentWindowProps) {
                   </Button>
                 </DropdownMenuTrigger>
               </TooltipTrigger>
-              <TooltipContent>Conversation history</TooltipContent>
+              <TooltipContent>{t("agent.history")}</TooltipContent>
             </Tooltip>
             <DropdownMenuContent
               align="end"
               className="max-h-80 w-64 overflow-y-auto"
             >
-              <DropdownMenuLabel>Recent conversations</DropdownMenuLabel>
+              <DropdownMenuLabel>{t("agent.recent")}</DropdownMenuLabel>
               <DropdownMenuSeparator />
               {conversations.length === 0 ? (
                 <DropdownMenuItem disabled>
@@ -405,7 +408,7 @@ export function InAppAgentWindow(props: InAppAgentWindowProps) {
                   <Minus className="size-3" />
                 </Button>
               </TooltipTrigger>
-              <TooltipContent>Minimize assistant</TooltipContent>
+              <TooltipContent>{t("agent.minimize")}</TooltipContent>
             </Tooltip>
           ) : null}
         </div>
@@ -608,7 +611,7 @@ export function InAppAgentWindow(props: InAppAgentWindowProps) {
               }}
               disabled={isInputDisabled}
               aria-label="Ask the assistant a question"
-              placeholder="Ask the assistant a question..."
+              placeholder={t("agent.placeholder")}
               rows={1}
               className={cn(
                 "bg-background placeholder:text-muted-foreground w-full flex-1 resize-none overflow-y-auto rounded-md text-sm leading-5 disabled:cursor-not-allowed disabled:opacity-60",

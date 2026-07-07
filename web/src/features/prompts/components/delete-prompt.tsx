@@ -3,6 +3,7 @@ import { useHasProjectAccess } from "@/src/features/rbac/utils/checkProjectAcces
 import { api } from "@/src/utils/api";
 import { Trash } from "lucide-react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Popover,
   PopoverContent,
@@ -10,7 +11,9 @@ import {
 } from "@/src/components/ui/popover";
 import useProjectIdFromURL from "@/src/hooks/useProjectIdFromURL";
 
-export function DeletePrompt({ promptName }: { promptName: string }) {
+export function DeletePrompt({
+  const { t } = useTranslation("prompt");
+ promptName }: { promptName: string }) {
   const projectId = useProjectIdFromURL();
   const utils = api.useUtils();
   const [isOpen, setIsOpen] = useState(false);
@@ -36,7 +39,7 @@ export function DeletePrompt({ promptName }: { promptName: string }) {
         </Button>
       </PopoverTrigger>
       <PopoverContent>
-        <h2 className="mb-3 font-semibold">Please confirm</h2>
+        <h2 className="mb-3 font-semibold">{t("common.pleaseConfirm")}</h2>
         <p className="mb-3 text-sm">
           This action permanently deletes this prompt. All requests to fetch
           prompt{" "}

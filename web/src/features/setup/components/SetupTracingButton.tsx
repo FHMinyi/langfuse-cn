@@ -7,6 +7,7 @@ import { useHasProjectAccess } from "@/src/features/rbac/utils/checkProjectAcces
 import { LockIcon } from "lucide-react";
 import { useRouter } from "next/router";
 import { useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { usePostHogClientCapture } from "@/src/features/posthog-analytics/usePostHogClientCapture";
 
 const SetupTracingButton = () => {
@@ -46,6 +47,8 @@ const SetupTracingButton = () => {
   });
 
   if (isLoading || hasTracingConfigured || !project) {
+  const { t } = useTranslation("api");
+
     return null;
   }
 
@@ -59,7 +62,7 @@ const SetupTracingButton = () => {
 
   return (
     <Link href={setupTracingRoute(project.id)}>
-      <Button>Configure Tracing</Button>
+      <Button>{t("setup.configureTracing")}</Button>
     </Link>
   );
 };

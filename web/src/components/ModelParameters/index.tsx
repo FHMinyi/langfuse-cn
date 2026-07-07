@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
 import {
@@ -97,6 +98,8 @@ export const ModelParameters: React.FC<ModelParamsContext> = ({
   if (!projectId) return null;
 
   if (availableProviders.length === 0) {
+  const { t } = useTranslation("components");
+
     return (
       <div className="flex flex-col space-y-4 pr-1">
         {customHeader ? (
@@ -106,7 +109,7 @@ export const ModelParameters: React.FC<ModelParamsContext> = ({
             <p className="font-semibold">Model</p>
           </div>
         )}
-        <p className="text-xs">No LLM API key set in project. </p>
+        <p className="text-xs">{t("modelParams.noApiKey")} </p>
         <CreateLLMApiKeyDialog
           open={createLlmApiKeyDialogOpen}
           setOpen={setCreateLlmApiKeyDialogOpen}
@@ -137,14 +140,14 @@ export const ModelParameters: React.FC<ModelParamsContext> = ({
         sideOffset={5}
       >
         <div className="mb-3">
-          <h4 className="mb-1 text-sm font-medium">Model Advanced Settings</h4>
+          <h4 className="mb-1 text-sm font-medium">{t("modelParams.advancedSettings")}</h4>
           <p className="text-muted-foreground text-xs">
             Configure advanced parameters for your model.
           </p>
         </div>
         <div className="space-y-4">
           <ModelParamsSlider
-            title="Temperature"
+            title={t("modelParams.temperature")}
             modelParamsKey="temperature"
             formDisabled={formDisabled}
             enabled={modelParams.temperature.enabled}
@@ -157,7 +160,7 @@ export const ModelParameters: React.FC<ModelParamsContext> = ({
             updateModelParam={updateModelParamValue}
           />
           <ModelParamsSlider
-            title="Output token limit"
+            title={t("modelParams.outputTokenLimit")}
             modelParamsKey="max_tokens"
             formDisabled={formDisabled}
             enabled={modelParams.max_tokens.enabled}
@@ -170,7 +173,7 @@ export const ModelParameters: React.FC<ModelParamsContext> = ({
             updateModelParam={updateModelParamValue}
           />
           <ModelParamsSlider
-            title="Top P"
+            title={t("modelParams.topP")}
             modelParamsKey="top_p"
             formDisabled={formDisabled}
             enabled={modelParams.top_p.enabled}
@@ -185,7 +188,7 @@ export const ModelParameters: React.FC<ModelParamsContext> = ({
           {modelParams.adapter.value === LLMAdapter.VertexAI &&
             modelParams.maxReasoningTokens && (
               <ModelParamsSlider
-                title="Max. Reasoning Tokens"
+                title={t("modelParams.maxReasoningTokens")}
                 modelParamsKey="maxReasoningTokens"
                 formDisabled={formDisabled}
                 enabled={modelParams.maxReasoningTokens.enabled}
@@ -309,7 +312,7 @@ export const ModelParameters: React.FC<ModelParamsContext> = ({
       <div className="space-y-4">
         <div className="space-y-3">
           <ModelParamsSelect
-            title="Provider"
+            title={t("modelParams.provider")}
             modelParamsKey="provider"
             disabled={formDisabled}
             value={modelParams.provider.value}
@@ -318,7 +321,7 @@ export const ModelParameters: React.FC<ModelParamsContext> = ({
             layout="vertical"
           />
           <ModelParamsSelect
-            title="Model name"
+            title={t("modelParams.modelName")}
             modelParamsKey="model"
             disabled={formDisabled}
             value={modelParams.model.value}

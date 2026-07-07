@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useTranslation } from "react-i18next";
 import { api } from "@/src/utils/api";
 import { useRouter } from "next/router";
 import EvalLogTable from "@/src/features/evals/components/eval-log";
@@ -80,7 +81,9 @@ export const EvaluatorDetail = () => {
   }
 
   if (evaluator.data && evaluator.data.evalTemplate === null) {
-    return <div>Evaluator not found</div>;
+  const { t } = useTranslation("evaluation");
+
+    return <div>{t("evalDetail.notFound")}</div>;
   }
 
   const existingEvaluator =
@@ -146,7 +149,7 @@ export const EvaluatorDetail = () => {
             <div className="mx-3 mt-3">
               <Alert variant="destructive">
                 <AlertTriangle className="h-4 w-4" />
-                <AlertTitle>Unsupported filters</AlertTitle>
+                <AlertTitle>{t("evalDetail.unsupportedFilters")}</AlertTitle>
                 <AlertDescription>
                   This evaluator contains deprecated or unsupported filters. The
                   filters must be removed. Until the filters are removed, the

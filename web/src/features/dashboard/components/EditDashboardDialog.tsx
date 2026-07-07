@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { api } from "@/src/utils/api";
 import {
   Dialog,
@@ -32,6 +33,7 @@ export function EditDashboardDialog({
   initialName,
   initialDescription,
 }: EditDashboardDialogProps) {
+  const { t } = useTranslation("dashboard");
   const [name, setName] = useState(initialName);
   const [description, setDescription] = useState(initialDescription);
   const utils = api.useUtils();
@@ -68,7 +70,7 @@ export function EditDashboardDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
-          <DialogTitle>Edit Dashboard</DialogTitle>
+          <DialogTitle>{t("editDashboardDialog.title")}</DialogTitle>
         </DialogHeader>
         <DialogBody>
           <div className="grid gap-4 py-4">
@@ -78,7 +80,7 @@ export function EditDashboardDialog({
                 id="name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="Dashboard name"
+                placeholder={t("editDashboardDialog.namePlaceholder")}
               />
             </div>
             <div className="grid gap-2">
@@ -87,7 +89,7 @@ export function EditDashboardDialog({
                 id="description"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                placeholder="Dashboard description"
+                placeholder={t("editDashboardDialog.descriptionPlaceholder")}
                 rows={3}
               />
             </div>

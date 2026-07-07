@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/src/components/ui/button";
 import { Trash } from "lucide-react";
 import { api } from "@/src/utils/api";
@@ -39,6 +40,8 @@ export const DeleteAutomationButton: React.FC<DeleteAutomationButtonProps> = ({
         });
 
         if (onSuccess) {
+  const { t } = useTranslation("workflow");
+
           onSuccess();
         }
 
@@ -72,7 +75,7 @@ export const DeleteAutomationButton: React.FC<DeleteAutomationButtonProps> = ({
         )}
       </PopoverTrigger>
       <PopoverContent>
-        <h2 className="mb-3 font-semibold">Please confirm</h2>
+        <h2 className="mb-3 font-semibold">{t("common.pleaseConfirm")}</h2>
         <p className="mb-3 text-sm">
           This action permanently deletes this automation and execution history.
           This cannot be undone.

@@ -2,6 +2,7 @@ import { Button } from "@/src/components/ui/button";
 import { useHasProjectAccess } from "@/src/features/rbac/utils/checkProjectAccess";
 import { api } from "@/src/utils/api";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Dialog,
   DialogContent,
@@ -16,7 +17,9 @@ import useProjectIdFromURL from "@/src/hooks/useProjectIdFromURL";
 import { Trash, Folder, FileText } from "lucide-react";
 import Spinner from "@/src/components/design-system/Spinner/Spinner";
 
-export function DeleteFolder({ folderPath }: { folderPath: string }) {
+export function DeleteFolder({
+  const { t } = useTranslation("prompt");
+ folderPath }: { folderPath: string }) {
   const projectId = useProjectIdFromURL();
   const utils = api.useUtils();
   const [isOpen, setIsOpen] = useState(false);
@@ -87,7 +90,7 @@ export function DeleteFolder({ folderPath }: { folderPath: string }) {
           </p>
 
           <div className="bg-muted/50 rounded-md border p-4">
-            <h4 className="mb-2 text-sm font-medium">Prompts to delete:</h4>
+            <h4 className="mb-2 text-sm font-medium">{t("delete.promptsToDelete")}</h4>
             {prompts.isLoading ? (
               <div className="flex items-center justify-center py-4">
                 <Spinner size="sm" variant="muted" />

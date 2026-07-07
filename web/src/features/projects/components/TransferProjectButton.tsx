@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { Button } from "@/src/components/ui/button";
 import {
   Dialog,
@@ -41,6 +42,8 @@ import { TriangleAlert } from "lucide-react";
 import { showSuccessToast } from "@/src/features/notifications/showSuccessToast";
 
 export function TransferProjectButton() {
+  const { t } = useTranslation("settings");
+
   const capture = usePostHogClientCapture();
   const session = useSession();
   const { project, organization } = useQueryProject();
@@ -112,7 +115,7 @@ export function TransferProjectButton() {
           </DialogTitle>
           <Alert className="mt-2">
             <TriangleAlert className="h-4 w-4" />
-            <AlertTitle>Warning</AlertTitle>
+            <AlertTitle>{t("project.transfer.warning")}</AlertTitle>
             <AlertDescription>
               Transferring the project will move it to a different organization:
               <ul className="list-disc pl-4">
@@ -137,7 +140,7 @@ export function TransferProjectButton() {
                 name="projectId"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Select New Organization</FormLabel>
+                    <FormLabel>{t("project.transfer.selectOrg")}</FormLabel>
                     <FormControl>
                       <Select
                         onValueChange={field.onChange}
@@ -145,7 +148,7 @@ export function TransferProjectButton() {
                         disabled={transferProject.isPending}
                       >
                         <SelectTrigger>
-                          <SelectValue placeholder="Select organization" />
+                          <SelectValue placeholder={t("project.transfer.selectOrgPlaceholder")} />
                         </SelectTrigger>
                         <SelectContent>
                           {organizationsToTransferTo
@@ -171,7 +174,7 @@ export function TransferProjectButton() {
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Confirm</FormLabel>
+                    <FormLabel>{t("project.transfer.confirm")}</FormLabel>
                     <FormControl>
                       <Input placeholder={confirmMessage} {...field} />
                     </FormControl>

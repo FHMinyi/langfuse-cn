@@ -10,6 +10,7 @@ import { ConfirmDialog } from "@/src/components/ui/confirm-dialog";
 import { Input } from "@/src/components/ui/input";
 import { Label } from "@/src/components/ui/label";
 import { useState, forwardRef } from "react";
+import { useTranslation } from "react-i18next";
 import { DialogTrigger } from "@radix-ui/react-dialog";
 import { DatasetForm } from "@/src/features/datasets/components/DatasetForm";
 import { useHasProjectAccess } from "@/src/features/rbac/utils/checkProjectAccess";
@@ -58,6 +59,7 @@ export const DatasetActionButton = forwardRef<
   HTMLButtonElement,
   DatasetActionButtonProps
 >((props, ref) => {
+  const { t } = useTranslation("dataset");
   const capture = usePostHogClientCapture();
   const [open, setOpen] = useState(false);
   const [deleteConfirmationInput, setDeleteConfirmationInput] = useState("");
@@ -207,7 +209,7 @@ export const DatasetActionButton = forwardRef<
           }}
           trigger={isIconMode ? undefined : actionButton}
           size="lg"
-          title="Please confirm"
+          title={t("common.pleaseConfirm")}
           description="This action cannot be undone and removes all the data associated with this dataset."
           confirmLabel="Delete dataset"
           confirmDisabled={deleteConfirmationInput !== datasetName}

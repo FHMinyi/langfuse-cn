@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { ActionButton } from "@/src/components/ActionButton";
 import { useHasProjectAccess } from "@/src/features/rbac/utils/checkProjectAccess";
 import { Zap } from "lucide-react";
@@ -11,6 +12,8 @@ export const AutomationButton = ({
 }: {
   projectId: string;
 } & ButtonProps) => {
+  const { t } = useTranslation("workflow");
+
   const hasAccess = useHasProjectAccess({
     projectId,
     scope: "automations:read",
@@ -39,7 +42,7 @@ export const AutomationButton = ({
       href={`/project/${projectId}/automations`}
       icon={<Zap className="h-4 w-4" aria-hidden="true" />}
       hasAccess={hasAccess}
-      title="Automations"
+      title={t("automation.title")}
       variant="outline"
       {...buttonProps}
     >

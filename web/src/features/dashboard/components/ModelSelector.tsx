@@ -19,6 +19,7 @@ import { type FilterState } from "@langfuse/shared";
 import { type ViewVersion } from "@langfuse/shared/query";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export const ModelSelectorPopover = ({
   allModels,
@@ -35,6 +36,7 @@ export const ModelSelectorPopover = ({
   isAllSelected: boolean;
   handleSelectAll: () => void;
 }) => {
+  const { t } = useTranslation("dashboard");
   const [open, setOpen] = useState(false);
 
   return (
@@ -52,8 +54,8 @@ export const ModelSelectorPopover = ({
       </PopoverTrigger>
       <PopoverContent className="w-56 p-0">
         <InputCommand>
-          <InputCommandInput placeholder="Search models..." variant="bottom" />
-          <InputCommandEmpty>No model found.</InputCommandEmpty>
+          <InputCommandInput placeholder={t("modelSelector.searchPlaceholder")} variant="bottom" />
+          <InputCommandEmpty>{t("modelSelector.noModelFound")}</InputCommandEmpty>
           <InputCommandGroup>
             <InputCommandItem onSelect={handleSelectAll}>
               <Check
@@ -63,7 +65,7 @@ export const ModelSelectorPopover = ({
                 )}
               />
               <span>
-                <p className="font-semibold">Select All</p>
+                <p className="font-semibold">{t("modelSelector.selectAll")}</p>
               </span>
             </InputCommandItem>
             <InputCommandSeparator className="my-1" />

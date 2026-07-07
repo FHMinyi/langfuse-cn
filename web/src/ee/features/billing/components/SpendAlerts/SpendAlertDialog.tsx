@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -102,6 +103,8 @@ export function SpendAlertDialog({
       }
       onSuccess();
     } catch (error) {
+  const { t } = useTranslation("ee");
+
       console.error("Failed to save spend alert:", error);
       toast.error(
         `Failed to ${alert ? "update" : "create"} spend alert. Please try again.`,
@@ -127,7 +130,7 @@ export function SpendAlertDialog({
               name="title"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Alert Title</FormLabel>
+                  <FormLabel>{t("billing.alertTitle")}</FormLabel>
                   <FormControl>
                     <Input placeholder="e.g., Production Alert" {...field} />
                   </FormControl>
@@ -140,7 +143,7 @@ export function SpendAlertDialog({
               name="limit"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Limit (USD)</FormLabel>
+                  <FormLabel>{t("billing.alertLimit")}</FormLabel>
                   <FormControl>
                     <Input
                       type="number"
@@ -167,16 +170,16 @@ export function SpendAlertDialog({
             <div className="text-muted-foreground text-xs">
               <div className="flex flex-row items-center">
                 <Info className="mr-2 h-3 w-3" />
-                <span className="font-medium">How it works</span>
+                <span className="font-medium">{t("billing.howItWorks")}</span>
               </div>
               <ul className="list-disc pl-5">
                 <li>
                   The limit is evaluated against your upcoming invoice total,
                   including base fee, running usage fees, discounts, and taxes.
                 </li>
-                <li>Alerts trigger once per billing cycle.</li>
-                <li>You will receive an email when the alert is triggered.</li>
-                <li>Alerts are evaluated with a 90 minute delay.</li>
+                <li>{t("billing.alertTriggerOnce")}</li>
+                <li>{t("billing.alertEmail")}</li>
+                <li>{t("billing.alertDelay")}</li>
               </ul>
             </div>
             <div className="flex flex-row items-center justify-end gap-2">

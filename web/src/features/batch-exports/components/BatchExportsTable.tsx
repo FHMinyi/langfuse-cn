@@ -26,6 +26,7 @@ import {
   AlertDialogTrigger,
 } from "@/src/components/ui/alert-dialog";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useHasProjectAccess } from "@/src/features/rbac/utils/checkProjectAccess";
 
 export function BatchExportsTable(props: { projectId: string }) {
@@ -177,6 +178,8 @@ export function BatchExportsTable(props: { projectId: string }) {
             open={cancelDialogOpen && selectedExportId === id}
             onOpenChange={(open) => {
               if (!open) {
+  const { t } = useTranslation("workflow");
+
                 setCancelDialogOpen(false);
                 setSelectedExportId(null);
               }
@@ -196,7 +199,7 @@ export function BatchExportsTable(props: { projectId: string }) {
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>
-                <AlertDialogTitle>Cancel batch export?</AlertDialogTitle>
+                <AlertDialogTitle>{t("batchExports.cancelConfirm")}</AlertDialogTitle>
                 <AlertDialogDescription>
                   Are you sure you want to cancel this batch export? This action
                   cannot be undone.

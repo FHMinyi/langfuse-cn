@@ -9,6 +9,7 @@ import { createColumnHelper } from "@tanstack/react-table";
 import { Copy, MoreVertical, Pen, Trash } from "lucide-react";
 import { useQueryParam, StringParam, withDefault } from "use-query-params";
 import { useEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { usePaginationState } from "@/src/hooks/usePaginationState";
 import TableIdOrName from "@/src/components/table/table-id";
 import { TablePeekViewEvaluatorTemplateDetail } from "@/src/components/table/peek/peek-evaluator-template-detail";
@@ -92,6 +93,8 @@ const TemplateTypeBadge = ({
   sourceCodeLanguage?: EvalTemplate["sourceCodeLanguage"];
 }) => {
   if (type === EvalTemplateType.CODE) {
+  const { t } = useTranslation("evaluation");
+
     const label = getCodeEvalLanguageLabel(sourceCodeLanguage);
     const Icon =
       sourceCodeLanguage === EvalTemplateSourceCodeLanguage.PYTHON
@@ -160,7 +163,7 @@ const EvalTemplateRowActionsMenu = ({
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" size="icon-xs" aria-label="actions">
-            <span className="sr-only relative">Open menu</span>
+            <span className="sr-only relative">{t("common.openMenu")}</span>
             <MoreVertical className="h-4 w-4" />
           </Button>
         </DropdownMenuTrigger>
@@ -618,7 +621,7 @@ export default function EvalsTemplateTable({
           }
         >
           <DialogHeader>
-            <DialogTitle>Edit evaluator</DialogTitle>
+            <DialogTitle>{t("templatesTable.editEvaluator")}</DialogTitle>
           </DialogHeader>
           <EvalTemplateForm
             projectId={projectId}
@@ -655,7 +658,7 @@ export default function EvalsTemplateTable({
           }
         >
           <DialogHeader>
-            <DialogTitle>Clone evaluator</DialogTitle>
+            <DialogTitle>{t("templatesTable.cloneEvaluator")}</DialogTitle>
           </DialogHeader>
           <EvalTemplateForm
             projectId={projectId}
@@ -724,7 +727,7 @@ export default function EvalsTemplateTable({
       >
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Update running evaluators?</DialogTitle>
+            <DialogTitle>{t("templatesTable.updateRunning")}</DialogTitle>
             <DialogDescription>
               Do you want all running evaluators attached to the original
               Langfuse evaluator to reference your new project-level version?

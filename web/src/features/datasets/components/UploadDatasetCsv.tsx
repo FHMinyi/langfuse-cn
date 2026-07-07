@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import {
   Card,
   CardContent,
@@ -30,6 +31,8 @@ export const UploadDatasetCsv = ({
   setPreview: (preview: CsvPreviewResult | null) => void;
   setCsvFile: (file: File | null) => void;
 }) => {
+  const { t } = useTranslation("dataset");
+
   const handleFiles = async (files: File[]) => {
     const file = files[0];
     if (!file) return;
@@ -70,7 +73,7 @@ export const UploadDatasetCsv = ({
     <DialogBody className="border-t">
       <Card className="h-full items-center justify-center border-none">
         <CardHeader className="text-center">
-          <CardTitle className="text-lg">Add items to dataset</CardTitle>
+          <CardTitle className="text-lg">{t("upload.addItems")}</CardTitle>
           <CardDescription>
             Add items to dataset by uploading a file, add items manually or via
             our SDKs/API

@@ -30,6 +30,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import * as z from "zod";
 import { CloudPrivacyNotice } from "@/src/features/auth/components/AuthCloudPrivacyNotice";
 import { CloudRegionSwitch } from "@/src/features/auth/components/AuthCloudRegionSwitch";
@@ -199,6 +200,7 @@ export function SSOButtons({
   onProviderSelect?: (provider: NextAuthProvider) => void;
 }) {
   const capture = usePostHogClientCapture();
+  const { t } = useTranslation("auth");
   const [providerSigningIn, setProviderSigningIn] =
     useState<NextAuthProvider | null>(null);
 
@@ -239,7 +241,7 @@ export function SSOButtons({
             <div className="border-border my-6 border-t"></div>
           ) : (
             <div className="text-muted-foreground my-6 text-center text-xs">
-              or {action} with
+              {t("signIn.orActionWith", { action })}
             </div>
           )
         ) : null}
@@ -428,10 +430,10 @@ export function SSOButtons({
             <>
               <AuthProviderButton
                 icon={<Code className="mr-3" size={18} />}
-                label="WorkOS (organization)"
+                label={t("sso.workosOrganization")}
                 onClick={() => {
                   const organization = window.prompt(
-                    "Please enter your organization ID",
+                    t("sso.promptOrganizationId"),
                   );
                   if (organization) {
                     capture("sign_in:button_click", { provider: "workos" });
@@ -448,10 +450,10 @@ export function SSOButtons({
               />
               <AuthProviderButton
                 icon={<Code className="mr-3" size={18} />}
-                label="WorkOS (connection)"
+                label={t("sso.workosConnection")}
                 onClick={() => {
                   const connection = window.prompt(
-                    "Please enter your connection ID",
+                    t("sso.promptConnectionId"),
                   );
                   if (connection) {
                     capture("sign_in:button_click", { provider: "workos" });
@@ -526,8 +528,8 @@ export function useHuggingFaceRedirect(runningOnHuggingFaceSpaces: boolean) {
 const signInErrors = [
   {
     code: "OAuthAccountNotLinked",
-    description:
-      "Please sign in with the same provider (e.g. Google, GitHub, Azure AD, etc.) that you used to create this account.",
+    // i18n key resolved at render time via t("error.oauthAccountNotLinked")
+    descriptionKey: "error.oauthAccountNotLinked",
   },
 ];
 
@@ -537,7 +539,17 @@ export default function SignIn({
   runningOnHuggingFaceSpaces,
 }: PageProps) {
   const router = useRouter();
+  const { t } = useTranslation("auth");
   useHuggingFaceRedirect(runningOnHuggingFaceSpaces);
+
+  // Build the validation schema inside the component so that the password
+  // length error message is translated at runtime.
+  const formSchema = z.object({
+    email: z.email(),
+    password: z.string().min(8, {
+      message: t("error.passwordMinLength"),
+    }),
+  });
 
   // handle NextAuth error codes: https://next-auth.js.org/configuration/pages#sign-in-page
   const nextAuthError =
@@ -552,8 +564,13 @@ export default function SignIn({
   // Use error_description from IdP if available, otherwise use mapped error or error code
   const errorMessage = nextAuthErrorDescription
     ? nextAuthErrorDescription
-    : (signInErrors.find((e) => e.code === nextAuthError)?.description ??
+    : (signInErrors.find((e) => e.code === nextAuthError)?.descriptionKey ??
       nextAuthError);
+  const translatedErrorMessage = errorMessage
+    ? signInErrors.find((e) => e.descriptionKey === errorMessage)
+      ? t(errorMessage)
+      : errorMessage
+    : null;
 
   useEffect(() => {
     // log unexpected sign in errors to Sentry
@@ -569,7 +586,7 @@ export default function SignIn({
 
   const [credentialsFormError, setCredentialsFormError] = useState<
     string | null
-  >(errorMessage);
+  >(translatedErrorMessage);
   // Two-step login flow: ask for email first, detect SSO, then either redirect to SSO or reveal password field.
   // Skip this flow when no SSO is configured - show password field immediately
   const [showPasswordStep, setShowPasswordStep] = useState<boolean>(
@@ -602,7 +619,7 @@ export default function SignIn({
 
   // Credentials
   const credentialsForm = useForm({
-    resolver: zodResolver(credentialAuthForm),
+    resolver: zodResolver(formSchema),
     defaultValues: {
       email: emailParam ?? "",
       password: "",
@@ -625,7 +642,7 @@ export default function SignIn({
         redirect: false,
       });
       if (result === undefined) {
-        setCredentialsFormError("An unexpected error occurred.");
+        setCredentialsFormError(t("error.unexpected"));
         captureException(new Error("Sign in result is undefined"));
       } else if (!result.ok) {
         if (!result.error) {
@@ -636,13 +653,13 @@ export default function SignIn({
           );
         }
         setCredentialsFormError(
-          result?.error ?? "An unexpected error occurred.",
+          result?.error ?? t("error.unexpected"),
         );
       }
     } catch (error) {
       captureException(error);
       console.error(error);
-      setCredentialsFormError("An unexpected error occurred.");
+      setCredentialsFormError(t("error.unexpected"));
     }
   }
 
@@ -664,7 +681,7 @@ export default function SignIn({
     const email = emailSchema.safeParse(credentialsForm.getValues("email"));
     if (!email.success) {
       credentialsForm.setError("email", {
-        message: "Invalid email address",
+        message: t("error.invalidEmail"),
       });
       setContinueLoading(false);
       return;
@@ -711,9 +728,7 @@ export default function SignIn({
       }, 100);
     } catch (error) {
       console.error(error);
-      setCredentialsFormError(
-        "Unable to check SSO configuration. Please try again.",
-      );
+      setCredentialsFormError(t("error.ssoCheckFailed"));
     } finally {
       setContinueLoading(false);
     }
@@ -722,7 +737,7 @@ export default function SignIn({
   return (
     <>
       <Head>
-        <title>Sign in | Langfuse</title>
+        <title>{t("signIn.title")}</title>
       </Head>
       <div className="flex flex-1 flex-col py-6 sm:min-h-full sm:justify-center sm:px-6 sm:py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
@@ -730,19 +745,18 @@ export default function SignIn({
             <LangfuseIcon />
           </div>
           <h2 className="text-primary mt-4 text-center text-2xl leading-9 font-bold tracking-tight">
-            Sign in to your account
+            {t("signIn.heading")}
           </h2>
         </div>
 
         {isLangfuseCloud && (
           <div className="bg-card mt-4 -mb-4 rounded-lg p-3 text-center text-sm sm:mx-auto sm:w-full sm:max-w-[480px] sm:rounded-lg sm:px-6">
-            If you are experiencing issues signing in, please force refresh this
-            page (CMD + SHIFT + R) or clear your browser cache.{" "}
+            {t("signIn.cloudTrouble")}{" "}
             <a
               href="mailto:support@langfuse.com"
               className="text-primary-accent hover:text-hover-primary-accent cursor-pointer text-xs font-medium whitespace-nowrap"
             >
-              (contact us)
+              {t("signIn.contactUs")}
             </a>
           </div>
         )}
@@ -772,10 +786,10 @@ export default function SignIn({
                       name="email"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Email</FormLabel>
+                          <FormLabel>{t("field.email")}</FormLabel>
                           <FormControl>
                             <Input
-                              placeholder="jsdoe@example.com"
+                              placeholder={t("field.emailPlaceholder")}
                               allowPasswordManager
                               autoComplete="email"
                               {...field}
@@ -794,14 +808,14 @@ export default function SignIn({
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>
-                              Password{" "}
+                              {t("field.password")}{" "}
                               <Link
                                 href="/auth/reset-password"
                                 className="text-primary-accent hover:text-hover-primary-accent ml-1 text-xs"
                                 tabIndex={-1}
-                                title="What is this?"
+                                title={t("field.forgotPasswordTitle")}
                               >
-                                (forgot password?)
+                                {t("field.forgotPassword")}
                               </Link>
                             </FormLabel>
                             <FormControl>
@@ -829,7 +843,7 @@ export default function SignIn({
                       }
                       data-testid="submit-email-password-sign-in-form"
                     >
-                      {showPasswordStep ? "Sign in" : "Continue"}
+                      {showPasswordStep ? t("signIn.button") : t("signIn.continue")}
                     </Button>
                   </form>
                 </Form>
@@ -842,7 +856,7 @@ export default function SignIn({
                       : "hidden",
                   )}
                 >
-                  Last used
+                  {t("signIn.lastUsed")}
                 </div>
               </div>
             )}
@@ -850,9 +864,9 @@ export default function SignIn({
               <div className="text-destructive text-center text-sm font-medium">
                 {credentialsFormError}
                 <br />
-                Contact support if this error is unexpected.{" "}
+                {t("signIn.contactSupport")}{" "}
                 {isLangfuseCloud &&
-                  "Make sure you are using the correct cloud data region."}
+                  t("signIn.cloudRegionHint")}
               </div>
             ) : null}
             <SSOButtons
@@ -866,12 +880,12 @@ export default function SignIn({
           env.NEXT_PUBLIC_SIGN_UP_DISABLED !== "true" &&
           authProviders.credentials ? (
             <p className="text-muted-foreground mt-10 text-center text-sm">
-              No account yet?{" "}
+              {t("signIn.noAccount")}{" "}
               <Link
                 href={`/auth/sign-up${router.asPath.includes("?") ? router.asPath.substring(router.asPath.indexOf("?")) : ""}`}
                 className="text-primary-accent hover:text-hover-primary-accent leading-6 font-semibold"
               >
-                Sign up
+                {t("signIn.signUp")}
               </Link>
             </p>
           ) : null}

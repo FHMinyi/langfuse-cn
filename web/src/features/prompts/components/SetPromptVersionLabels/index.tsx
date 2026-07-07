@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef, type ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import { CircleFadingArrowUp } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
@@ -28,6 +29,8 @@ import { TruncatedLabels } from "@/src/components/TruncatedLabels";
 import { cn } from "@/src/utils/tailwind";
 
 export function SetPromptVersionLabels({
+  const { t } = useTranslation("prompt");
+
   promptLabels,
   prompt,
   isOpen,
@@ -183,7 +186,7 @@ export function SetPromptVersionLabels({
           />
           <Button
             variant="outline"
-            title="Add prompt label"
+            title={t("labels.addLabel")}
             className={cn(
               "bg-muted-gray text-primary h-6 w-6",
               showOnlyOnHover && "opacity-0 group-hover:opacity-100",
@@ -204,7 +207,7 @@ export function SetPromptVersionLabels({
           onClick={(event) => event.stopPropagation()}
           className="flex flex-col"
         >
-          <h2 className="mb-3 font-semibold">Prompt labels</h2>
+          <h2 className="mb-3 font-semibold">{t("labels.title")}</h2>
           <h2 className="mb-3 text-xs">
             Use labels to fetch prompts via SDKs. The{" "}
             <strong>production</strong> labeled prompt will be served by
@@ -227,7 +230,7 @@ export function SetPromptVersionLabels({
                 {/* Search + create input */}
                 <div className="px-2 pt-1 pb-2">
                   <Input
-                    placeholder="Search or create label…"
+                    placeholder={t("labels.searchOrCreate")}
                     value={searchValue}
                     onChange={(e) => setSearchValue(e.target.value)}
                     onKeyDown={(e) => {

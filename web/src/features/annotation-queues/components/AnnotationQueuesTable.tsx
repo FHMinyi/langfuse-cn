@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { DataTable } from "@/src/components/table/data-table";
 import { type LangfuseColumnDef } from "@/src/components/table/types";
 import { api } from "@/src/utils/api";
@@ -33,6 +34,8 @@ type RowData = {
 };
 
 export function AnnotationQueuesTable({ projectId }: { projectId: string }) {
+  const { t } = useTranslation("workflow");
+
   const [rowHeight, setRowHeight] = useRowHeightLocalStorage(
     "annotationQueues",
     "s",
@@ -150,7 +153,7 @@ export function AnnotationQueuesTable({ projectId }: { projectId: string }) {
         return !hasAccess ? (
           <Button size="sm" disabled>
             <Lock className="mr-1 h-3 w-3" />
-            <span className="text-xs">Process queue</span>
+            <span className="text-xs">{t("queue.processQueue")}</span>
           </Button>
         ) : (
           <Button size="sm" asChild>
@@ -158,7 +161,7 @@ export function AnnotationQueuesTable({ projectId }: { projectId: string }) {
               href={`/project/${projectId}/annotation-queues/${key.id}/items`}
             >
               <ClipboardPen className="mr-1 h-3 w-3" />
-              <span className="text-xs">Process queue</span>
+              <span className="text-xs">{t("queue.processQueue")}</span>
             </Link>
           </Button>
         );

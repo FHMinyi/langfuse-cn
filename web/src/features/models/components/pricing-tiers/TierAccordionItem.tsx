@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { Trash2 } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
@@ -37,6 +38,8 @@ export function TierAccordionItem({
   remove,
   isDefault,
 }: TierAccordionItemProps) {
+  const { t } = useTranslation("model");
+
   return (
     <AccordionItem
       value={`tier-${index}`}
@@ -74,7 +77,7 @@ export function TierAccordionItem({
           name={`pricingTiers.${index}.name`}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Tier Name</FormLabel>
+              <FormLabel>{t("tierAccordion.tierName")}</FormLabel>
               <FormControl>
                 <Input {...field} disabled={isDefault} />
               </FormControl>

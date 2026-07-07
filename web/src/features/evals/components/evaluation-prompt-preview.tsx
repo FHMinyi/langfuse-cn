@@ -6,6 +6,7 @@ import { cn } from "@/src/utils/tailwind";
 import { EvalTargetObject, type EvalTemplate } from "@langfuse/shared";
 import Link from "next/link";
 import { Fragment, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { isTraceTarget } from "@/src/features/evals/utils/typeHelpers";
 import { type PreviewData } from "@/src/features/evals/hooks/usePreviewData";
 
@@ -188,6 +189,8 @@ export const EvaluationPromptPreview = ({
 
     // Add remaining text
     if (lastIndex < promptText.length) {
+  const { t } = useTranslation("evaluation");
+
       fragments.push({
         type: "text" as const,
         content: promptText.substring(lastIndex),
@@ -201,7 +204,7 @@ export const EvaluationPromptPreview = ({
     <div className="max-h-full min-h-0 flex-1 overflow-y-auto rounded-md border">
       {isLoading ? (
         <div className="flex items-center justify-center p-8">
-          <p>Loading variables...</p>
+          <p>{t("promptPreview.loading")}</p>
         </div>
       ) : (
         <ColoredPromptView fragments={getPromptFragments()} />

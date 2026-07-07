@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { Button } from "@/src/components/ui/button";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -239,6 +240,8 @@ export const DatasetForm = forwardRef<DatasetFormRef, DatasetFormProps>(
     );
 
     function onSubmit(values: z.infer<typeof formSchema>) {
+  const { t } = useTranslation("dataset");
+
       // Parse schemas if they're not empty (tRPC expects objects for DatasetJSONSchema)
       const inputSchema =
         values.inputSchema === "" ? null : JSON.parse(values.inputSchema);
@@ -349,7 +352,7 @@ export const DatasetForm = forwardRef<DatasetFormRef, DatasetFormProps>(
                 name="description"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Description (optional)</FormLabel>
+                    <FormLabel>{t("form.descriptionOptional")}</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
@@ -362,7 +365,7 @@ export const DatasetForm = forwardRef<DatasetFormRef, DatasetFormProps>(
                 name="metadata"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Metadata (optional)</FormLabel>
+                    <FormLabel>{t("form.metadataOptional")}</FormLabel>
                     <FormControl>
                       <CodeMirrorEditor
                         mode="json"

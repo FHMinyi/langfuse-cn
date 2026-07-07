@@ -1,6 +1,7 @@
 import capitalize from "lodash/capitalize";
 import router from "next/router";
 import { useState, useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import { Button } from "@/src/components/ui/button";
 import { Checkbox } from "@/src/components/ui/checkbox";
@@ -127,6 +128,8 @@ export const NewPromptForm: React.FC<NewPromptFormProps> = (props) => {
   ).data?.name;
 
   function onSubmit(values: NewPromptFormSchemaType) {
+  const { t } = useTranslation("prompt");
+
     capture(
       initialPrompt ? "prompts:update_form_submit" : "prompts:new_form_submit",
       {
@@ -240,7 +243,7 @@ export const NewPromptForm: React.FC<NewPromptFormProps> = (props) => {
               return (
                 <div>
                   <FormItem>
-                    <FormLabel>Name</FormLabel>
+                    <FormLabel>{t("common.name")}</FormLabel>
                     <FormDescription>
                       Use slashes &apos;/&apos; in prompt names to organize them
                       into{" "}
@@ -254,7 +257,7 @@ export const NewPromptForm: React.FC<NewPromptFormProps> = (props) => {
                       .
                     </FormDescription>
                     <FormControl>
-                      <Input placeholder="Name your prompt" {...field} />
+                      <Input placeholder={t("newPrompt.namePlaceholder")} {...field} />
                     </FormControl>
                     {/* Custom form message to include a link to the already existing prompt */}
                     {form.getFieldState("name").error ? (
@@ -283,7 +286,7 @@ export const NewPromptForm: React.FC<NewPromptFormProps> = (props) => {
         {/* Prompt content field - text vs. chat */}
         <>
           <FormItem>
-            <FormLabel>Prompt</FormLabel>
+            <FormLabel>{t("newPrompt.prompt")}</FormLabel>
             <FormDescription>
               Define your prompt template. You can use{" "}
               <code className="text-xs">{"{{variable}}"}</code> to insert
@@ -390,7 +393,7 @@ export const NewPromptForm: React.FC<NewPromptFormProps> = (props) => {
           name="config"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Config</FormLabel>
+              <FormLabel>{t("common.config")}</FormLabel>
               <FormDescription>
                 Arbitrary JSON configuration that is available on the prompt.
                 Use this to track LLM parameters, function definitions, or any
@@ -422,7 +425,7 @@ export const NewPromptForm: React.FC<NewPromptFormProps> = (props) => {
                   />
                 </FormControl>
                 <div className="space-y-1 leading-none">
-                  <FormLabel>Set the &quot;production&quot; label</FormLabel>
+                  <FormLabel>{t("newPrompt.setProductionLabel")}</FormLabel>
                 </div>
               </div>
             </FormItem>
@@ -434,14 +437,14 @@ export const NewPromptForm: React.FC<NewPromptFormProps> = (props) => {
           name="commitMessage"
           render={({ field }) => (
             <FormItem className="relative">
-              <FormLabel>Commit message</FormLabel>
+              <FormLabel>{t("newPrompt.commitMessage")}</FormLabel>
               <FormDescription>
                 Provide information about the changes made in this version.
                 Helps maintain a clear history of prompt iterations.
               </FormDescription>
               <FormControl>
                 <Textarea
-                  placeholder="Add commit message..."
+                  placeholder={t("newPrompt.commitMessagePlaceholder")}
                   {...field}
                   className="rounded-md border text-sm focus:ring-0 focus:outline-hidden focus-visible:ring-0 focus-visible:ring-offset-0 active:ring-0"
                 />

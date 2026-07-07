@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import Decimal from "decimal.js";
 
 import { PriceMapSchema } from "@/src/features/models/validation";
@@ -8,6 +9,8 @@ export function PricePreview({
 }: {
   prices: Record<string, number | undefined>;
 }) {
+  const { t } = useTranslation("model");
+
   const parsedPrices = PriceMapSchema.safeParse(prices);
 
   const getMaxDecimalsForPriceGroup = (
@@ -35,7 +38,7 @@ export function PricePreview({
         {parsedPrices.success ? (
           <div className="space-y-2">
             <div className="border-border text-muted-foreground grid grid-cols-[2fr_1fr_1fr_1fr] gap-2 border-b pb-2 text-xs font-medium">
-              <span>Usage Type</span>
+              <span>{t("pricePreview.usageType")}</span>
               <span className="text-right">per unit</span>
               <span className="text-right">per 1K</span>
               <span className="text-right">per 1M</span>

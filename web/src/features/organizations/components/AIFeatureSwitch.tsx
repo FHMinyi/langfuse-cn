@@ -2,6 +2,7 @@ import { Button } from "@/src/components/ui/button";
 import { Switch } from "@/src/components/design-system/Switch/Switch";
 import { api } from "@/src/utils/api";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Dialog,
   DialogBody,
@@ -101,6 +102,8 @@ export default function AIFeatureSwitch() {
   }
 
   function handleConfirm() {
+  const { t } = useTranslation("settings");
+
     if (!organization || !hasAccess) return;
     capture("organization_settings:ai_features_toggle");
     updateAIFeatures.mutate({
@@ -113,7 +116,7 @@ export default function AIFeatureSwitch() {
 
   return (
     <div>
-      <Header title="AI Features" />
+      <Header title={t("org.aiFeatures")} />
       <Card className="mb-4 p-3">
         <div className="flex flex-row items-center justify-between">
           <div className="flex flex-col gap-1">
@@ -144,7 +147,7 @@ export default function AIFeatureSwitch() {
               disabled={!hasAccess}
             />
             {!hasAccess && (
-              <span title="No access">
+              <span title={t("common.noAccess")}>
                 <LockIcon className="text-muted absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2 transform" />
               </span>
             )}
@@ -168,7 +171,7 @@ export default function AIFeatureSwitch() {
                 disabled={!hasAccess || updateAITelemetry.isPending}
               />
               {!hasAccess && (
-                <span title="No access">
+                <span title={t("common.noAccess")}>
                   <LockIcon className="text-muted absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2 transform" />
                 </span>
               )}
@@ -187,7 +190,7 @@ export default function AIFeatureSwitch() {
       >
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Confirm AI Features Change</DialogTitle>
+            <DialogTitle>{t("org.confirmAiChange")}</DialogTitle>
           </DialogHeader>
           <DialogBody>
             <span className="text-sm">

@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import {
   HoverCard,
   HoverCardContent,
@@ -47,13 +48,13 @@ export const RoleSelectItem = ({
           ) : (
             <>
               <div className="font-bold">Role: {formatRole(role)}</div>
-              <p className="mt-2 text-xs font-semibold">Organization Scopes</p>
+              <p className="mt-2 text-xs font-semibold">{t("rbac.orgScopes")}</p>
               <ul className="list-inside list-disc text-xs">{orgScopes}</ul>
-              <p className="mt-2 text-xs font-semibold">Project Scopes</p>
+              <p className="mt-2 text-xs font-semibold">{t("rbac.projectScopes")}</p>
               <ul className="list-inside list-disc text-xs">{projectScopes}</ul>
               <p className="mt-2 border-t pt-2 text-xs">
                 Note:{" "}
-                <span className="text-muted-foreground">Muted scopes</span> are
+                <span className="text-muted-foreground">{t("rbac.mutedScopes")}</span> are
                 inherited from lower role.
               </p>
             </>
@@ -79,6 +80,8 @@ const reduceScopesToListItems = (
       {Object.entries(
         accessRights[role].reduce(
           (acc, scope) => {
+  const { t } = useTranslation("settings");
+
             const [resource, action] = scope.split(":");
             if (!acc[resource]) {
               acc[resource] = [];

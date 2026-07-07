@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import Link from "next/link";
 import {
   Dialog,
@@ -29,6 +30,8 @@ type PromptSelectionDialogProps = {
 };
 
 export function PromptSelectionDialog({
+  const { t } = useTranslation("prompt");
+
   isOpen,
   onClose,
   onSelect,
@@ -102,7 +105,7 @@ export function PromptSelectionDialog({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Add inline prompt reference</DialogTitle>
+          <DialogTitle>{t("selection.addInlineRef")}</DialogTitle>
         </DialogHeader>
         <DialogBody>
           <div className="flex flex-col gap-4">
@@ -113,7 +116,7 @@ export function PromptSelectionDialog({
             </p>
 
             <div className="flex flex-col gap-2">
-              <Label htmlFor="prompt-name">Prompt name</Label>
+              <Label htmlFor="prompt-name">{t("selection.promptName")}</Label>
               <Select
                 value={selectedPromptName}
                 onValueChange={(value) => {
@@ -122,7 +125,7 @@ export function PromptSelectionDialog({
                 }}
               >
                 <SelectTrigger id="prompt-name">
-                  <SelectValue placeholder="Select a text prompt" />
+                  <SelectValue placeholder={t("selection.selectTextPrompt")} />
                 </SelectTrigger>
                 <SelectContent>
                   {promptOptions?.map((prompt) => (
@@ -139,7 +142,7 @@ export function PromptSelectionDialog({
 
             {selectedPromptName && (
               <div className="flex flex-col gap-2">
-                <Label htmlFor="selection-type">Reference by</Label>
+                <Label htmlFor="selection-type">{t("selection.referenceBy")}</Label>
                 <Select
                   value={selectionType}
                   onValueChange={(value: "version" | "label") => {
@@ -148,11 +151,11 @@ export function PromptSelectionDialog({
                   }}
                 >
                   <SelectTrigger id="selection-type">
-                    <SelectValue placeholder="Select link type" />
+                    <SelectValue placeholder={t("selection.selectLinkType")} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="label">Label</SelectItem>
-                    <SelectItem value="version">Version</SelectItem>
+                    <SelectItem value="label">{t("selection.label")}</SelectItem>
+                    <SelectItem value="version">{t("selection.version")}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -212,7 +215,7 @@ export function PromptSelectionDialog({
 
           {selectedTag && (
             <div className="space-y-2">
-              <Label>Tag preview</Label>
+              <Label>{t("selection.tagPreview")}</Label>
               <div className="relative">
                 <div className="bg-muted rounded-md border p-3 pr-10 font-mono text-xs">
                   {selectedTag}

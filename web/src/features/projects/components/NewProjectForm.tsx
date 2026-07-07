@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { Button } from "@/src/components/ui/button";
 import type * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -62,6 +63,8 @@ export const NewProjectForm = ({
         data-testid="new-project-form"
         onKeyDown={(e) => {
           if ((e.metaKey || e.ctrlKey) && e.key === "Enter") {
+  const { t } = useTranslation("settings");
+
             e.preventDefault();
             form.handleSubmit(onSubmit)();
           }
@@ -72,7 +75,7 @@ export const NewProjectForm = ({
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Project name</FormLabel>
+              <FormLabel>{t("project.nameLabel")}</FormLabel>
               <FormControl>
                 <Input
                   placeholder="my-llm-project"

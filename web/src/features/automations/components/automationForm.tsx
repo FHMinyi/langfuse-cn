@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import {
   Card,
   CardContent,
@@ -186,6 +187,8 @@ const formSchema = z
       data.eventSource === TriggerEventSource.Prompt &&
       data.eventAction.length === 0
     ) {
+  const { t } = useTranslation("workflow");
+
       ctx.addIssue({
         code: "custom",
         path: ["eventAction"],
@@ -213,7 +216,7 @@ const EventSourceField = ({
       name="eventSource"
       render={({ field }) => (
         <FormItem>
-          <FormLabel>Event Source</FormLabel>
+          <FormLabel>{t("automation.form.eventSource")}</FormLabel>
           <Select
             onValueChange={(value) =>
               onSourceChange(value as TriggerEventSource)
@@ -223,7 +226,7 @@ const EventSourceField = ({
           >
             <FormControl>
               <SelectTrigger>
-                <SelectValue placeholder="Select an event source" />
+                <SelectValue placeholder={t("automation.form.selectEventSource")} />
               </SelectTrigger>
             </FormControl>
             <SelectContent>
@@ -263,10 +266,10 @@ const PromptTriggerFields = ({
       name="eventAction"
       render={({ field }) => (
         <FormItem>
-          <FormLabel>Event Action</FormLabel>
+          <FormLabel>{t("automation.form.eventAction")}</FormLabel>
           <FormControl>
             <MultiSelect
-              title="Event Actions"
+              title={t("automation.form.eventActionsTitle")}
               label="Actions"
               values={field.value}
               onValueChange={field.onChange}
@@ -302,7 +305,7 @@ const PromptTriggerFields = ({
       name="filter"
       render={({ field }) => (
         <FormItem>
-          <FormLabel>Filter</FormLabel>
+          <FormLabel>{t("automation.form.filter")}</FormLabel>
           <FormControl>
             <InlineFilterBuilder
               columns={webhookActionFilterOptions()}
@@ -325,7 +328,7 @@ const PromptTriggerFields = ({
 const MonitorTriggerFields = ({ projectId }: { projectId: string }) => (
   <Alert>
     <Info className="h-4 w-4" />
-    <AlertTitle>How Monitors Connect</AlertTitle>
+    <AlertTitle>{t("automation.form.howMonitorsConnect")}</AlertTitle>
     <AlertDescription>
       Add this automation to a monitor from the{" "}
       <Link
@@ -629,7 +632,7 @@ export const AutomationForm = ({
                   <FormItem>
                     <FormControl>
                       <Input
-                        placeholder="Automation name"
+                        placeholder={t("automation.form.namePlaceholder")}
                         {...field}
                         autoFocus={!automation}
                         disabled={!hasAccess || !isEditing}
@@ -665,7 +668,7 @@ export const AutomationForm = ({
 
         <Card>
           <CardHeader>
-            <CardTitle>Trigger</CardTitle>
+            <CardTitle>{t("automation.form.trigger")}</CardTitle>
             <CardDescription>
               Configure when this automation should run.
             </CardDescription>
@@ -689,7 +692,7 @@ export const AutomationForm = ({
 
         <Card>
           <CardHeader>
-            <CardTitle>Action</CardTitle>
+            <CardTitle>{t("automation.form.action")}</CardTitle>
             <CardDescription>
               Configure what happens when the trigger fires.
             </CardDescription>
@@ -700,7 +703,7 @@ export const AutomationForm = ({
               name="actionType"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Action Type</FormLabel>
+                  <FormLabel>{t("automation.form.actionType")}</FormLabel>
                   <Select
                     onValueChange={handleActionTypeChange}
                     value={field.value}
@@ -708,7 +711,7 @@ export const AutomationForm = ({
                   >
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Select an action type" />
+                        <SelectValue placeholder={t("automation.form.selectActionType")} />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>

@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import {
   Accordion,
   AccordionContent,
@@ -89,6 +90,8 @@ export function DatasetVersionHistoryPanel({
   };
 
   const openDocumentation = () => {
+  const { t } = useTranslation("dataset");
+
     window.open(
       "https://langfuse.com/docs/datasets/dataset-versioning",
       "_blank",
@@ -110,7 +113,7 @@ export function DatasetVersionHistoryPanel({
       <div className="flex h-full items-center justify-center p-4">
         <div className="text-muted-foreground text-center text-sm">
           <Clock className="mx-auto mb-2 h-8 w-8" />
-          <p>No versions found</p>
+          <p>{t("versionHistory.noVersions")}</p>
         </div>
       </div>
     );
@@ -156,7 +159,7 @@ export function DatasetVersionHistoryPanel({
               {isItemVersion && (
                 <span
                   className="bg-primary h-1.5 w-1.5 shrink-0 rounded-full"
-                  title="Item modified in this version"
+                  title={t("versionHistory.itemModified")}
                 />
               )}
               <span
@@ -190,7 +193,7 @@ export function DatasetVersionHistoryPanel({
               onClick={(e) => e.stopPropagation()}
             >
               <MoreVertical className="h-4 w-4" />
-              <span className="sr-only">Version actions</span>
+              <span className="sr-only">{t("versionHistory.versionActions")}</span>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
@@ -222,7 +225,7 @@ export function DatasetVersionHistoryPanel({
     <div className="flex h-full w-full flex-col">
       {/* Header */}
       <div className="border-b p-4">
-        <h3 className="text-lg font-semibold">Version History</h3>
+        <h3 className="text-lg font-semibold">{t("versionHistory.title")}</h3>
         <p className="text-muted-foreground text-sm">
           {versions.length} version{versions.length !== 1 ? "s" : ""}
         </p>

@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { PagedSettingsContainer } from "@/src/components/PagedSettingsContainer";
 import Header from "@/src/components/layouts/header";
 import { MembershipInvitesPage } from "@/src/features/rbac/components/MembershipInvitesPage";
@@ -29,6 +30,7 @@ type OrganizationSettingsPage = {
 } & ({ content: React.ReactNode } | { href: string });
 
 export function useOrganizationSettingsPages(): OrganizationSettingsPage[] {
+  const { t } = useTranslation("pages");
   const { organization } = useQueryProjectOrOrganization();
   const showBillingSettings = useHasEntitlement("cloud-billing");
   const hasAdminApiEntitlement = useHasEntitlement("admin-api");
@@ -74,9 +76,9 @@ export const getOrganizationSettingsPages = ({
       <div className="flex flex-col gap-6">
         <RenameOrganization />
         <div>
-          <Header title="Debug Information" />
+          <Header title={t("settings.debugInfo")} />
           <JSONView
-            title="Metadata"
+            title={t("settings.metadata")}
             json={{
               name: organization.name,
               id: organization.id,
@@ -118,7 +120,7 @@ export const getOrganizationSettingsPages = ({
     content: (
       <div className="flex flex-col gap-6">
         <div>
-          <Header title="Organization Members" />
+          <Header title={t("settings.orgMembers")} />
           <MembersTable orgId={organization.id} />
         </div>
         <div>

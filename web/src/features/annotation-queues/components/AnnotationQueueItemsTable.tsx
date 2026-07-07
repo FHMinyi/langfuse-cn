@@ -18,6 +18,7 @@ import {
 import { type RouterOutput } from "@/src/utils/types";
 import { type RowSelectionState } from "@tanstack/react-table";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -92,7 +93,7 @@ const QueueItemTableMultiSelectAction = ({
       >
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>Delete queue items</DialogTitle>
+            <DialogTitle>{t("queue.deleteItemsTitle")}</DialogTitle>
             <DialogDescription>
               This action cannot be undone and removes the selected annotation
               queue item(s), but
@@ -260,6 +261,8 @@ export function AnnotationQueueItemsTable({
         if (!rowData.source) return null;
 
         switch (rowData.objectType) {
+  const { t } = useTranslation("workflow");
+
           case "OBSERVATION":
             return (
               <TableLink

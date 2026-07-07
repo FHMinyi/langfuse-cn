@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import type { DatasetItemDomain } from "@langfuse/shared";
 import {
   stringifyDatasetItemData,
@@ -20,6 +21,8 @@ export const DatasetItemViewModeContent = ({
   isLoading,
   dataset,
 }: DatasetItemViewModeContentProps) => {
+  const { t } = useTranslation("dataset");
+
   if (isLoading) {
     return <div className="text-muted-foreground text-sm">Loading...</div>;
   }
@@ -28,7 +31,7 @@ export const DatasetItemViewModeContent = ({
     return (
       <div className="flex flex-col items-center justify-center p-12 text-center">
         <div className="text-muted-foreground">
-          <p className="text-lg font-medium">Dataset item not found</p>
+          <p className="text-lg font-medium">{t("itemView.notFound")}</p>
           <p className="mt-2 text-sm">
             This dataset item does not exist or has been deleted.
           </p>

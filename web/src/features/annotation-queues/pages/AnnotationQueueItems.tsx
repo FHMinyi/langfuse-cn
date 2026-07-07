@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { api } from "@/src/utils/api";
 import { useRouter } from "next/router";
 import { AnnotationQueueItemsTable } from "@/src/features/annotation-queues/components/AnnotationQueueItemsTable";
@@ -21,6 +22,8 @@ import { SubHeaderLabel } from "@/src/components/layouts/header";
 import { getScoreDataTypeIcon } from "@/src/features/scores/lib/scoreColumns";
 
 export default function QueueItems() {
+  const { t } = useTranslation("workflow");
+
   const router = useRouter();
   const projectId = router.query.projectId as string;
   const queueId = router.query.queueId as string;
@@ -55,7 +58,7 @@ export default function QueueItems() {
         actionButtonsRight: !hasWriteAccess ? (
           <Button disabled>
             <Lock className="mr-1 h-4 w-4" />
-            <span className="text-sm">Process queue</span>
+            <span className="text-sm">{t("queue.processQueue")}</span>
           </Button>
         ) : (
           <Button asChild>
@@ -63,7 +66,7 @@ export default function QueueItems() {
               href={`/project/${projectId}/annotation-queues/${queueId}/items`}
             >
               <ClipboardPen className="mr-1 h-4 w-4" />
-              <span className="text-sm">Process queue</span>
+              <span className="text-sm">{t("queue.processQueue")}</span>
             </Link>
           </Button>
         ),
@@ -97,7 +100,7 @@ export default function QueueItems() {
                   </CardDescription>
                 )}
                 <div className="flex flex-col gap-2">
-                  <SubHeaderLabel title="Score Configs" />
+                  <SubHeaderLabel title={t("queue.scoreConfigs")} />
                   <div className="flex flex-wrap gap-2">
                     {queue.data?.scoreConfigs.map((scoreConfig) => (
                       <Badge key={scoreConfig.id} variant="outline">

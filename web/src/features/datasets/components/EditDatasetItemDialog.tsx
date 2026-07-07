@@ -3,6 +3,7 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { type Control, useForm, useWatch } from "react-hook-form";
 import { useEffect, useState, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { Form } from "@/src/components/ui/form";
 import { Button } from "@/src/components/ui/button";
 import {
@@ -122,6 +123,8 @@ export const EditDatasetItemDialog = ({
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
+  const { t } = useTranslation("dataset");
+
     if (!!!datasetItem) return;
     updateDatasetItemMutation.mutate({
       projectId: projectId,
@@ -137,7 +140,7 @@ export const EditDatasetItemDialog = ({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent size="xl">
         <DialogHeader>
-          <DialogTitle>Edit Dataset Item</DialogTitle>
+          <DialogTitle>{t("editItem.title")}</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form

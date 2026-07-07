@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { DeleteButton } from "@/src/components/deleteButton";
 import { api } from "@/src/utils/api";
 
@@ -10,6 +11,8 @@ export const DeleteAnnotationQueueButton = ({
   projectId,
   queueId,
 }: DeleteAnnotationQueueButtonProps) => {
+  const { t } = useTranslation("workflow");
+
   const utils = api.useUtils();
   const deleteMutation = api.annotationQueues.delete.useMutation();
 
@@ -23,7 +26,7 @@ export const DeleteAnnotationQueueButton = ({
       icon
       variant="ghost"
       size="icon-xs"
-      title="Delete"
+      title={t("common.delete")}
       aria-label="delete"
       captureDeleteOpen={() => undefined}
       captureDeleteSuccess={() => undefined}

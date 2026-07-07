@@ -20,6 +20,7 @@ import { useHasOrganizationAccess } from "@/src/features/rbac/utils/checkOrganiz
 import { api } from "@/src/utils/api";
 import { TrashIcon } from "lucide-react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Alert, AlertDescription, AlertTitle } from "@/src/components/ui/alert";
 import startCase from "lodash/startCase";
 import { useLangfuseEnvCode } from "@/src/features/public-api/hooks/useLangfuseEnvCode";
@@ -62,11 +63,13 @@ export function ApiKeyList(props: { entityId: string; scope: ApiKeyScope }) {
     props.scope === "project" ? projectApiKeysQuery : organizationApiKeysQuery;
 
   if (!hasAccess) {
+  const { t } = useTranslation("api");
+
     return (
       <div>
-        <Header title="API Keys" />
+        <Header title={t("apiKey.title")} />
         <Alert>
-          <AlertTitle>Access Denied</AlertTitle>
+          <AlertTitle>{t("common.accessDenied")}</AlertTitle>
           <AlertDescription>
             You do not have permission to view API keys for this {scope}.
           </AlertDescription>
@@ -101,8 +104,8 @@ export function ApiKeyList(props: { entityId: string; scope: ApiKeyScope }) {
                 Created
               </TableHead>
               <TableHead className="text-primary">Note</TableHead>
-              <TableHead className="text-primary">Public Key</TableHead>
-              <TableHead className="text-primary">Secret Key</TableHead>
+              <TableHead className="text-primary">{t("apiKey.publicKey")}</TableHead>
+              <TableHead className="text-primary">{t("apiKey.secretKey")}</TableHead>
               {/* <TableHead className="text-primary">Last used</TableHead> */}
               <TableHead />
             </TableRow>
@@ -239,7 +242,7 @@ function DeleteApiKeyButton(props: {
           <TrashIcon className="h-4 w-4" />
         </Button>
       }
-      title="Delete API key"
+      title={t("apiKey.deleteTitle")}
       description="Are you sure you want to delete this API key? This action cannot be undone."
       confirmLabel="Permanently delete"
       loading={mutDeleteOrgApiKey.isPending || mutDeleteProjectApiKey.isPending}

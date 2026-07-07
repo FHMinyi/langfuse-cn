@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/src/components/ui/button";
 import { useHasProjectAccess } from "@/src/features/rbac/utils/checkProjectAccess";
 import {
@@ -61,6 +62,7 @@ export function UpsertScoreConfigDialog({
   onOpenChange: (open: boolean) => void;
   defaultValues?: CreateConfig | UpdateConfig;
 }) {
+  const { t } = useTranslation("evaluation");
   const [formError, setFormError] = useState<string | null>(null);
   const capture = usePostHogClientCapture();
 
@@ -168,7 +170,7 @@ export function UpsertScoreConfigDialog({
                   name="name"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Name</FormLabel>
+                      <FormLabel>{t("scoreConfig.name")}</FormLabel>
                       <FormControl>
                         <Input
                           {...field}
@@ -187,7 +189,7 @@ export function UpsertScoreConfigDialog({
                   name="dataType"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Data type</FormLabel>
+                      <FormLabel>{t("scoreConfig.dataType")}</FormLabel>
                       <Select
                         disabled={!!id}
                         defaultValue={field.value}
@@ -217,7 +219,7 @@ export function UpsertScoreConfigDialog({
                       >
                         <FormControl>
                           <SelectTrigger>
-                            <SelectValue placeholder="Select a data type" />
+                            <SelectValue placeholder={t("scoreConfig.selectDataType")} />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
@@ -241,7 +243,7 @@ export function UpsertScoreConfigDialog({
                       name="minValue"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Minimum (optional) </FormLabel>
+                          <FormLabel>{t("scoreConfig.minimum")} </FormLabel>
                           <FormControl>
                             <Input
                               {...field}
@@ -265,7 +267,7 @@ export function UpsertScoreConfigDialog({
                       name="maxValue"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Maximum (optional)</FormLabel>
+                          <FormLabel>{t("scoreConfig.maximum")}</FormLabel>
                           <FormControl>
                             <Input
                               {...field}
@@ -306,7 +308,7 @@ export function UpsertScoreConfigDialog({
                                   } label is mapped to an integer value internally.`}
                                 />
                               </FormLabel>
-                              <FormLabel>Label</FormLabel>
+                              <FormLabel>{t("scoreConfig.label")}</FormLabel>
                             </div>
                           )}
                           {fields.map((category, index) => (
@@ -413,11 +415,11 @@ export function UpsertScoreConfigDialog({
                   render={({ field }) => (
                     <>
                       <FormItem>
-                        <FormLabel>Description (optional)</FormLabel>
+                        <FormLabel>{t("scoreConfig.description")}</FormLabel>
                         <FormControl>
                           <Textarea
                             {...field}
-                            placeholder="Provide an optional description of the score config..."
+                            placeholder={t("scoreConfig.descriptionPlaceholder")}
                             value={field.value ?? undefined}
                           />
                         </FormControl>

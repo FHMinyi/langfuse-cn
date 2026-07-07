@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { Button } from "@/src/components/ui/button";
 import { useHasProjectAccess } from "@/src/features/rbac/utils/checkProjectAccess";
 import { UpsertModelFormDialog } from "@/src/features/models/components/UpsertModelFormDialog";
@@ -10,6 +11,8 @@ export const EditModelButton = ({
   modelData: GetModelResult;
   projectId: string;
 }) => {
+  const { t } = useTranslation("model");
+
   const hasAccess = useHasProjectAccess({
     projectId,
     scope: "models:CUD",
@@ -20,7 +23,7 @@ export const EditModelButton = ({
       <Button
         variant="outline"
         disabled={!hasAccess}
-        title="Edit model"
+        title={t("common.editModel")}
         className="flex items-center"
       >
         <span>Edit</span>

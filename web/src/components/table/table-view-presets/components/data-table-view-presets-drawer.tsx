@@ -55,6 +55,7 @@ import {
   type TableViewPresetState,
 } from "@langfuse/shared";
 import { useCallback, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   DropdownMenuItem,
   DropdownMenuTrigger,
@@ -485,13 +486,13 @@ export function TableViewPresetsDrawer({
 
             <Command className="h-fit rounded-none border-none pb-1 shadow-none">
               <CommandInput
-                placeholder="Search views..."
+                placeholder={t("viewPresets.searchViews")}
                 value={searchQuery}
                 onValueChange={setSearchQueryLocal}
                 className="h-9 border-none focus:ring-0"
               />
               <CommandList className="max-h-[calc(100vh-150px)]">
-                <CommandEmpty>No views found</CommandEmpty>
+                <CommandEmpty>{t("viewPresets.noViewsFound")}</CommandEmpty>
                 <CommandGroup className="pb-0">
                   {/* System Preset: Langfuse Default - hidden when page-specific presets exist */}
                   {!systemFilterPresets?.length && (
@@ -755,6 +756,8 @@ export function TableViewPresetsDrawer({
                                 onClick={(e) => {
                                   e.stopPropagation();
                                   if (isUserDefault) {
+  const { t } = useTranslation("components");
+
                                     clearViewDefault("user");
                                   } else {
                                     setViewAsDefault(view.id, "user");
@@ -764,9 +767,9 @@ export function TableViewPresetsDrawer({
                                 disabled={isSettingDefault}
                               >
                                 {isUserDefault ? (
-                                  <>Remove as my default</>
+                                  <>{t("viewPresets.removeDefault")}</>
                                 ) : (
-                                  <>Set as my default</>
+                                  <>{t("viewPresets.setDefault")}</>
                                 )}
                               </DropdownMenuItem>
                               {/* Set as project default - requires write access */}
@@ -783,9 +786,9 @@ export function TableViewPresetsDrawer({
                                 disabled={!hasWriteAccess || isSettingDefault}
                               >
                                 {isProjectDefault ? (
-                                  <>Remove as project default</>
+                                  <>{t("viewPresets.removeProjectDefault")}</>
                                 ) : (
-                                  <>Set as project default</>
+                                  <>{t("viewPresets.setProjectDefault")}</>
                                 )}
                                 {!hasWriteAccess && (
                                   <Lock className="ml-auto h-4 w-4" />
@@ -885,7 +888,7 @@ export function TableViewPresetsDrawer({
       >
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Save Current Table View</DialogTitle>
+            <DialogTitle>{t("viewPresets.saveTitle")}</DialogTitle>
           </DialogHeader>
           <Form {...form}>
             <form
@@ -898,7 +901,7 @@ export function TableViewPresetsDrawer({
                   name="name"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>View name</FormLabel>
+                      <FormLabel>{t("viewPresets.viewName")}</FormLabel>
                       <FormControl>
                         <Input {...field} />
                       </FormControl>
@@ -908,7 +911,7 @@ export function TableViewPresetsDrawer({
                 />
 
                 <div className="text-muted-foreground mt-4 text-sm">
-                  <p>This will save the current:</p>
+                  <p>{t("viewPresets.thisWillSave")}</p>
                   <ul className="mt-2 list-disc pl-5">
                     <li>
                       Column arrangement ({currentState.columnOrder.length}{" "}
@@ -919,7 +922,7 @@ export function TableViewPresetsDrawer({
                       Sort order ({formatOrderBy(currentState.orderBy)}{" "}
                       criteria)
                     </li>
-                    {currentState.searchQuery && <li>Search term</li>}
+                    {currentState.searchQuery && <li>{t("viewPresets.searchTerm")}</li>}
                   </ul>
                 </div>
               </DialogBody>

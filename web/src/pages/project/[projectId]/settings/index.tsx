@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import Header from "@/src/components/layouts/header";
 import { ApiKeyList } from "@/src/features/public-api/components/ApiKeyList";
 import { DeleteProjectButton } from "@/src/features/projects/components/DeleteProjectButton";
@@ -42,6 +43,7 @@ type ProjectSettingsPage = {
 } & ({ content: React.ReactNode } | { href: string });
 
 export function useProjectSettingsPages(): ProjectSettingsPage[] {
+  const { t } = useTranslation("pages");
   const router = useRouter();
   const { project, organization } = useQueryProject();
   const showBillingSettings = useHasEntitlement("cloud-billing");
@@ -88,9 +90,9 @@ export const getProjectSettingsPages = ({
         <RenameProject />
         {showRetentionSettings && <ConfigureRetention />}
         <div>
-          <Header title="Debug Information" />
+          <Header title={t("settings.debugInfo")} />
           <JSONView
-            title="Metadata"
+            title={t("settings.metadata")}
             json={{
               project: {
                 name: project.name,
@@ -198,7 +200,7 @@ export const getProjectSettingsPages = ({
     cmdKKeywords: ["invite", "user"],
     content: (
       <div>
-        <Header title="Project Members" />
+        <Header title={t("settings.projectMembers")} />
         <MembersTable
           orgId={organization.id}
           project={{ id: project.id, name: project.name }}
@@ -289,7 +291,7 @@ const Integrations = (props: { projectId: string }) => {
 
   return (
     <div>
-      <Header title="Integrations" />
+      <Header title={t("settings.integrations")} />
       <div className="space-y-6">
         <Card className="p-3">
           {}
@@ -343,7 +345,7 @@ const Integrations = (props: { projectId: string }) => {
         </Card>
 
         <Card className="p-3">
-          <span className="font-semibold">Blob Storage</span>
+          <span className="font-semibold">{t("settings.blobStorage")}</span>
           <p className="text-primary mb-4 text-sm">
             Configure scheduled exports of your trace data to S3 compatible
             storages or Azure Blob Storage. Set up a scheduled export to your

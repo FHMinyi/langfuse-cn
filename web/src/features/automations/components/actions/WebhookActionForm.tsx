@@ -27,6 +27,7 @@ import {
 } from "@langfuse/shared";
 import { api } from "@/src/utils/api";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Dialog,
   DialogBody,
@@ -115,6 +116,8 @@ export const WebhookActionForm: React.FC<WebhookActionFormProps> = ({
 
   // Function to toggle secret status of a header
   const toggleHeaderSecret = (index: number) => {
+  const { t } = useTranslation("workflow");
+
     const currentValue = form.watch(`webhook.headers.${index}.isSecret`);
     form.setValue(`webhook.headers.${index}.isSecret`, !currentValue);
   };
@@ -151,7 +154,7 @@ export const WebhookActionForm: React.FC<WebhookActionFormProps> = ({
         name="webhook.apiVersion.prompt"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>API Version</FormLabel>
+            <FormLabel>{t("webhook.apiVersion")}</FormLabel>
             <Select
               onValueChange={field.onChange}
               value={field.value}
@@ -159,7 +162,7 @@ export const WebhookActionForm: React.FC<WebhookActionFormProps> = ({
             >
               <FormControl>
                 <SelectTrigger>
-                  <SelectValue placeholder="Select API version" />
+                  <SelectValue placeholder={t("webhook.selectApiVersion")} />
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
@@ -176,7 +179,7 @@ export const WebhookActionForm: React.FC<WebhookActionFormProps> = ({
       />
 
       <div>
-        <FormLabel>Headers</FormLabel>
+        <FormLabel>{t("webhook.headers")}</FormLabel>
 
         {/* Default Headers Section */}
         <div className="mb-4">
@@ -238,7 +241,7 @@ export const WebhookActionForm: React.FC<WebhookActionFormProps> = ({
                   <FormItem>
                     <FormControl>
                       <Input
-                        placeholder="Header Name"
+                        placeholder={t("webhook.headerNamePlaceholder")}
                         {...field}
                         disabled={disabled}
                       />
@@ -309,7 +312,7 @@ export const WebhookActionForm: React.FC<WebhookActionFormProps> = ({
 
       {/* Webhook Secret Section */}
       <div>
-        <FormLabel>Webhook Secret</FormLabel>
+        <FormLabel>{t("webhook.secretLabel")}</FormLabel>
         <FormDescription className="mb-2">
           Use this secret to verify webhook signatures for security. The secret
           is automatically included in the x-langfuse-signature header.
@@ -407,7 +410,7 @@ export const RegenerateWebhookSecretButton = ({
           </Button>
         </PopoverTrigger>
         <PopoverContent>
-          <h2 className="mb-3 font-semibold">Please confirm</h2>
+          <h2 className="mb-3 font-semibold">{t("common.pleaseConfirm")}</h2>
           <p className="mb-3 max-w-sm text-sm">
             This action will invalidate the current webhook secret and generate
             a new one. Any existing integrations using the old secret will stop
@@ -441,7 +444,7 @@ export const RegenerateWebhookSecretButton = ({
       >
         <DialogContent className="max-w-4xl">
           <DialogHeader>
-            <DialogTitle>Webhook Secret Regenerated</DialogTitle>
+            <DialogTitle>{t("automation.secretRegenerated")}</DialogTitle>
             <DialogDescription>
               Your webhook secret has been regenerated. Please copy the new
               secret below - it will only be shown once.

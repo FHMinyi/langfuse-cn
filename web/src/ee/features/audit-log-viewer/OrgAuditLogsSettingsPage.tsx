@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import Header from "@/src/components/layouts/header";
 import { Alert, AlertDescription, AlertTitle } from "@/src/components/ui/alert";
 import { AuditLogsTable } from "@/src/ee/features/audit-log-viewer/AuditLogsTable";
@@ -5,6 +6,8 @@ import { useHasEntitlement } from "@/src/features/entitlements/hooks";
 import { useHasOrganizationAccess } from "@/src/features/rbac/utils/checkOrganizationAccess";
 
 export function OrgAuditLogsSettingsPage(props: { orgId: string }) {
+  const { t } = useTranslation("ee");
+
   const hasAccess = useHasOrganizationAccess({
     organizationId: props.orgId,
     scope: "auditLogs:read",
@@ -18,7 +21,7 @@ export function OrgAuditLogsSettingsPage(props: { orgId: string }) {
     </p>
   ) : !hasAccess ? (
     <Alert>
-      <AlertTitle>Access Denied</AlertTitle>
+      <AlertTitle>{t("common.accessDenied")}</AlertTitle>
       <AlertDescription>
         Contact your organization administrator to request access.
       </AlertDescription>
@@ -29,7 +32,7 @@ export function OrgAuditLogsSettingsPage(props: { orgId: string }) {
 
   return (
     <>
-      <Header title="Organization Audit Logs" />
+      <Header title={t("audit.title")} />
       <p className="text-muted-foreground mb-2 text-sm">
         Track who changed what in your organization and when. Monitor
         organization settings, project creation/deletion, and membership changes

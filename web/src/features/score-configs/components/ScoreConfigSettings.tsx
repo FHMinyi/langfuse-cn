@@ -1,9 +1,11 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import Header from "@/src/components/layouts/header";
 import { useHasProjectAccess } from "@/src/features/rbac/utils/checkProjectAccess";
 import { ScoreConfigsTable } from "@/src/components/table/use-cases/score-configs";
 
 export function ScoreConfigSettings({ projectId }: { projectId: string }) {
+  const { t } = useTranslation("evaluation");
   const hasReadAccess = useHasProjectAccess({
     projectId: projectId,
     scope: "scoreConfigs:read",
@@ -13,7 +15,7 @@ export function ScoreConfigSettings({ projectId }: { projectId: string }) {
 
   return (
     <div id="score-configs">
-      <Header title="Score Configs" />
+      <Header title={t("scoreConfig.settingsTitle")} />
       <p className="mb-2 text-sm">
         Score configs define which scores are available for{" "}
         <a

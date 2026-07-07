@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { Card } from "@/src/components/ui/card";
 
 export const NotFoundCard = ({
@@ -7,6 +8,8 @@ export const NotFoundCard = ({
   itemType: "trace" | "observation";
   singleLine?: boolean;
 }) => {
+  const { t } = useTranslation("dataset");
+
   if (singleLine) {
     return (
       <Card className="flex h-full w-full items-center justify-start overflow-hidden rounded-sm px-2">
@@ -22,7 +25,7 @@ export const NotFoundCard = ({
 
   return (
     <Card className="flex h-full w-full flex-col items-center justify-center overflow-hidden rounded-sm p-3">
-      <h2 className="mb-1.5 text-sm font-semibold">Not found</h2>
+      <h2 className="mb-1.5 text-sm font-semibold">{t("common.notFound")}</h2>
       <p className="text-muted-foreground max-w-xs text-center text-xs">
         The {itemType} is either still being processed or has been deleted.
       </p>

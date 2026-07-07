@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import {
   type FormatMetricOptions,
   type MetricFormatterFunction,
@@ -76,6 +77,7 @@ const ChartComponent = ({
   metricFormatter?: MetricFormatterFunction;
   thresholds?: ChartThreshold[];
 }) => {
+  const { t } = useTranslation("dashboard");
   const [forceRender, setForceRender] = useState(overrideWarning);
   const shouldWarn = data.length > 2000 && !forceRender;
 
@@ -237,7 +239,7 @@ const ChartComponent = ({
   const renderWarning = () => (
     <div className="flex flex-col items-center justify-center p-6 text-center">
       <AlertCircle className="mb-4 h-12 w-12" />
-      <h3 className="mb-2 text-lg font-semibold">Large Dataset Warning</h3>
+      <h3 className="mb-2 text-lg font-semibold">{t("chart.largeDatasetWarning")}</h3>
       <p className="text-muted-foreground mb-6 text-sm">
         This chart has more than 2,000 unique data points. Rendering it may be
         slow or may crash your browser. Try to reduce the number of dimensions

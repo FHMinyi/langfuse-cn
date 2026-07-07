@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { ChevronDownIcon } from "lucide-react";
 
 import { Button } from "@/src/components/ui/button";
@@ -17,6 +18,8 @@ import { PriceUnit } from "@/src/features/models/validation";
 import { usePriceUnitMultiplier } from "@/src/features/models/hooks/usePriceUnitMultiplier";
 
 export const PriceUnitSelector = () => {
+  const { t } = useTranslation("model");
+
   const { priceUnit, setPriceUnit } = usePriceUnitMultiplier();
 
   return (
@@ -32,7 +35,7 @@ export const PriceUnitSelector = () => {
           onValueChange={(value: PriceUnit) => setPriceUnit(value)}
         >
           <SelectTrigger className="w-full">
-            <SelectValue placeholder="Select unit" />
+            <SelectValue placeholder={t("priceUnit.select")} />
           </SelectTrigger>
           <SelectContent>
             {Object.values(PriceUnit).map((unit) => (

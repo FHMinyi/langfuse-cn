@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/src/components/ui/button";
 import {
   Dialog,
@@ -40,6 +41,8 @@ export const BillingDiscountCodeButton = ({
       ]);
     },
     onError: (err) => {
+  const { t } = useTranslation("ee");
+
       setProcessing(false);
       toast.error(err.message || "Failed to apply promotion code");
     },
@@ -56,14 +59,14 @@ export const BillingDiscountCodeButton = ({
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className="text-lg">Add Promotion Code</DialogTitle>
+          <DialogTitle className="text-lg">{t("billing.addPromoCode")}</DialogTitle>
         </DialogHeader>
         <DialogBody className="space-y-3 text-sm">
-          <p>Enter a valid promotion code to apply it to your subscription.</p>
+          <p>{t("billing.promoDescription")}</p>
           <Input
             value={code}
             onChange={(e) => setCode(e.target.value)}
-            placeholder="PROMO2025"
+            placeholder={t("billing.promoPlaceholder")}
             disabled={processing}
           />
         </DialogBody>

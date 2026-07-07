@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useRouter } from "next/router";
 import { api } from "@/src/utils/api";
 import {
@@ -48,6 +49,7 @@ export function SelectWidgetDialog({
   onSelectWidget,
   dashboardId,
 }: SelectWidgetDialogProps) {
+  const { t } = useTranslation("dashboard");
   const router = useRouter();
   const [selectedWidgetId, setSelectedWidgetId] = useState<string | null>(null);
 
@@ -85,13 +87,13 @@ export function SelectWidgetDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[800px]">
         <DialogHeader>
-          <DialogTitle>Select widget to add</DialogTitle>
+          <DialogTitle>{t("selectWidgetDialog.title")}</DialogTitle>
         </DialogHeader>
 
         <DialogBody>
           <div className="max-h-[400px] overflow-y-auto">
             {widgets.isPending ? (
-              <div className="py-8 text-center">Loading widgets...</div>
+              <div className="py-8 text-center">{t("selectWidgetDialog.loading")}</div>
             ) : widgets.isError ? (
               <div className="text-destructive py-8 text-center">
                 Error: {widgets.error.message}
@@ -104,10 +106,10 @@ export function SelectWidgetDialog({
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Name</TableHead>
+                    <TableHead>{t("selectWidgetDialog.name")}</TableHead>
                     <TableHead>Description</TableHead>
-                    <TableHead>View Type</TableHead>
-                    <TableHead>Chart Type</TableHead>
+                    <TableHead>{t("selectWidgetDialog.viewType")}</TableHead>
+                    <TableHead>{t("selectWidgetDialog.chartType")}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>

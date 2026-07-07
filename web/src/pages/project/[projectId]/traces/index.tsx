@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import { useTranslation } from "react-i18next";
 import TracesTable from "@/src/components/table/use-cases/traces";
 import Page from "@/src/components/layouts/page";
 import { api } from "@/src/utils/api";
@@ -14,6 +15,7 @@ import { TableTimeRangeHeaderPicker } from "@/src/components/table/table-time-ra
 
 export default function Traces() {
   const router = useRouter();
+  const { t } = useTranslation("tracing");
   const projectId = router.query.projectId as string;
   const { isBetaEnabled, isInitializing } = useV4Beta();
   const { project } = useQueryProject();
@@ -42,10 +44,9 @@ export default function Traces() {
     return (
       <Page
         headerProps={{
-          title: "Tracing",
+          title: t("traces.title"),
           help: {
-            description:
-              "A trace represents a single function/api invocation. Traces contain observations. See [docs](https://langfuse.com/docs/observability/data-model) to learn more.",
+            description: t("traces.help.description"),
             href: "https://langfuse.com/docs/observability/data-model",
           },
         }}
@@ -59,12 +60,11 @@ export default function Traces() {
   return (
     <Page
       headerProps={{
-        title: "Tracing",
+        title: t("traces.title"),
         help: {
           description: (
             <>
-              A trace represents a single function/api invocation. Traces
-              contain observations. See{" "}
+              {t("traces.help.descriptionHtml")}
               <a
                 href="https://langfuse.com/docs/observability/data-model"
                 target="_blank"
@@ -72,9 +72,9 @@ export default function Traces() {
                 className="decoration-primary/30 hover:decoration-primary underline"
                 onClick={(e) => e.stopPropagation()}
               >
-                docs
-              </a>{" "}
-              to learn more.
+                {t("traces.help.docsLink")}
+              </a>
+              {t("traces.help.descriptionSuffix")}
             </>
           ),
           href: "https://langfuse.com/docs/observability/data-model",

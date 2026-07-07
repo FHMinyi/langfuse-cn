@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useRouter } from "next/router";
 import { api } from "@/src/utils/api";
 import Page from "@/src/components/layouts/page";
@@ -11,6 +12,8 @@ import { showErrorToast } from "@/src/features/notifications/showErrorToast";
 import { useHasProjectAccess } from "@/src/features/rbac/utils/checkProjectAccess";
 
 export default function NewDashboard() {
+  const { t } = useTranslation("pages");
+
   const router = useRouter();
   const { projectId } = router.query as { projectId: string };
 
@@ -85,14 +88,14 @@ export default function NewDashboard() {
     >
       <div className="mx-auto my-8 max-w-xl space-y-6">
         <div className="space-y-2">
-          <Label htmlFor="dashboard-name">Dashboard Name</Label>
+          <Label htmlFor="dashboard-name">{t("dashboardNew.name")}</Label>
           <Input
             id="dashboard-name"
             value={dashboardName}
             onChange={(e) => {
               setDashboardName(e.target.value);
             }}
-            placeholder="Enter dashboard name"
+            placeholder={t("dashboardNew.namePlaceholder")}
             required
           />
         </div>
@@ -105,7 +108,7 @@ export default function NewDashboard() {
             onChange={(e) => {
               setDashboardDescription(e.target.value);
             }}
-            placeholder="Describe the purpose of this dashboard. Optional, but very helpful."
+            placeholder={t("dashboardNew.descriptionPlaceholder")}
             rows={4}
           />
         </div>

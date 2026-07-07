@@ -8,6 +8,7 @@ import {
 import { api } from "@/src/utils/api";
 import { cn } from "@/src/utils/tailwind";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   DropdownMenuItem,
   DropdownMenuSeparator,
@@ -50,6 +51,8 @@ export const NewDatasetItemFromExistingObject = (props: {
   const normalizePrefillValue = (
     value: Prisma.JsonValue | null,
   ): Prisma.JsonValue | null => {
+  const { t } = useTranslation("dataset");
+
     if (value === null || value === undefined) {
       return null;
     }
@@ -95,7 +98,7 @@ export const NewDatasetItemFromExistingObject = (props: {
           variant="outline"
           size={buttonSize === "sm" ? "icon-xs" : "icon"}
           hasAccess={hasAccess}
-          title="Copy item"
+          title={t("newItem.copyTitle")}
           aria-label="Copy item"
           onClick={() => {
             setIsFormOpen(true);
@@ -176,7 +179,7 @@ export const NewDatasetItemFromExistingObject = (props: {
       <Dialog open={hasAccess && isFormOpen} onOpenChange={setIsFormOpen}>
         <DialogContent className="h-[calc(100vh-5rem)] max-h-none w-[calc(100vw-5rem)] max-w-none">
           <DialogHeader>
-            <DialogTitle>Add item to datasets</DialogTitle>
+            <DialogTitle>{t("newItem.addToDatasets")}</DialogTitle>
           </DialogHeader>
           {isFormOpen && (
             <NewDatasetItemForm

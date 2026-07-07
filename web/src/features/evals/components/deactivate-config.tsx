@@ -3,6 +3,7 @@ import { usePostHogClientCapture } from "@/src/features/posthog-analytics/usePos
 import { useHasProjectAccess } from "@/src/features/rbac/utils/checkProjectAccess";
 import { api, type RouterOutputs } from "@/src/utils/api";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Popover,
   PopoverContent,
@@ -32,6 +33,8 @@ export function DeactivateEvalConfig({
 
   const onClick = () => {
     if (!projectId) {
+  const { t } = useTranslation("evaluation");
+
       console.error("Project ID is missing");
       return;
     }
@@ -69,7 +72,7 @@ export function DeactivateEvalConfig({
         </div>
       </PopoverTrigger>
       <PopoverContent>
-        <h2 className="mb-3 font-semibold">Please confirm</h2>
+        <h2 className="mb-3 font-semibold">{t("common.pleaseConfirm")}</h2>
         <p className="mb-3 text-sm">
           {evalConfig?.status === "ACTIVE"
             ? "This action will deactivate the evaluator. No more traces will be evaluated based on this evaluator."

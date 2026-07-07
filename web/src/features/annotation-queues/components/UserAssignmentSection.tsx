@@ -7,6 +7,7 @@ import { useUserSearch } from "@/src/hooks/useUserSearch";
 import { useSelectedUsers } from "@/src/features/annotation-queues/hooks/useSelectedUsers";
 import { showSuccessToast } from "@/src/features/notifications/showSuccessToast";
 import { useRef } from "react";
+import { useTranslation } from "react-i18next";
 
 interface UserAssignmentSectionProps {
   projectId: string;
@@ -74,6 +75,8 @@ export const UserAssignmentSection = ({
 
   // Handle user removal
   const handleUserRemove = (userId: string) => {
+  const { t } = useTranslation("workflow");
+
     if (!!queueId)
       deleteQueueAssignmentMutation.mutate({
         projectId,
@@ -99,7 +102,7 @@ export const UserAssignmentSection = ({
         searchResults={userSearch.searchResults}
         isLoading={userSearch.isLoading}
         disabled={!hasQueueAssignmentWriteAccess}
-        placeholder="Search users to add..."
+        placeholder={t("queue.searchUsers")}
         hasMoreResults={userSearch.hasMoreResults}
         getItemKey={(user) => user.id}
         onOpenChange={(open) => {

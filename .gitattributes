@@ -1,0 +1,5 @@
+# Patch files must keep LF line endings. pnpm computes a patch hash from the
+# file content; CRLF (Windows default) produces a different hash that no longer
+# matches the lockfile, breaking `pnpm add` / `pnpm install` with
+# ERR_PNPM_UNUSED_PATCH. This is a Windows-specific fix.
+*.patch text eol=lf

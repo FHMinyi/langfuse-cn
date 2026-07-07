@@ -1,4 +1,5 @@
 import type React from "react";
+import { useTranslation } from "react-i18next";
 import {
   createContext,
   useContext,
@@ -121,6 +122,8 @@ export function DataTableControls({
   queryFilter,
   filterWithAI,
 }: DataTableControlsProps) {
+  const { t } = useTranslation("components");
+
   const { isLangfuseCloud } = useLangfuseCloudRegion();
   const { setOpen } = useDataTableControls();
   const [aiPopoverOpen, setAiPopoverOpen] = useState(false);
@@ -170,7 +173,7 @@ export function DataTableControls({
                 <PanelLeftOpen className="h-3.5 w-3.5" />
               </Button>
             </TooltipTrigger>
-            <TooltipContent side="right">Show filters</TooltipContent>
+            <TooltipContent side="right">{t("table.showFilters")}</TooltipContent>
           </Tooltip>
         </div>
         {activeFilterCount > 0 && (
@@ -207,7 +210,7 @@ export function DataTableControls({
                   <PanelLeftClose className="h-3.5 w-3.5" />
                 </Button>
               </TooltipTrigger>
-              <TooltipContent>Hide filters</TooltipContent>
+              <TooltipContent>{t("table.hideFilters")}</TooltipContent>
             </Tooltip>
             <span className="text-sm font-medium">Filters</span>
           </div>
@@ -224,7 +227,7 @@ export function DataTableControls({
                     Clear all
                   </Button>
                 </TooltipTrigger>
-                <TooltipContent>Clear all filters</TooltipContent>
+                <TooltipContent>{t("table.clearAllFilters")}</TooltipContent>
               </Tooltip>
             )}
             {filterWithAI && isLangfuseCloud && (
@@ -237,7 +240,7 @@ export function DataTableControls({
                       </Button>
                     </PopoverTrigger>
                   </TooltipTrigger>
-                  <TooltipContent>Filter with AI</TooltipContent>
+                  <TooltipContent>{t("table.filterWithAi")}</TooltipContent>
                 </Tooltip>
                 <PopoverContent align="center" className="w-[400px]">
                   <DataTableAIFilters
@@ -921,7 +924,7 @@ export function CategoricalFacet({
                     <div className="relative">
                       <Search className="text-muted-foreground absolute top-1/2 left-2 h-3.5 w-3.5 -translate-y-1/2" />
                       <Input
-                        placeholder="Filter values"
+                        placeholder={t("table.filterValuesPlaceholder")}
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         className="h-8 pl-7 text-xs"
@@ -1235,7 +1238,7 @@ export function StringFacet({
             type="text"
             id={`string-${filterKey}`}
             value={localValue}
-            placeholder="Search"
+            placeholder={t("table.searchPlaceholder")}
             onChange={handleInputChange}
             className="h-8"
           />
@@ -1490,7 +1493,7 @@ function TextFilterSection({
               handleAdd();
             }
           }}
-          placeholder="Enter value..."
+          placeholder={t("table.enterValuePlaceholder")}
           className="h-7 flex-1 text-xs"
         />
         <Button

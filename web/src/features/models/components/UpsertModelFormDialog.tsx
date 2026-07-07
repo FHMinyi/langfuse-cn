@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useEffect, useState, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { useForm, useFieldArray } from "react-hook-form";
 
 import { CodeMirrorEditor } from "@/src/components/editor";
@@ -150,6 +151,8 @@ export const UpsertModelFormDialog = (({
       const tier = form.getValues(`pricingTiers.${index}`);
       const expectedPriority = tier.isDefault ? 0 : index;
       if (tier.priority !== expectedPriority) {
+  const { t } = useTranslation("model");
+
         form.setValue(`pricingTiers.${index}.priority`, expectedPriority);
       }
     });
@@ -319,7 +322,7 @@ export const UpsertModelFormDialog = (({
                 disabled={props.action === "edit"}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Model Name</FormLabel>
+                    <FormLabel>{t("upsert.modelName")}</FormLabel>
                     <FormDescription>
                       The name of the model. This will be used to reference the
                       model in the API. You can track price changes of models by
@@ -337,7 +340,7 @@ export const UpsertModelFormDialog = (({
                 name="matchPattern"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Match pattern</FormLabel>
+                    <FormLabel>{t("upsert.matchPattern")}</FormLabel>
                     <FormDescription>
                       Regular expression (Postgres syntax) to match ingested
                       generations (model attribute) to this model definition.
@@ -365,7 +368,7 @@ export const UpsertModelFormDialog = (({
                 name="tokenizerId"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Tokenizer</FormLabel>
+                    <FormLabel>{t("upsert.tokenizer")}</FormLabel>
                     <Select
                       onValueChange={(tokenizerId) => {
                         field.onChange(tokenizerId);
@@ -377,7 +380,7 @@ export const UpsertModelFormDialog = (({
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select a unit" />
+                          <SelectValue placeholder={t("upsert.selectUnit")} />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -412,7 +415,7 @@ export const UpsertModelFormDialog = (({
                   name="tokenizerConfig"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Tokenizer Config</FormLabel>
+                      <FormLabel>{t("upsert.tokenizerConfig")}</FormLabel>
                       <CodeMirrorEditor
                         mode="json"
                         value={field.value ?? "{}"}

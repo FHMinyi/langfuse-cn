@@ -47,6 +47,7 @@ import { Switch } from "@/src/components/design-system/Switch/Switch";
 import { DetailPageNav } from "@/src/features/navigate-detail-pages/DetailPageNav";
 import { useEvalConfigMappingData } from "@/src/features/evals/hooks/useEvalConfigMappingData";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Alert, AlertTitle, AlertDescription } from "@/src/components/ui/alert";
 import { AlertCircle, ExternalLink } from "lucide-react";
 import { useVariableMappingSync } from "@/src/features/evals/hooks/useVariableMappingSync";
@@ -145,6 +146,8 @@ export const VariableMappingCard = ({
 
   useEffect(() => {
     if (isPeekView) {
+  const { t } = useTranslation("evaluation");
+
       setSelectedPreviewPointer(undefined);
     }
   }, [isPeekView, peekId]);
@@ -212,7 +215,7 @@ export const VariableMappingCard = ({
   return (
     <Card className="max-w-full min-w-0 p-4">
       <div className="mb-2 flex items-center gap-2">
-        <span className="text-lg font-medium">Variable mapping</span>
+        <span className="text-lg font-medium">{t("varMapping.title")}</span>
         <div className="flex flex-wrap items-center justify-between gap-2">
           {evalTemplate.projectId ? (
             <Button asChild variant="outline" size="sm">
@@ -230,7 +233,7 @@ export const VariableMappingCard = ({
               variant="outline"
               size="sm"
               disabled
-              title="Only user-managed templates can be edited"
+              title={t("varMapping.readonlyHint")}
             >
               Edit prompt
               <ExternalLink className="ml-1 h-4 w-4" />
@@ -349,7 +352,7 @@ export const VariableMappingCard = ({
                             render={({ field }) => (
                               <div className="flex items-center gap-2">
                                 <VariableMappingDescription
-                                  title="Object"
+                                  title={t("varMapping.object")}
                                   description={
                                     "Langfuse object to retrieve the data from."
                                   }
@@ -466,7 +469,7 @@ export const VariableMappingCard = ({
                                               onChange={(e) =>
                                                 field.onChange(e.target.value)
                                               }
-                                              placeholder="Enter langfuse object name"
+                                              placeholder={t("varMapping.objectNamePlaceholder")}
                                               disabled={disabled}
                                             />
                                           </div>
@@ -545,7 +548,7 @@ export const VariableMappingCard = ({
                                       }}
                                     >
                                       <SelectTrigger>
-                                        <SelectValue placeholder="Object type" />
+                                        <SelectValue placeholder={t("varMapping.objectTypePlaceholder")} />
                                       </SelectTrigger>
                                       <SelectContent>
                                         {availableVariables
@@ -596,7 +599,7 @@ export const VariableMappingCard = ({
                                         {...field}
                                         value={field.value ?? ""}
                                         disabled={disabled}
-                                        placeholder="Optional"
+                                        placeholder={t("varMapping.optional")}
                                       />
                                     </FormControl>
                                     <FormMessage />
@@ -631,7 +634,7 @@ export const VariableMappingCard = ({
                           {hideAdvancedSettings && (
                             <div className="flex items-center gap-2">
                               <VariableMappingDescription
-                                title="Object"
+                                title={t("varMapping.object")}
                                 description="Type of object to retrieve the data from."
                                 href="https://langfuse.com/docs/evaluation/evaluation-methods/llm-as-a-judge"
                               />
@@ -678,7 +681,7 @@ export const VariableMappingCard = ({
                                         onValueChange={field.onChange}
                                       >
                                         <SelectTrigger>
-                                          <SelectValue placeholder="Select field" />
+                                          <SelectValue placeholder={t("varMapping.selectField")} />
                                         </SelectTrigger>
                                         <SelectContent>
                                           {availableColumns.map((column) => (
@@ -722,7 +725,7 @@ export const VariableMappingCard = ({
                                         {...field}
                                         value={field.value ?? ""}
                                         disabled={disabled}
-                                        placeholder="Optional"
+                                        placeholder={t("varMapping.optional")}
                                       />
                                     </FormControl>
                                     <FormMessage />

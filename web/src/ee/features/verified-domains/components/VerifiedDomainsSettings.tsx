@@ -49,6 +49,7 @@ import { api } from "@/src/utils/api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AlertCircle, ChevronRight, TrashIcon } from "lucide-react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -71,6 +72,8 @@ const addDomainSchema = z.object({
 type AddDomainInput = z.infer<typeof addDomainSchema>;
 
 export const VerifiedDomainsSettings = ({ orgId }: { orgId: string }) => {
+  const { t } = useTranslation("ee");
+
   const hasEntitlement = useHasEntitlement("cloud-multi-tenant-sso");
   const hasAccess = useHasOrganizationAccess({
     organizationId: orgId,
@@ -79,7 +82,7 @@ export const VerifiedDomainsSettings = ({ orgId }: { orgId: string }) => {
 
   const heading = (
     <>
-      <Header title="Verified Domains" />
+      <Header title={t("domains.title")} />
       <p className="text-muted-foreground mb-4 text-sm">
         You can only configure SSO for domains your organization owns. Verify a
         domain via DNS to enable SSO for it.
@@ -93,7 +96,7 @@ export const VerifiedDomainsSettings = ({ orgId }: { orgId: string }) => {
         {heading}
         <Alert>
           <AlertCircle className="h-4 w-4" />
-          <AlertTitle>Not available</AlertTitle>
+          <AlertTitle>{t("common.notAvailable")}</AlertTitle>
           <AlertDescription>
             Verified Domains and Enterprise SSO are not available on your plan.
             Please upgrade to access this feature.
@@ -108,7 +111,7 @@ export const VerifiedDomainsSettings = ({ orgId }: { orgId: string }) => {
       <div>
         {heading}
         <Alert>
-          <AlertTitle>Access Denied</AlertTitle>
+          <AlertTitle>{t("common.accessDenied")}</AlertTitle>
           <AlertDescription>
             You do not have permission to manage verified domains for this
             organization.
@@ -121,7 +124,7 @@ export const VerifiedDomainsSettings = ({ orgId }: { orgId: string }) => {
   return (
     <div className="space-y-6">
       <Header
-        title="Verified Domains"
+        title={t("domains.title")}
         actionButtons={<AddDomainButton orgId={orgId} />}
       />
       <p className="text-muted-foreground text-sm">
@@ -223,7 +226,7 @@ function DomainRow({ orgId, row }: { orgId: string; row: DomainRowData }) {
           {row.verifiedAt ? (
             <Badge variant="default">Verified</Badge>
           ) : (
-            <Badge variant="secondary">Pending verification</Badge>
+            <Badge variant="secondary">{t("domains.pendingVerification")}</Badge>
           )}
         </TableCell>
         <TableCell density="comfortable" className="hidden md:table-cell">
@@ -344,11 +347,11 @@ function AddDomainButton({ orgId }: { orgId: string }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button size="sm">Add Domain</Button>
+        <Button size="sm">{t("domains.addDomain")}</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Add a domain</DialogTitle>
+          <DialogTitle>{t("domains.addDomainTitle")}</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -358,7 +361,7 @@ function AddDomainButton({ orgId }: { orgId: string }) {
                 name="domain"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Domain</FormLabel>
+                    <FormLabel>{t("domains.domainLabel")}</FormLabel>
                     <FormControl>
                       <Input placeholder="acme.com" autoFocus {...field} />
                     </FormControl>

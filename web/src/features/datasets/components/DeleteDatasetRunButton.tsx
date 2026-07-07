@@ -5,6 +5,7 @@ import { useHasProjectAccess } from "@/src/features/rbac/utils/checkProjectAcces
 import { usePostHogClientCapture } from "@/src/features/posthog-analytics/usePostHogClientCapture";
 import { api } from "@/src/utils/api";
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useRouter } from "next/router";
 
 export const DeleteDatasetRunButton = ({
@@ -48,10 +49,12 @@ export const DeleteDatasetRunButton = ({
 
   return hasAccess ? (
     <ConfirmDialog
-      open={isDialogOpen}
+      open={
+  const { t } = useTranslation("dataset");
+isDialogOpen}
       onOpenChange={setIsDialogOpen}
       trigger={button}
-      title="Please confirm"
+      title={t("common.pleaseConfirm")}
       description="This action cannot be undone. Traces linked to this run must be deleted manually."
       confirmLabel="Delete Dataset Run"
       loading={mutDelete.isPending}

@@ -20,6 +20,7 @@
  */
 
 import React, { useMemo, useCallback, useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { cn } from "@/src/utils/tailwind";
 import {
   Table,
@@ -222,6 +223,7 @@ export const PivotTable: React.FC<PivotTableProps> = ({
   onSortChange,
   isLoading = false,
 }) => {
+  const { t } = useTranslation("dashboard");
   const units = config?.units;
   // Transform chart data into pivot table structure
   const pivotTableRows = useMemo(() => {
@@ -347,7 +349,7 @@ export const PivotTable: React.FC<PivotTableProps> = ({
     return (
       <div className="flex h-full items-center justify-center">
         <div className="text-center">
-          <p className="text-muted-foreground text-sm">No data available</p>
+          <p className="text-muted-foreground text-sm">{t("pivotTable.noData")}</p>
         </div>
       </div>
     );

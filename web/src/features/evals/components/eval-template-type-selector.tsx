@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { type UseFormReturn } from "react-hook-form";
 import { type z } from "zod";
 import {
@@ -79,6 +80,8 @@ export function EvalTemplateTypeSelector({
     }
 
     if (nextValue === EvalTemplateType.LLM_AS_JUDGE) {
+  const { t } = useTranslation("evaluation");
+
       form.setValue("type", EvalTemplateType.LLM_AS_JUDGE);
       onChange?.();
       return;
@@ -101,7 +104,7 @@ export function EvalTemplateTypeSelector({
       name="type"
       render={() => (
         <FormItem>
-          <FormLabel>Type</FormLabel>
+          <FormLabel>{t("typeSelector.type")}</FormLabel>
           <FormControl>
             <Tabs
               value={selectedValue}

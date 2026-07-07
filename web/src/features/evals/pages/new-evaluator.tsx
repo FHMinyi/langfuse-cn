@@ -22,6 +22,7 @@ import {
 import { Alert, AlertDescription, AlertTitle } from "@/src/components/ui/alert";
 import { Button } from "@/src/components/ui/button";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Skeleton } from "@/src/components/ui/skeleton";
 
 // Multi-step setup process
@@ -135,7 +136,9 @@ export default function NewEvaluatorPage() {
   const isProviderStepComplete = step === "run" && selectedTemplateIsLlm;
 
   if (!hasAccess) {
-    return <div>You do not have access to this page.</div>;
+  const { t } = useTranslation("evaluation");
+
+    return <div>{t("common.noAccess")}</div>;
   }
 
   return (
@@ -239,7 +242,7 @@ export default function NewEvaluatorPage() {
             {hasNewerTemplate && latestTemplate && currentTemplate ? (
               <Alert variant="info">
                 <Info className="h-4 w-4" />
-                <AlertTitle>Selected Evaluator has been updated</AlertTitle>
+                <AlertTitle>{t("newEvaluator.selectedUpdated")}</AlertTitle>
                 <AlertDescription className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                   <span>
                     Click to use the latest version of your evaluator{" "}

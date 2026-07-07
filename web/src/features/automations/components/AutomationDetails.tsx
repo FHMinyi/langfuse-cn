@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { api } from "@/src/utils/api";
 import { Button } from "@/src/components/ui/button";
 import { Edit } from "lucide-react";
@@ -72,8 +73,10 @@ export const AutomationDetails: React.FC<AutomationDetailsProps> = ({
   };
 
   if (isLoading) {
+  const { t } = useTranslation("workflow");
+
     return (
-      <div className="py-4 text-center">Loading automation details...</div>
+      <div className="py-4 text-center">{t("automation.loadingDetails")}</div>
     );
   }
 

@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useTranslation } from "react-i18next";
 import { EvalTemplateForm } from "@/src/features/evals/components/template-form";
 import { api } from "@/src/utils/api";
 import { type EvalTemplate } from "@langfuse/shared";
@@ -242,6 +243,8 @@ export function EvalVersionDropdown(props: {
       (template) => template.id === value,
     );
     if (selectedTemplate && props.onSelect) {
+  const { t } = useTranslation("evaluation");
+
       props.onSelect(selectedTemplate);
       capture("eval_templates:view_version");
     }
@@ -254,7 +257,7 @@ export function EvalVersionDropdown(props: {
       defaultValue={props.defaultOption ? props.defaultOption.id : undefined}
     >
       <SelectTrigger className="w-[180px]">
-        <SelectValue placeholder="Version" />
+        <SelectValue placeholder={t("common.version")} />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
@@ -304,7 +307,7 @@ export function UpdateTemplate({
 
   return (
     <div className="flex items-center gap-2">
-      <span className="text-sm font-medium">Edit mode</span>
+      <span className="text-sm font-medium">{t("templateDetail.editMode")}</span>
       <Switch
         checked={isEditing}
         onCheckedChange={handlePromptEdit}

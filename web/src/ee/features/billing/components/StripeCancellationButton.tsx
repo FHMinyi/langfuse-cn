@@ -12,6 +12,7 @@ import {
 import { useBillingInformation } from "./useBillingInformation";
 import { api } from "@/src/utils/api";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { nanoid } from "nanoid";
 
@@ -91,13 +92,15 @@ export const StripeCancellationButton = ({
 
   // Reactivate with confirm dialog
   if (cancellation?.isCancelled) {
+  const { t } = useTranslation("ee");
+
     return (
       <Dialog>
         <DialogTrigger asChild>
           <Button
             variant={variant}
             disabled={loading}
-            title="Reactivate Subscription"
+            title={t("billing.reactivate")}
             className={className}
           >
             {loading ? "Working…" : "Reactivate Subscription"}
@@ -140,14 +143,14 @@ export const StripeCancellationButton = ({
         <Button
           variant={variant}
           disabled={loading}
-          title="Cancel Subscription"
+          title={t("billing.cancel")}
         >
           Cancel Subscription
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className="text-lg">Confirm Cancellation</DialogTitle>
+          <DialogTitle className="text-lg">{t("billing.confirmCancellation")}</DialogTitle>
         </DialogHeader>
         <DialogBody className="text-sm">
           <p>
@@ -163,7 +166,7 @@ export const StripeCancellationButton = ({
         </DialogBody>
         <DialogFooter>
           <DialogClose asChild>
-            <Button variant="secondary">Keep Subscription</Button>
+            <Button variant="secondary">{t("billing.keepSubscription")}</Button>
           </DialogClose>
           <Button variant="destructive" onClick={onCancel} disabled={loading}>
             {loading ? "Cancelling…" : "Confirm Cancellation"}

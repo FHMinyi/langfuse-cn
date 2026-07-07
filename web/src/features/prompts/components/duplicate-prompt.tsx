@@ -16,6 +16,7 @@ import { ActionButton } from "@/src/components/ActionButton";
 import { usePostHogClientCapture } from "@/src/features/posthog-analytics/usePostHogClientCapture";
 import { useEntitlementLimit } from "@/src/features/entitlements/hooks";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Form,
   FormControl,
@@ -69,6 +70,8 @@ const DuplicatePromptForm: React.FC<{
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
+  const { t } = useTranslation("prompt");
+
     capture("prompt_detail:duplicate_form_submit");
     duplicatePrompt
       .mutateAsync({
@@ -117,7 +120,7 @@ const DuplicatePromptForm: React.FC<{
             name="name"
             render={({ field }) => (
               <FormItem className="flex flex-col gap-2">
-                <FormLabel>Name</FormLabel>
+                <FormLabel>{t("common.name")}</FormLabel>
                 <FormControl>
                   <Input {...field} type="text" />
                 </FormControl>
@@ -130,7 +133,7 @@ const DuplicatePromptForm: React.FC<{
             name="isCopySingleVersion"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Settings</FormLabel>
+                <FormLabel>{t("duplicate.settings")}</FormLabel>
                 <FormControl>
                   <RadioGroup
                     {...field}
@@ -209,7 +212,7 @@ export const DuplicatePromptButton: React.FC<{
           hasAccess={hasAccess}
           variant="outline"
           limit={promptLimit}
-          title="Duplicate prompt"
+          title={t("duplicate.title")}
           limitValue={allPromptNames.data?.length ?? undefined}
           onClick={() => {
             capture("prompt_detail:duplicate_button_click");
@@ -220,7 +223,7 @@ export const DuplicatePromptButton: React.FC<{
       </DialogTrigger>
       <DialogContent className="max-h-[90vh] min-h-0">
         <DialogHeader>
-          <DialogTitle>Duplicate prompt</DialogTitle>
+          <DialogTitle>{t("duplicate.title")}</DialogTitle>
         </DialogHeader>
         <DuplicatePromptForm
           projectId={projectId}

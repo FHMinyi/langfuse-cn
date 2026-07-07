@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { PlusCircle, Trash2 } from "lucide-react";
 import { useFieldArray } from "react-hook-form";
 import { Button } from "@/src/components/ui/button";
@@ -32,6 +33,8 @@ export function TierConditionsEditor({
   tierIndex,
   form,
 }: TierConditionsEditorProps) {
+  const { t } = useTranslation("model");
+
   const { fields, append, remove } = useFieldArray({
     control: form.control,
     name: `pricingTiers.${tierIndex}.conditions`,
@@ -40,7 +43,7 @@ export function TierConditionsEditor({
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <FormLabel>Conditions</FormLabel>
+        <FormLabel>{t("tierConditions.conditions")}</FormLabel>
         <Button
           type="button"
           variant="ghost"
@@ -88,7 +91,7 @@ export function TierConditionsEditor({
             name={`pricingTiers.${tierIndex}.conditions.${conditionIndex}.usageDetailPattern`}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Usage Detail Pattern (Regex)</FormLabel>
+                <FormLabel>{t("tierConditions.usageDetailPattern")}</FormLabel>
                 <FormControl>
                   <Input {...field} placeholder="^input" />
                 </FormControl>
@@ -107,7 +110,7 @@ export function TierConditionsEditor({
               name={`pricingTiers.${tierIndex}.conditions.${conditionIndex}.operator`}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Operator</FormLabel>
+                  <FormLabel>{t("tierConditions.operator")}</FormLabel>
                   <Select value={field.value} onValueChange={field.onChange}>
                     <SelectTrigger>
                       <SelectValue />
@@ -133,7 +136,7 @@ export function TierConditionsEditor({
               name={`pricingTiers.${tierIndex}.conditions.${conditionIndex}.value`}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Value</FormLabel>
+                  <FormLabel>{t("tierConditions.value")}</FormLabel>
                   <FormControl>
                     <Input
                       type="number"
@@ -161,7 +164,7 @@ export function TierConditionsEditor({
                     onCheckedChange={field.onChange}
                   />
                 </FormControl>
-                <FormLabel className="mt-0!">Case sensitive</FormLabel>
+                <FormLabel className="mt-0!">{t("tierConditions.caseSensitive")}</FormLabel>
               </FormItem>
             )}
           />

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { Button } from "@/src/components/ui/button";
 import {
@@ -25,6 +26,8 @@ export const DeleteModelButton = ({
   const capture = usePostHogClientCapture();
   const mut = api.models.delete.useMutation({
     onSuccess: () => {
+  const { t } = useTranslation("model");
+
       utils.models.invalidate();
       onSuccess?.();
     },
@@ -40,7 +43,7 @@ export const DeleteModelButton = ({
       <PopoverTrigger asChild>
         <Button
           variant="outline"
-          title="Delete model"
+          title={t("common.deleteModel")}
           disabled={!hasAccess}
           className="border-light-red flex items-center"
         >
@@ -48,7 +51,7 @@ export const DeleteModelButton = ({
         </Button>
       </PopoverTrigger>
       <PopoverContent>
-        <h2 className="mb-3 font-semibold">Please confirm</h2>
+        <h2 className="mb-3 font-semibold">{t("common.pleaseConfirm")}</h2>
         <p className="mb-3 text-sm">
           This action permanently deletes this model definition.
         </p>

@@ -16,6 +16,7 @@ import { evaluatorFilterConfig } from "@/src/features/filters/config/evaluators-
 import { api } from "@/src/utils/api";
 import { createColumnHelper } from "@tanstack/react-table";
 import { useEffect, useState, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { useQueryParam, StringParam, withDefault } from "use-query-params";
 import { usePaginationState } from "@/src/hooks/usePaginationState";
 import {
@@ -64,6 +65,8 @@ import {
 } from "@/src/components/table/loading-cells";
 
 function LegacyBadgeCell({ status }: { status: string }) {
+  const { t } = useTranslation("evaluation");
+
   return (
     <div className="flex items-center gap-1.5">
       <Badge variant="warning">
@@ -75,7 +78,7 @@ function LegacyBadgeCell({ status }: { status: string }) {
             </TooltipTrigger>
             <TooltipContent className="max-w-[280px]">
               <div className="space-y-1 text-sm">
-                <p className="font-medium">Action required</p>
+                <p className="font-medium">{t("evalTable.actionRequired")}</p>
                 <p className="text-muted-foreground">
                   This evaluator requires changes to benefit from new features
                   and performance improvements. Please follow{" "}
@@ -390,7 +393,7 @@ export default function EvaluatorTable({ projectId }: { projectId: string }) {
               icon
               variant="ghost"
               size="icon-xs"
-              title="Delete"
+              title={t("common.delete")}
             />
           </div>
         );
@@ -433,7 +436,7 @@ export default function EvaluatorTable({ projectId }: { projectId: string }) {
               variant="warning"
               key="dismissed-eval-remapping-callouts"
             >
-              <span>New functionality has landed. </span>
+              <span>{t("evalTable.newFunctionality")} </span>
               <span className="font-semibold">
                 Some of your evaluators (marked &quot;Legacy&quot;) require
                 changes{" "}
@@ -526,7 +529,7 @@ export default function EvaluatorTable({ projectId }: { projectId: string }) {
       >
         <DialogContent className="max-h-[90vh] max-w-(--breakpoint-xl) overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>Edit configuration</DialogTitle>
+            <DialogTitle>{t("evalTable.editConfig")}</DialogTitle>
           </DialogHeader>
           {existingEvaluator.isLoading ? (
             <div className="flex items-center justify-center p-4">

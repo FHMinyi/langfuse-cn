@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { useRouter } from "next/router";
 import { Button } from "@/src/components/ui/button";
 import { api } from "@/src/utils/api";
@@ -20,6 +21,8 @@ export const DuplicateDatasetButton: React.FC<{
   });
 
   const handleDuplicate = () => {
+  const { t } = useTranslation("dataset");
+
     if (
       confirm(
         "Are you sure you want to duplicate this dataset and all of its items?",
@@ -33,7 +36,7 @@ export const DuplicateDatasetButton: React.FC<{
     <Button
       onClick={handleDuplicate}
       variant="ghost"
-      title="Duplicate dataset"
+      title={t("duplicate.title")}
       loading={duplicateDataset.isPending}
       disabled={!hasAccess}
     >

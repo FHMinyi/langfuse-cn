@@ -9,6 +9,7 @@ import { WebhookSecretRender } from "@/src/features/automations/components/Webho
 import { Button } from "@/src/components/ui/button";
 import { Plus } from "lucide-react";
 import { useEffect, useMemo, useState, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import Page from "@/src/components/layouts/page";
 import { api } from "@/src/utils/api";
 import { useQueryParams, StringParam, withDefault } from "use-query-params";
@@ -93,6 +94,8 @@ export default function AutomationsPage() {
       const pathname = getPathnameWithoutBasePath();
 
       if (updates.view !== undefined) {
+  const { t } = useTranslation("workflow");
+
         params.set("view", updates.view);
         // The prefill blob is scoped to view=create; drop it on any other view.
         if (updates.view !== "create") {
@@ -279,7 +282,7 @@ export default function AutomationsPage() {
 
   const renderAutomationNotFoundError = (message: string) => (
     <ErrorPage
-      title="Webhook not found"
+      title={t("automation.webhookNotFound")}
       message={message}
       additionalButton={{
         label: "Back to Webhooks",
@@ -360,7 +363,7 @@ export default function AutomationsPage() {
       <div className="h-full p-6">
         <div className="text-muted-foreground flex h-full items-center justify-center">
           <div className="text-center">
-            <h3 className="text-lg font-medium">Select an automation</h3>
+            <h3 className="text-lg font-medium">{t("automation.selectAutomation")}</h3>
             <p className="mt-2 text-sm">
               Choose an automation from the sidebar to view its details and
               execution history.
@@ -412,7 +415,7 @@ export default function AutomationsPage() {
       >
         <DialogContent className="max-w-4xl">
           <DialogHeader>
-            <DialogTitle>Webhook Secret Created</DialogTitle>
+            <DialogTitle>{t("automation.secretCreated")}</DialogTitle>
             <DialogDescription>
               Your automation has been created successfully. Please copy the
               webhook secret below - it will only be shown once.

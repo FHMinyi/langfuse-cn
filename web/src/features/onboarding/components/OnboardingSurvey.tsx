@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
@@ -134,6 +135,8 @@ export function OnboardingSurvey() {
   }
 
   if (onboardingStatus.isError) {
+  const { t } = useTranslation("api");
+
     return (
       <div className="flex flex-1 flex-col py-6 sm:min-h-full sm:justify-start sm:px-6 sm:py-12 lg:px-8">
         <div className="flex items-center justify-center gap-2 sm:mx-auto sm:w-full sm:max-w-md">
@@ -142,7 +145,7 @@ export function OnboardingSurvey() {
 
         <div className="bg-background mt-6 rounded-lg px-6 py-10 shadow-sm sm:mx-auto sm:mt-16 sm:w-full sm:max-w-[480px] sm:px-12 sm:py-12">
           <div className="flex flex-col items-center text-center">
-            <h1 className="text-xl font-semibold">Failed to load onboarding</h1>
+            <h1 className="text-xl font-semibold">{t("onboarding.failedToLoad")}</h1>
             <p className="text-muted-foreground mt-2 text-sm">
               Refresh the page to try again.
             </p>
@@ -183,7 +186,7 @@ export function OnboardingSurvey() {
                       <Input
                         autoFocus
                         maxLength={500}
-                        placeholder="Colleague, Word of Mouth, X, Reddit, Event"
+                        placeholder={t("onboarding.referralPlaceholder")}
                         {...field}
                         value={field.value ?? ""}
                       />

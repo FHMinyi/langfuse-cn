@@ -81,6 +81,12 @@ import { ScoreCacheProvider } from "@/src/features/scores/contexts/ScoreCacheCon
 import { CorrectionCacheProvider } from "@/src/features/corrections/contexts/CorrectionCacheContext";
 import { V4_BETA_ENABLED_POSTHOG_PROPERTY } from "@/src/features/posthog-analytics/usePostHogClientCapture";
 
+// Initialize react-i18next (client-side). The import has the side effect of
+// registering the en-US fallback bundle, detecting the browser language, and
+// wiring `initReactI18next`. See `@/src/i18n` for the full setup.
+// Langfuse upstream does not support i18n (issue #12890); this fork adds it.
+import "@/src/i18n";
+
 // Check that PostHog is client-side (used to handle Next.js SSR) and that env vars are set
 if (
   typeof window !== "undefined" &&

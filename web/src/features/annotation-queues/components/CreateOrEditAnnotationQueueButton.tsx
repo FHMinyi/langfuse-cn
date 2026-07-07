@@ -1,5 +1,6 @@
 import { Button, type ButtonProps } from "@/src/components/ui/button";
 import React, { useEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Dialog,
   DialogBody,
@@ -62,6 +63,8 @@ export const CreateOrEditAnnotationQueueButton = ({
   size?: ButtonProps["size"];
   isTableAction?: boolean;
 }) => {
+  const { t } = useTranslation("workflow");
+
   const [isOpen, setIsOpen] = useState(false);
   const [isAdvancedOpen, setIsAdvancedOpen] = useState(false);
   const hasQueueAccess = useHasProjectAccess({
@@ -289,7 +292,7 @@ export const CreateOrEditAnnotationQueueButton = ({
                   name="name"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Name</FormLabel>
+                      <FormLabel>{t("queue.name")}</FormLabel>
                       <FormControl>
                         <Input
                           {...field}
@@ -309,11 +312,11 @@ export const CreateOrEditAnnotationQueueButton = ({
                   name="description"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Description (optional)</FormLabel>
+                      <FormLabel>{t("queue.descriptionOptional")}</FormLabel>
                       <FormControl>
                         <Textarea
                           {...field}
-                          placeholder="Add description..."
+                          placeholder={t("queue.descriptionPlaceholder")}
                           className="text-xs focus:ring-0 focus:outline-hidden focus-visible:ring-0 focus-visible:ring-offset-0 active:ring-0"
                         />
                       </FormControl>
@@ -326,14 +329,14 @@ export const CreateOrEditAnnotationQueueButton = ({
                   name="scoreConfigIds"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Score Configs</FormLabel>
+                      <FormLabel>{t("queue.scoreConfigs")}</FormLabel>
                       <FormDescription>
                         Define which dimensions annotators should score for the
                         given queue.
                       </FormDescription>
                       <FormControl>
                         <MultiSelectKeyValues
-                          placeholder="Value"
+                          placeholder={t("queue.scoreConfigs")}
                           align="end"
                           variant="outline"
                           className="grid grid-cols-[auto_1fr_auto_auto] gap-2"
@@ -384,7 +387,7 @@ export const CreateOrEditAnnotationQueueButton = ({
                   name="newAssignmentUserIds"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Advanced Settings</FormLabel>
+                      <FormLabel>{t("queue.advancedSettings")}</FormLabel>
                       <div className="mt-1 rounded-md border">
                         <Collapsible
                           open={isAdvancedOpen && hasQueueAssignmentsReadAccess}

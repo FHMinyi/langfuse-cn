@@ -5,6 +5,7 @@
 
 import { useRouter } from "next/router";
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import type { Session, User } from "next-auth";
 import { useEntitlements } from "@/src/features/entitlements/hooks";
 import { useUiCustomization } from "@/src/ee/features/ui-customization/useUiCustomization";
@@ -22,6 +23,45 @@ import { isPathActive } from "../utils/pathClassification";
 
 /** Organization type from user session (can be null when not in project/org context) */
 type Organization = User["organizations"][number] | null | undefined;
+
+/**
+ * Maps the English `title` defined in `ROUTES` (routes.tsx) to i18n keys.
+ * The route titles are static strings at module scope, so we translate them
+ * at render time via this lookup rather than modifying the Route type.
+ * Routes without an entry here fall back to their original English title.
+ */
+const ROUTE_TITLE_I18N_KEYS: Record<string, string> = {
+  "Go to...": "nav.search",
+  Organizations: "nav.organizations",
+  Projects: "nav.projects",
+  Home: "nav.home",
+  Dashboards: "nav.dashboards",
+  Tracing: "nav.tracing",
+  Sessions: "nav.sessions",
+  Users: "nav.users",
+  Monitors: "nav.monitors",
+  Prompts: "nav.prompts",
+  Playground: "nav.playground",
+  Scores: "nav.scores",
+  Evaluators: "nav.evaluators",
+  "Human Annotation": "nav.humanAnnotation",
+  Datasets: "nav.datasets",
+  Experiments: "nav.experiments",
+  Upgrade: "nav.upgrade",
+  "Cloud Status": "nav.cloudStatus",
+  "Preview (fast)": "nav.preview",
+  Settings: "nav.settings",
+  "Book a call": "nav.bookACall",
+  Assistant: "nav.assistant",
+  Support: "nav.support",
+};
+
+/** Maps RouteGroup enum values to i18n keys for the sidebar group labels. */
+const ROUTE_GROUP_I18N_KEYS: Record<string, string> = {
+  [RouteGroup.Observability]: "nav.group.observability",
+  [RouteGroup.PromptManagement]: "nav.group.promptManagement",
+  [RouteGroup.Evaluation]: "nav.group.evaluation",
+};
 
 /** Grouped navigation structure */
 type GroupedNavigation = {
@@ -81,6 +121,7 @@ export function useFilteredNavigation(
   organization: Organization,
 ) {
   const router = useRouter();
+  const { t } = useTranslation("common");
   const entitlements = useEntitlements();
   const uiCustomization = useUiCustomization();
   const { isLangfuseCloud } = useLangfuseCloudRegion();
@@ -133,8 +174,14 @@ export function useFilteredNavigation(
         ?.map(mapRouteToNavigationItem)
         .filter((item): item is NavigationItem => item !== null);
 
+      // Translate the title via the lookup table; fall back to the original
+      // English title if no i18n key is registered for this route.
+      const titleKey = ROUTE_TITLE_I18N_KEYS[route.title];
+      const translatedTitle = titleKey ? t(titleKey) : route.title;
+
       return {
         ...route,
+        title: translatedTitle,
         url,
         isActive: isPathActive(route.pathname, router.pathname),
         items: items && items.length > 0 ? items : undefined,
@@ -163,5 +210,5 @@ export function useFilteredNavigation(
         ...secondaryNavigation.flattened,
       ],
     };
-  }, [filteredRoutes, routerProjectId, routerOrganizationId, router.pathname]);
+  }, [filteredRoutes, routerProjectId, routerOrganizationId, router.pathname, t]);
 }

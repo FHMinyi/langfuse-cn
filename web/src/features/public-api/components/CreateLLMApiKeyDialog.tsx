@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { PlusIcon } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import {
@@ -28,6 +29,8 @@ export function CreateLLMApiKeyDialog({
    */
   hideTrigger?: boolean;
 }) {
+  const { t } = useTranslation("api");
+
   const projectId = useProjectIdFromURL();
   const hasAccess = useHasProjectAccess({
     projectId,
@@ -54,7 +57,7 @@ export function CreateLLMApiKeyDialog({
       )}
       <DialogContent className="max-h-[90%] min-w-[40vw] overflow-auto">
         <DialogHeader>
-          <DialogTitle>New LLM Connection</DialogTitle>
+          <DialogTitle>{t("llm.newTitle")}</DialogTitle>
         </DialogHeader>
         {open && (
           <CreateLLMApiKeyForm

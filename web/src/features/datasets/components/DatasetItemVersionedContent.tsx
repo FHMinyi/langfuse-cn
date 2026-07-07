@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { DatasetItemDiffView } from "./DatasetItemDiffView";
 import type { DatasetItemDomain } from "@langfuse/shared";
 import {
@@ -30,6 +31,8 @@ export const DatasetItemVersionedContent = ({
   itemChangedAtVersion,
   dataset,
 }: DatasetItemVersionedContentProps) => {
+  const { t } = useTranslation("dataset");
+
   // Loading states
   if (isLoadingVersioned) {
     return <div className="text-muted-foreground text-sm">Loading...</div>;
@@ -63,7 +66,7 @@ export const DatasetItemVersionedContent = ({
       return (
         <div className="flex flex-col items-center justify-center p-12 text-center">
           <div className="text-muted-foreground">
-            <p className="text-lg font-medium">Cannot show diff</p>
+            <p className="text-lg font-medium">{t("itemView.cannotShowDiff")}</p>
             <p className="mt-2 text-sm">
               The latest version of this item does not exist (has been deleted).
             </p>

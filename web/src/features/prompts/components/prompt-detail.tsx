@@ -45,6 +45,7 @@ import {
 } from "@/src/components/ui/dialog";
 import { CreateExperimentsForm } from "@/src/features/experiments/components/CreateExperimentsForm";
 import { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { showSuccessToast } from "@/src/features/notifications/showSuccessToast";
 import { DuplicatePromptButton } from "@/src/features/prompts/components/duplicate-prompt";
 import Page from "@/src/components/layouts/page";
@@ -109,6 +110,7 @@ await langfuse.prompt.get("${name}", { version: ${version} })
 export const PromptDetail = ({
   promptName: promptNameProp,
 }: { promptName?: string } = {}) => {
+  const { t } = useTranslation("prompt");
   const projectId = useProjectIdFromURL();
   const capture = usePostHogClientCapture();
   const router = useRouter();
@@ -333,7 +335,7 @@ export const PromptDetail = ({
           <div className="mt-3 flex items-center justify-between">
             <CommandInput
               showBorder={false}
-              placeholder="Search..."
+              placeholder={t("detail.search")}
               className="text-muted-foreground h-fit border-none py-0 text-sm font-light focus:ring-0"
             />
 
@@ -348,7 +350,7 @@ export const PromptDetail = ({
                 href={`/project/${projectId}/prompts/new?promptId=${encodeURIComponent(prompt.id)}`}
               >
                 <Plus className="h-4 w-4 md:mr-2" />
-                <span className="hidden lg:inline">New version</span>
+                <span className="hidden lg:inline">{t("detail.newVersion")}</span>
               </Link>
             </Button>
           </div>
@@ -482,7 +484,7 @@ export const PromptDetail = ({
               <TabsBarTrigger value="linked-generations">
                 Linked Generations
               </TabsBarTrigger>
-              <TabsBarTrigger value="use-prompt">Use Prompt</TabsBarTrigger>
+              <TabsBarTrigger value="use-prompt">{t("detail.usePrompt")}</TabsBarTrigger>
             </TabsBarList>
             <TabsBarContent
               value="linked-generations"
@@ -544,13 +546,13 @@ export const PromptDetail = ({
                     promptGraph.data?.resolvedPrompt ? (
                       <CodeView
                         content={String(promptGraph.data.resolvedPrompt)}
-                        title="Text Prompt (resolved)"
+                        title={t("detail.textPromptResolved")}
                       />
                     ) : (
                       <CodeView
                         content={renderRichPromptContent(prompt.prompt)}
                         originalContent={prompt.prompt}
-                        title="Text Prompt"
+                        title={t("detail.textPrompt")}
                       />
                     )
                   ) : (
@@ -567,7 +569,7 @@ export const PromptDetail = ({
               <div className="flex max-h-full min-h-0 w-full flex-col overflow-y-auto pb-4">
                 <JSONView
                   json={prompt.config}
-                  title="Config"
+                  title={t("common.config")}
                   className="pb-2"
                 />
               </div>
@@ -577,8 +579,8 @@ export const PromptDetail = ({
               className="mt-0 flex max-h-full min-h-0 flex-1 overflow-hidden"
             >
               <div className="flex h-full min-h-0 w-full flex-col gap-2 overflow-y-auto pb-4">
-                {pythonCode && <CodeView content={pythonCode} title="Python" />}
-                {jsCode && <CodeView content={jsCode} title="JS/TS" />}
+                {pythonCode && <CodeView content={pythonCode} title={t("detail.python")} />}
+                {jsCode && <CodeView content={jsCode} title={t("detail.jsTs")} />}
                 <p className="text-muted-foreground pl-1 text-xs">
                   See{" "}
                   <a

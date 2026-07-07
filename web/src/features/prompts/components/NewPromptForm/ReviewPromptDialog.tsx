@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/src/components/ui/button";
 import {
   Dialog,
@@ -23,6 +24,8 @@ type ReviewPromptDialogProps = {
 };
 
 const formatMessages = (messages: any[], excludeKeys: string[] = []) => {
+  const { t } = useTranslation("prompt");
+
   return JSON.stringify(
     messages.map((m) =>
       Object.fromEntries(
@@ -76,7 +79,7 @@ export const ReviewPromptDialog: React.FC<ReviewPromptDialogProps> = (
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent size="xl">
         <DialogHeader>
-          <DialogTitle>Review Prompt Changes</DialogTitle>
+          <DialogTitle>{t("review.title")}</DialogTitle>
           <DialogDescription className="flex items-center gap-2">
             <span className="font-medium">{initialPrompt.name}</span>
           </DialogDescription>
@@ -87,7 +90,7 @@ export const ReviewPromptDialog: React.FC<ReviewPromptDialogProps> = (
             <div className="space-y-6">
               <div className="space-y-4">
                 <div>
-                  <h3 className="mb-2 text-base font-medium">Content</h3>
+                  <h3 className="mb-2 text-base font-medium">{t("common.content")}</h3>
                   <DiffViewer
                     oldString={initialPromptContent}
                     newString={newPromptContent}
@@ -96,7 +99,7 @@ export const ReviewPromptDialog: React.FC<ReviewPromptDialogProps> = (
                   />
                 </div>
                 <div>
-                  <h3 className="mb-2 text-base font-medium">Config</h3>
+                  <h3 className="mb-2 text-base font-medium">{t("common.config")}</h3>
                   <DiffViewer
                     oldString={JSON.stringify(initialPrompt.config, null, 2)}
                     newString={newConfig ?? "failed"}

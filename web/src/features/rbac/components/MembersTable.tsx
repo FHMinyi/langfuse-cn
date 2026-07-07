@@ -38,6 +38,7 @@ import { SettingsTableCard } from "@/src/components/layouts/settings-table-card"
 import useSessionStorage from "@/src/components/useSessionStorage";
 import { useQueryParam, withDefault, StringParam } from "use-query-params";
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 export type MembersTableRow = {
   user: {
@@ -64,6 +65,8 @@ export function MembersTable({
   project?: { id: string; name: string };
   showSettingsCard?: boolean;
 }) {
+  const { t } = useTranslation("settings");
+
   // Create a unique key for this table's pagination state
   const paginationKey = project
     ? `projectMembers_${project.id}_pagination`
@@ -367,7 +370,7 @@ export function MembersTable({
   if (project ? !hasProjectViewAccess : !hasOrgViewAccess) {
     return (
       <Alert>
-        <AlertTitle>Access Denied</AlertTitle>
+        <AlertTitle>{t("rbac.accessDenied")}</AlertTitle>
         <AlertDescription>
           You do not have permission to view members of this organization.
         </AlertDescription>

@@ -1,4 +1,5 @@
 import { Fragment, type ReactNode, useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useRouter } from "next/router";
 import { api } from "@/src/utils/api";
 import { cn } from "@/src/utils/tailwind";
@@ -110,6 +111,8 @@ export function SelectEvaluatorList({ projectId }: SelectEvaluatorListProps) {
   const handleTemplateSelect = (templateId: string) => {
     const template = templates.data?.templates.find((t) => t.id === templateId);
     if (template) {
+  const { t } = useTranslation("evaluation");
+
       handleSelectEvaluator(template);
     }
   };
@@ -119,7 +122,7 @@ export function SelectEvaluatorList({ projectId }: SelectEvaluatorListProps) {
     <>
       <div className="mb-4 flex max-h-full min-h-0 flex-col gap-5">
         <div className="shrink-0 space-y-2">
-          <h2 className="text-base font-semibold">Create from scratch</h2>
+          <h2 className="text-base font-semibold">{t("selectList.fromScratch")}</h2>
           <div className="flex flex-wrap gap-3">
             {isCodeEvalEnabled ? (
               <Button
@@ -130,7 +133,7 @@ export function SelectEvaluatorList({ projectId }: SelectEvaluatorListProps) {
               >
                 <Code2 className="h-5 w-5 shrink-0" />
                 <span className="flex flex-col gap-1">
-                  <span className="font-medium">Code evaluator</span>
+                  <span className="font-medium">{t("selectList.codeEvaluator")}</span>
                   <span className="text-muted-foreground text-sm font-normal">
                     Use code to create Langfuse scores.
                   </span>
@@ -157,7 +160,7 @@ export function SelectEvaluatorList({ projectId }: SelectEvaluatorListProps) {
         </div>
 
         <div className="flex max-h-full min-h-0 flex-col gap-2">
-          <h2 className="shrink-0 text-base font-semibold">Use existing</h2>
+          <h2 className="shrink-0 text-base font-semibold">{t("selectList.useExisting")}</h2>
           <Card className="grid max-h-full min-h-0 grid-rows-[minmax(0,1fr)_auto] overflow-y-auto p-3">
             <div className="flex min-h-0 flex-col overflow-hidden">
               {templates.isLoading ? (
@@ -209,7 +212,7 @@ export function SelectEvaluatorList({ projectId }: SelectEvaluatorListProps) {
           }
         >
           <DialogHeader>
-            <DialogTitle>Create new evaluator</DialogTitle>
+            <DialogTitle>{t("selectList.createTitle")}</DialogTitle>
             {useLlmCreateWizard ? (
               <DialogDescription>
                 Set up an LLM connection first, then define the evaluator.

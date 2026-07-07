@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { DataTable } from "@/src/components/table/data-table";
 import { DataTableToolbar } from "@/src/components/table/data-table-toolbar";
 import { type LangfuseColumnDef } from "@/src/components/table/types";
@@ -38,6 +39,8 @@ export function MembershipInvitesPage({
   orgId: string;
   projectId?: string;
 }) {
+  const { t } = useTranslation("settings");
+
   const paginationKey = projectId
     ? `projectInvites_${projectId}_pagination`
     : `orgInvites_${orgId}_pagination`;
@@ -207,7 +210,7 @@ export function MembershipInvitesPage({
   return (
     <>
       {/* Header included in order to hide it when there are not invites yet */}
-      <Header title="Membership Invites" />
+      <Header title={t("rbac.membershipInvites")} />
       <DataTableToolbar columns={columns} />
       <DataTable
         tableName={"membershipInvites"}

@@ -29,6 +29,7 @@ import {
 } from "@langfuse/shared";
 import { z } from "zod";
 import { useEffect, useMemo, useState, memo } from "react";
+import { useTranslation } from "react-i18next";
 import { api } from "@/src/utils/api";
 import {
   InlineFilterBuilder,
@@ -131,6 +132,8 @@ const addPropagationWarnings = (
       !allowPropagationFilters &&
       COLUMN_IDENTIFIERS_THAT_REQUIRE_PROPAGATION.has(col.id)
     ) {
+  const { t } = useTranslation("evaluation");
+
       return {
         ...col,
         alert: {
@@ -337,7 +340,7 @@ function CodeEvalSourceLink({
     <Button
       variant="outline"
       disabled
-      title="Only user-managed templates can be edited"
+      title={t("innerForm.readonlyHint")}
     >
       Edit source code
       <ExternalLink className="ml-1 h-3.5 w-3.5" />
@@ -832,7 +835,7 @@ export const InnerEvaluatorForm = (props: {
           name="scoreName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Generated Score Name</FormLabel>
+              <FormLabel>{t("innerForm.generatedScoreName")}</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
@@ -846,7 +849,7 @@ export const InnerEvaluatorForm = (props: {
           {hasInvalidTraceFilters && (
             <Alert variant="destructive">
               <AlertTriangle className="h-4 w-4" />
-              <AlertTitle>Unsupported filter detected</AlertTitle>
+              <AlertTitle>{t("innerForm.unsupportedFilter")}</AlertTitle>
               <AlertDescription>
                 This evaluator has a filter that is not supported for
                 trace-level evaluators. It is effectively paused. Please remove
@@ -935,7 +938,7 @@ export const InnerEvaluatorForm = (props: {
               userFacingTarget === "offline-experiment" &&
               props.evalCapabilities.allowLegacy && (
                 <div className="flex flex-col gap-2">
-                  <FormLabel className="text-sm">Experiment Method</FormLabel>
+                  <FormLabel className="text-sm">{t("innerForm.experimentMethod")}</FormLabel>
                   <Tabs
                     value={useOtelDataForExperiment ? "otel" : "non-otel"}
                     onValueChange={(value) => {
@@ -1014,7 +1017,7 @@ export const InnerEvaluatorForm = (props: {
                   name="timeScope"
                   render={({ field }) => (
                     <FormItem className="flex-1">
-                      <FormLabel>Evaluate</FormLabel>
+                      <FormLabel>{t("innerForm.evaluate")}</FormLabel>
                       <FormControl>
                         <div className="flex flex-col gap-2">
                           <div className="flex space-x-2">
@@ -1194,7 +1197,7 @@ export const InnerEvaluatorForm = (props: {
 
                     return (
                       <FormItem>
-                        <FormLabel>Filter</FormLabel>
+                        <FormLabel>{t("innerForm.filter")}</FormLabel>
                         <FormControl>
                           <div className="max-w-[500px]">
                             {props.disabled && !hasFilters ? (
@@ -1287,7 +1290,7 @@ export const InnerEvaluatorForm = (props: {
                       name="sampling"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Sampling</FormLabel>
+                          <FormLabel>{t("innerForm.sampling")}</FormLabel>
                           <FormControl>
                             <div className="max-w-[500px]">
                               <Slider
@@ -1314,7 +1317,7 @@ export const InnerEvaluatorForm = (props: {
                         name="delay"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Delay (seconds)</FormLabel>
+                            <FormLabel>{t("innerForm.delaySeconds")}</FormLabel>
                             <FormControl>
                               <Input {...field} type="number" min={0} />
                             </FormControl>
@@ -1420,7 +1423,7 @@ export const InnerEvaluatorForm = (props: {
       >
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>You selected a legacy evaluator</DialogTitle>
+            <DialogTitle>{t("innerForm.legacyTitle")}</DialogTitle>
           </DialogHeader>
           <DialogBody className="text-sm">
             We strongly recommend using observation evaluators. Trace evaluators

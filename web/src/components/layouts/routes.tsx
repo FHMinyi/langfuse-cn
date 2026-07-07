@@ -22,6 +22,7 @@ import {
   Beaker,
 } from "lucide-react";
 import { type ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import { type Entitlement } from "@/src/features/entitlements/constants/entitlements";
 import { type User } from "next-auth";
 import { type OrganizationScope } from "@/src/features/rbac/constants/organizationAccessRights";
@@ -264,6 +265,7 @@ export const ROUTES: Route[] = [
 function CommandMenuTrigger() {
   const { setOpen } = useCommandMenu();
   const capture = usePostHogClientCapture();
+  const { t } = useTranslation("common");
 
   return (
     <SidebarMenuButton
@@ -276,7 +278,7 @@ function CommandMenuTrigger() {
       className="whitespace-nowrap"
     >
       <Search className="h-4 w-4" />
-      Go to...
+      {t("nav.search")}
       <KeyboardShortcut
         className="ml-auto"
         keys={[navigator.userAgent.includes("Mac") ? "⌘" : "Ctrl", "K"]}

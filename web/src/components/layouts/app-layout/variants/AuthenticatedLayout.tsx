@@ -7,6 +7,7 @@
 import { useEffect, useState, type PropsWithChildren } from "react";
 import Head from "next/head";
 import { useRouter, type NextRouter } from "next/router";
+import { useTranslation } from "react-i18next";
 import { SidebarProvider, SidebarInset } from "@/src/components/ui/sidebar";
 import { AppSidebar } from "@/src/components/nav/app-sidebar";
 import { Toaster } from "@/src/components/ui/sonner";
@@ -19,6 +20,7 @@ import {
   getCloudRegionAuthUrl,
 } from "@/src/features/organizations/cloudRegions";
 import { useLangfuseCloudRegion } from "@/src/features/organizations/hooks";
+import { useLanguageNavItem } from "@/src/components/i18n/LanguageSwitcher";
 import type { Session } from "next-auth";
 import type { NavigationItem } from "@/src/components/layouts/utilities/routes";
 import type { RouteGroup } from "@/src/components/layouts/routes";
@@ -87,6 +89,8 @@ export function AuthenticatedLayout({
   const { isLangfuseCloud, region: currentRegion } = useLangfuseCloudRegion();
   const [featurePreviewOpen, setFeaturePreviewOpen] = useState(false);
   const router = useRouter();
+  const { t } = useTranslation("common");
+  const languageNavItem = useLanguageNavItem();
   useProjectCookie(router);
 
   // Safe assertion: AuthenticatedLayout is only rendered after auth checks pass
@@ -123,12 +127,13 @@ export function AuthenticatedLayout({
       avatar: user.image ?? "",
     },
     items: [
-      { name: "Account Settings", href: "/account/settings" },
-      { name: "Theme", onClick: () => {}, content: <ThemeToggle /> },
+      { name: t("nav.user.accountSettings"), href: "/account/settings" },
+      languageNavItem,
+      { name: t("nav.user.theme"), onClick: () => {}, content: <ThemeToggle /> },
       ...(hasFeaturePreviews
         ? [
             {
-              name: "Feature Preview",
+              name: t("nav.user.featurePreview"),
               onClick: () => setFeaturePreviewOpen(true),
             },
           ]
@@ -136,20 +141,20 @@ export function AuthenticatedLayout({
       ...(isLangfuseCloud
         ? [
             {
-              name: "Regions",
+              name: t("nav.user.regions"),
               subItems: regionMenuItems,
               content: (
                 <>
-                  Regions
+                  {t("nav.user.regions")}
                   <div className="ml-2 inline-flex rounded bg-black/5 p-1 text-xs dark:bg-white/10">
-                    Current: {currentRegion}
+                    {t("nav.user.regions.current")}: {currentRegion}
                   </div>
                 </>
               ),
             },
           ]
         : []),
-      { name: "Sign out", onClick: onSignOut },
+      { name: t("nav.user.signOut"), onClick: onSignOut },
     ],
   };
 

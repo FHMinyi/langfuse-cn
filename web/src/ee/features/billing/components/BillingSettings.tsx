@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 // Langfuse Cloud only
 
 import Header from "@/src/components/layouts/header";
@@ -17,6 +18,8 @@ import { SpendAlertsSection } from "./SpendAlerts/SpendAlertsSection";
 import { useBillingInformation } from "./useBillingInformation";
 
 export const BillingSettings = () => {
+  const { t } = useTranslation("ee");
+
   const router = useRouter();
   const orgId = router.query.organizationId as string | undefined;
   const hasAccess = useHasOrganizationAccess({
@@ -42,7 +45,7 @@ export const BillingSettings = () => {
   if (!hasAccess) {
     return (
       <Alert>
-        <AlertTitle>Access Denied</AlertTitle>
+        <AlertTitle>{t("common.accessDenied")}</AlertTitle>
         <AlertDescription>
           You do not have permission to view the billing settings of this
           organization.
@@ -55,7 +58,7 @@ export const BillingSettings = () => {
     <div>
       <BillingScheduleNotification />
 
-      <Header title="Usage & Billing" />
+      <Header title={t("billing.title")} />
       <div className="space-y-6">
         <BillingUsageChart />
         <BillingPlanPeriodView />

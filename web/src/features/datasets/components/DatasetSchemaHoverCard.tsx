@@ -9,6 +9,7 @@ import type { Prisma } from "@langfuse/shared";
 import { Button } from "@/src/components/ui/button";
 import { Separator } from "@/src/components/ui/separator";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { generateSchemaExample } from "../lib/generateSchemaExample";
 import { copyTextToClipboard } from "@/src/utils/clipboard";
 
@@ -23,6 +24,7 @@ export const DatasetSchemaHoverCard: React.FC<DatasetSchemaHoverCardProps> = ({
   schemaType,
   showLabel = false,
 }) => {
+  const { t } = useTranslation("dataset");
   const title =
     schemaType === "input" ? "Input Schema" : "Expected Output Schema";
 
@@ -62,7 +64,7 @@ export const DatasetSchemaHoverCard: React.FC<DatasetSchemaHoverCardProps> = ({
           size="sm"
         >
           <LockIcon className={showLabel ? "h-3 w-3" : "h-4 w-4"} />
-          {showLabel && <span>Schema enforced</span>}
+          {showLabel && <span>{t("schema.enforced")}</span>}
         </Button>
       </HoverCardTrigger>
       <HoverCardContent
@@ -96,7 +98,7 @@ export const DatasetSchemaHoverCard: React.FC<DatasetSchemaHoverCardProps> = ({
           <>
             <Separator className="my-4" />
             <div className="flex items-center justify-between">
-              <p className="text-sm font-medium">Example Object</p>
+              <p className="text-sm font-medium">{t("schema.exampleObject")}</p>
               <Button
                 variant="ghost"
                 size="sm"

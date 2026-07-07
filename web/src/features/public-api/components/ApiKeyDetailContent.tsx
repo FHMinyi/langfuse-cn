@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { SubHeader } from "@/src/components/layouts/header";
 import { CodeView } from "@/src/components/ui/CodeJsonViewer";
 import { Label } from "@/src/components/ui/label";
@@ -26,6 +27,8 @@ function encodeMcpCredential(publicKey: string, secretKey: string) {
 }
 
 export function ApiKeyDetailContent(props: ApiKeyDetailContentProps) {
+  const { t } = useTranslation("api");
+
   const { scope, secretKey, publicKey, baseUrl, className, showMcpSection } =
     props;
   const envCode = getLangfuseEnvCode(baseUrl, { secretKey, publicKey });
@@ -34,7 +37,7 @@ export function ApiKeyDetailContent(props: ApiKeyDetailContentProps) {
   return (
     <div className={cn("space-y-6", className)}>
       <div>
-        <SubHeader title="Secret Key" />
+        <SubHeader title={t("apiKey.detail.secretKey")} />
         <div className="text-muted-foreground text-sm">
           This key can only be viewed once. You can always create new keys in
           the {scope} settings.
@@ -42,7 +45,7 @@ export function ApiKeyDetailContent(props: ApiKeyDetailContentProps) {
         <CodeView content={secretKey} className="mt-2" />
       </div>
       <div>
-        <SubHeader title="Public Key" />
+        <SubHeader title={t("apiKey.detail.publicKey")} />
         <CodeView content={publicKey} className="mt-2" />
       </div>
       <div>
@@ -53,7 +56,7 @@ export function ApiKeyDetailContent(props: ApiKeyDetailContentProps) {
         <>
           <hr />
           <div>
-            <SubHeader title="Using with MCP" />
+            <SubHeader title={t("apiKey.detail.usingMcp")} />
             <p className="text-muted-foreground text-sm">
               For a detailed guide on how to use this API key to connect to the
               Langfuse MCP server, see the{" "}
@@ -68,7 +71,7 @@ export function ApiKeyDetailContent(props: ApiKeyDetailContentProps) {
               .
             </p>
             <div className="mt-4">
-              <Label>Header</Label>
+              <Label>{t("apiKey.detail.header")}</Label>
               <CodeView
                 content={`Authorization: Basic ${mcpCredential}`}
                 className="mt-2"

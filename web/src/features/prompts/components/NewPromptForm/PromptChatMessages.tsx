@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { v4 as uuidv4 } from "uuid";
 import { PlusIcon } from "lucide-react";
 
@@ -37,6 +38,8 @@ const PromptChatMessagesSearchSync = ({
 }: {
   messages: ChatMessageWithId[];
 }) => {
+  const { t } = useTranslation("prompt");
+
   useSyncMessageSearchMessages(PROMPT_CHAT_MESSAGES_SEARCH_PAGE_ID, messages);
 
   return null;
@@ -160,7 +163,7 @@ export const PromptChatMessages: React.FC<PromptChatMessagesProps> = ({
                 onClick={() => setIsDialogOpen(true)}
               >
                 <PlusIcon className="h-4 w-4" />
-                <span className="text-xs">Add prompt reference</span>
+                <span className="text-xs">{t("newPrompt.addPromptReference")}</span>
               </Button>
 
               {projectId && (

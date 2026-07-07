@@ -17,6 +17,7 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { env } from "@/src/env.mjs";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { LangfuseIcon } from "@/src/components/design-system/LangfuseIcon/LangfuseIcon";
 import { CloudPrivacyNotice } from "@/src/features/auth/components/AuthCloudPrivacyNotice";
 import { CloudRegionSwitch } from "@/src/features/auth/components/AuthCloudRegionSwitch";
@@ -134,6 +135,8 @@ function StandardSignupFlow({
     const emailResult = emailSchema.safeParse(emailValue);
 
     if (!emailResult.success) {
+  const { t } = useTranslation("pages");
+
       form.setError("email", {
         message: "Invalid email address",
       });
@@ -241,9 +244,9 @@ function StandardSignupFlow({
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel>{t("signUp.name")}</FormLabel>
                   <FormControl>
-                    <Input placeholder="Jane Doe" {...field} />
+                    <Input placeholder={t("signUp.namePlaceholder")} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -255,7 +258,7 @@ function StandardSignupFlow({
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel>{t("signUp.email")}</FormLabel>
                 <FormControl>
                   <Input
                     placeholder="jsdoe@example.com"
@@ -274,7 +277,7 @@ function StandardSignupFlow({
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel>{t("signUp.password")}</FormLabel>
                   <FormControl>
                     <PasswordInput {...field} />
                   </FormControl>
@@ -403,7 +406,7 @@ function VerifiedSignupFlow({
     return (
       <>
         <Head>
-          <title>Verify your email | Langfuse</title>
+          <title>{t("signUp.verifyTitle")}</title>
         </Head>
         <div className="flex flex-1 flex-col py-6 sm:min-h-full sm:justify-center sm:px-6 sm:py-12 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-md">
@@ -487,9 +490,9 @@ function VerifiedSignupFlow({
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Name</FormLabel>
+                <FormLabel>{t("signUp.name")}</FormLabel>
                 <FormControl>
-                  <Input placeholder="Jane Doe" {...field} />
+                  <Input placeholder={t("signUp.namePlaceholder")} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -500,7 +503,7 @@ function VerifiedSignupFlow({
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel>{t("signUp.email")}</FormLabel>
                 <FormControl>
                   <Input
                     placeholder="jsdoe@example.com"
@@ -545,7 +548,7 @@ function SignupPageShell({ children }: { children: React.ReactNode }) {
   return (
     <>
       <Head>
-        <title>Sign up | Langfuse</title>
+        <title>{t("signUp.title")}</title>
         <meta
           name="description"
           content="Create an account, no credit card required."

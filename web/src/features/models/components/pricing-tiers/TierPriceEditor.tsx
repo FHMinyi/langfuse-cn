@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { MinusCircle, PlusCircle } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
@@ -19,19 +20,21 @@ export function TierPriceEditor({
   form,
   isDefault,
 }: TierPriceEditorProps) {
+  const { t } = useTranslation("model");
+
   const prices = form.watch(`pricingTiers.${tierIndex}.prices`) || {};
 
   return (
     <div className="space-y-3">
-      <FormLabel>Prices</FormLabel>
+      <FormLabel>{t("pricing.prices")}</FormLabel>
       <div className="text-muted-foreground grid grid-cols-2 gap-1 text-sm">
-        <span>Usage type</span>
+        <span>{t("tierPrice.usageType")}</span>
         <span>Price</span>
       </div>
       {Object.entries(prices).map(([key, value], index) => (
         <div key={index} className="grid grid-cols-2 gap-1">
           <Input
-            placeholder="Key (e.g. input, output)"
+            placeholder={t("tierPrice.keyPlaceholder")}
             value={key}
             disabled={!isDefault}
             onChange={(e) => {
@@ -53,7 +56,7 @@ export function TierPriceEditor({
           <div className="flex gap-1">
             <Input
               type="number"
-              placeholder="Price per unit"
+              placeholder={t("tierPrice.pricePerUnit")}
               value={value as number}
               step="0.000001"
               onChange={(e) => {
@@ -67,7 +70,7 @@ export function TierPriceEditor({
               <Button
                 type="button"
                 variant="outline"
-                title="Remove price"
+                title={t("tierPrice.remove")}
                 size="icon"
                 onClick={() => {
                   const newPrices = { ...prices };
@@ -101,7 +104,7 @@ export function TierPriceEditor({
           className="flex items-center gap-1"
         >
           <PlusCircle className="h-4 w-4" />
-          <span>Add Price</span>
+          <span>{t("tierPrice.addPrice")}</span>
         </Button>
       )}
       <PricePreview prices={prices} />

@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useTranslation } from "react-i18next";
 import { Calendar as CalendarIcon, X, ChevronDown } from "lucide-react";
 import { addMinutes } from "date-fns";
 import { Button } from "@/src/components/ui/button";
@@ -42,6 +43,8 @@ export function DatePicker({
   disabled?: boolean;
   includeTimePicker?: boolean;
 }) {
+  const { t } = useTranslation("components");
+
   return (
     <div className="flex flex-row gap-2 align-middle">
       <Popover>
@@ -59,7 +62,7 @@ export function DatePicker({
             {date ? (
               format(date, includeTimePicker ? "PPP pp" : "PPP")
             ) : (
-              <span>Pick a date</span>
+              <span>{t("datePicker.pickDate")}</span>
             )}
           </Button>
         </PopoverTrigger>
@@ -245,7 +248,7 @@ export function DatePickerWithRange({
                 format(internalDateRange.from, "LLL dd, y")
               )
             ) : (
-              <span>Pick a date</span>
+              <span>{t("datePicker.pickDate")}</span>
             )}
           </Button>
         </PopoverTrigger>
@@ -518,7 +521,7 @@ export function TimeRangePicker({
     return (
       <div className="flex items-center gap-2">
         <CalendarIcon className="h-4 w-4" />
-        <span>Select time range</span>
+        <span>{t("datePicker.selectTimeRange")}</span>
       </div>
     );
   };
@@ -562,7 +565,7 @@ export function TimeRangePicker({
               {internalDateRange?.from && internalDateRange.to && (
                 <div className="flex flex-col gap-3 border-t p-3">
                   <div className="flex flex-col gap-1">
-                    <p className="px-1 text-sm font-medium">Start time</p>
+                    <p className="px-1 text-sm font-medium">{t("datePicker.startTime")}</p>
                     <TimePicker
                       date={internalDateRange?.from}
                       setDate={onStartTimeSelection}
@@ -570,7 +573,7 @@ export function TimeRangePicker({
                     />
                   </div>
                   <div className="flex flex-col gap-1">
-                    <p className="px-1 text-sm font-medium">End time</p>
+                    <p className="px-1 text-sm font-medium">{t("datePicker.endTime")}</p>
                     <TimePicker
                       date={internalDateRange?.to}
                       setDate={onEndTimeSelection}
@@ -611,7 +614,7 @@ export function TimeRangePicker({
                 <span className="bg-muted flex h-5 w-10 items-center justify-center rounded px-1.5 text-center text-xs">
                   <CalendarIcon className="h-3 w-3" />
                 </span>
-                <span>Select from calendar</span>
+                <span>{t("datePicker.selectFromCalendar")}</span>
               </div>
             </div>
           )}

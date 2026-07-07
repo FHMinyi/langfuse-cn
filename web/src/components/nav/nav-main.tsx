@@ -10,7 +10,15 @@ import {
 } from "@/src/components/ui/sidebar";
 import Link from "next/link";
 import { type ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import { type RouteGroup } from "@/src/components/layouts/routes";
+
+/** Maps RouteGroup enum values to i18n keys for the sidebar group labels. */
+const ROUTE_GROUP_I18N_KEYS: Record<RouteGroup, string> = {
+  [RouteGroup.Observability]: "nav.group.observability",
+  [RouteGroup.PromptManagement]: "nav.group.promptManagement",
+  [RouteGroup.Evaluation]: "nav.group.evaluation",
+};
 
 export type NavMainItem = {
   title: string;
@@ -54,6 +62,7 @@ export function NavMain({
     ungrouped: NavMainItem[];
   };
 }) {
+  const { t } = useTranslation("common");
   return (
     <>
       <SidebarGroup>
@@ -81,33 +90,39 @@ export function NavMain({
         </SidebarGroupContent>
       </SidebarGroup>
       {items.grouped &&
-        Object.entries(items.grouped).map(([group, items]) => (
-          <SidebarGroup key={group}>
-            <SidebarGroupLabel>{group}</SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {items.map((item) => (
-                  <SidebarMenuItem key={item.title}>
-                    {item.menuNode || (
-                      <SidebarMenuButton
-                        asChild
-                        tooltip={item.title}
-                        isActive={item.isActive}
-                      >
-                        <Link
-                          href={item.url}
-                          target={item.newTab ? "_blank" : undefined}
+        Object.entries(items.grouped).map(([group, items]) => {
+          const groupKey = group as RouteGroup;
+          const groupLabel = ROUTE_GROUP_I18N_KEYS[groupKey]
+            ? t(ROUTE_GROUP_I18N_KEYS[groupKey])
+            : group;
+          return (
+            <SidebarGroup key={group}>
+              <SidebarGroupLabel>{groupLabel}</SidebarGroupLabel>
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  {items.map((item) => (
+                    <SidebarMenuItem key={item.title}>
+                      {item.menuNode || (
+                        <SidebarMenuButton
+                          asChild
+                          tooltip={item.title}
+                          isActive={item.isActive}
                         >
-                          <NavItemContent item={item} />
-                        </Link>
-                      </SidebarMenuButton>
-                    )}
-                  </SidebarMenuItem>
-                ))}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
-        ))}
+                          <Link
+                            href={item.url}
+                            target={item.newTab ? "_blank" : undefined}
+                          >
+                            <NavItemContent item={item} />
+                          </Link>
+                        </SidebarMenuButton>
+                      )}
+                    </SidebarMenuItem>
+                  ))}
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </SidebarGroup>
+          );
+        })}
     </>
   );
 }

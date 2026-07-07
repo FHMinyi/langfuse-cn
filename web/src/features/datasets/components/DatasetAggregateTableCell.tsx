@@ -19,6 +19,7 @@ import { useTrpcError } from "@/src/hooks/useTrpcError";
 import { type ScoreAggregate } from "@langfuse/shared";
 import { computeScoreDiffs } from "@/src/features/datasets/lib/computeScoreDiffs";
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { type BaselineDiff } from "@/src/features/datasets/lib/calculateBaselineDiff";
 import { DiffLabel } from "@/src/features/datasets/components/DiffLabel";
 import { useResourceMetricsDiff } from "@/src/features/datasets/hooks/useResourceMetricsDiff";
@@ -124,6 +125,8 @@ const DatasetAggregateCellContent = ({
   };
 
   const handleOpenReview = () => {
+  const { t } = useTranslation("dataset");
+
     setActiveCell({
       traceId: value.trace.id,
       observationId: value.observation?.id,
@@ -186,7 +189,7 @@ const DatasetAggregateCellContent = ({
                 />
               ))
             ) : (
-              <span className="text-muted-foreground text-xs">No scores</span>
+              <span className="text-muted-foreground text-xs">{t("aggregate.noScores")}</span>
             )}
           </div>
         </div>
@@ -246,7 +249,7 @@ const DatasetAggregateCellContent = ({
                 variant="outline"
                 size="icon"
                 className="h-6 w-6 p-0"
-                title="View trace/observation"
+                title={t("aggregate.viewTrace")}
                 onClick={handleOpenPeek}
               >
                 <ListTree className="h-3 w-3" />

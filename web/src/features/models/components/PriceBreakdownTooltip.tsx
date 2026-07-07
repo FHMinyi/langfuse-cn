@@ -1,6 +1,7 @@
 import Decimal from "decimal.js";
 import { InfoIcon } from "lucide-react";
 import { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { type RowHeight } from "@/src/components/table/data-table-row-height-switch";
 import {
@@ -31,6 +32,8 @@ export const PriceBreakdownTooltip = ({
     () =>
       Math.max(
         ...Object.values(prices ?? {}).map((price) => {
+  const { t } = useTranslation("model");
+
           return getMaxDecimals(price, priceUnitMultiplier);
         }),
       ),
@@ -42,7 +45,7 @@ export const PriceBreakdownTooltip = ({
   return (
     <>
       {Object.keys(prices).length === 0 ? (
-        <p>No prices</p>
+        <p>{t("priceBreakdown.noPrices")}</p>
       ) : Object.keys(prices).length <= (rowHeight === "m" ? 4 : 2) ? (
         <div className="grid w-full grid-cols-[2fr_3fr] gap-x-2">
           {Object.entries(prices).map(([type, price]) => (
@@ -79,7 +82,7 @@ export const PriceBreakdownTooltip = ({
             <TooltipContent className="min-w-64 grow p-4">
               <div className="flex flex-col gap-4">
                 <div className="flex flex-col gap-1">
-                  <span className="font-semibold">Price breakdown</span>
+                  <span className="font-semibold">{t("priceBreakdown.title")}</span>
                   <span className="font-mono text-xs font-medium">
                     {modelName}
                   </span>

@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/src/components/ui/button";
 import {
   Dialog,
@@ -51,6 +52,8 @@ const createSmartDiff = (
     );
 
   return {
+  const { t } = useTranslation("prompt");
+
     oldString: formatMessages(oldPrompt.prompt as any[]),
     newString: formatMessages(newPrompt.prompt as any[]),
   };
@@ -77,7 +80,7 @@ export const PromptVersionDiffDialog: React.FC<PromptVersionDiffDialogProps> = (
           onClick={(event) => {
             event.stopPropagation();
           }}
-          title="Compare with selected prompt"
+          title={t("versionDiff.compareTitle")}
         >
           <FileDiffIcon className="h-4 w-4" />
         </Button>
@@ -105,7 +108,7 @@ export const PromptVersionDiffDialog: React.FC<PromptVersionDiffDialogProps> = (
           <div className="space-y-6">
             <div className="space-y-4">
               <div>
-                <h3 className="mb-2 text-base font-medium">Content</h3>
+                <h3 className="mb-2 text-base font-medium">{t("common.content")}</h3>
                 <DiffViewer
                   {...createSmartDiff(leftPrompt, rightPrompt)}
                   oldLabel={`v${leftPrompt.version}`}
@@ -115,7 +118,7 @@ export const PromptVersionDiffDialog: React.FC<PromptVersionDiffDialogProps> = (
                 />
               </div>
               <div>
-                <h3 className="mb-2 text-base font-medium">Config</h3>
+                <h3 className="mb-2 text-base font-medium">{t("common.config")}</h3>
                 <DiffViewer
                   oldString={JSON.stringify(leftPrompt.config, null, 2)}
                   newString={JSON.stringify(rightPrompt.config, null, 2)}

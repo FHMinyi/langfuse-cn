@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import Header from "@/src/components/layouts/header";
 import { Alert, AlertDescription, AlertTitle } from "@/src/components/ui/alert";
 import { BatchExportsTable } from "@/src/features/batch-exports/components/BatchExportsTable";
@@ -5,6 +6,8 @@ import { useHasProjectAccess } from "@/src/features/rbac/utils/checkProjectAcces
 import { SettingsTableCard } from "@/src/components/layouts/settings-table-card";
 
 export function BatchExportsSettingsPage(props: { projectId: string }) {
+  const { t } = useTranslation("workflow");
+
   const hasAccess = useHasProjectAccess({
     projectId: props.projectId,
     scope: "batchExports:read",
@@ -12,7 +15,7 @@ export function BatchExportsSettingsPage(props: { projectId: string }) {
 
   return (
     <>
-      <Header title="Exports" />
+      <Header title={t("batchExports.title")} />
       <p className="mb-4 text-sm">
         Export large datasets in your preferred format via the export buttons
         across Langfuse. Exports are processed asynchronously and remain
@@ -25,7 +28,7 @@ export function BatchExportsSettingsPage(props: { projectId: string }) {
         </SettingsTableCard>
       ) : (
         <Alert>
-          <AlertTitle>Access Denied</AlertTitle>
+          <AlertTitle>{t("common.accessDenied")}</AlertTitle>
           <AlertDescription>
             You do not have permission to view batch exports.
           </AlertDescription>

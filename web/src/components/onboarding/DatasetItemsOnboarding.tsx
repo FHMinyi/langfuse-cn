@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { SplashScreen } from "@/src/components/ui/splash-screen";
 import { Braces, Code, ListTree, Upload } from "lucide-react";
 import DocPopup from "@/src/components/layouts/doc-popup";
@@ -55,6 +56,8 @@ const DatasetItemEntryPointRow = ({
         !disabled
           ? (event) => {
               if (event.key === "Enter" || event.key === " ") {
+  const { t } = useTranslation("components");
+
                 event.preventDefault();
                 onClick?.();
               }
@@ -99,7 +102,7 @@ export const DatasetItemsOnboarding = ({
 
   return (
     <SplashScreen
-      title="Add items to your dataset"
+      title={t("onboarding.addItems")}
       description="Datasets are collections of specific edge cases and underrepresented patterns used to evaluate your application."
     >
       <div className="flex flex-col gap-4">
@@ -112,7 +115,7 @@ export const DatasetItemsOnboarding = ({
           <DialogTrigger asChild disabled={!hasProjectAccess}>
             <DatasetItemEntryPointRow
               icon={<Upload className="h-5 w-5" />}
-              title="Upload CSV"
+              title={t("onboarding.uploadCsv")}
               description="Import dataset items from a CSV file"
               onClick={() => {
                 if (hasProjectAccess) {
@@ -131,7 +134,7 @@ export const DatasetItemsOnboarding = ({
           <DialogTrigger asChild disabled={!hasProjectAccess}>
             <DatasetItemEntryPointRow
               icon={<Braces className="h-5 w-5" />}
-              title="Add Manually"
+              title={t("onboarding.addManually")}
               description="Manually input a single item"
               onClick={() => {
                 if (hasProjectAccess) {
@@ -143,7 +146,7 @@ export const DatasetItemsOnboarding = ({
           </DialogTrigger>
           <DialogContent size="lg">
             <DialogHeader>
-              <DialogTitle>Create dataset item</DialogTitle>
+              <DialogTitle>{t("onboarding.createItem")}</DialogTitle>
             </DialogHeader>
             <NewDatasetItemForm
               projectId={projectId}
@@ -160,14 +163,14 @@ export const DatasetItemsOnboarding = ({
         >
           <DatasetItemEntryPointRow
             icon={<Code className="h-5 w-5" />}
-            title="Add via Code"
+            title={t("onboarding.addViaCode")}
             description="Use our Python/TS/JS SDKs or custom API"
           />
         </Link>
 
         <DatasetItemEntryPointRow
           icon={<ListTree className="h-5 w-5" />}
-          title="Select Traces"
+          title={t("onboarding.selectTraces")}
           description="Coming soon!"
           comingSoon
           docPopup={{

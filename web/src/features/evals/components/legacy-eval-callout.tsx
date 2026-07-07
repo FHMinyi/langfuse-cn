@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { Callout } from "@/src/components/ui/callout";
 import { Button } from "@/src/components/ui/button";
 import {
@@ -21,6 +22,8 @@ export function LegacyEvalCallout({
   evalConfigId,
   targetObject,
 }: LegacyEvalCalloutProps) {
+  const { t } = useTranslation("evaluation");
+
   const router = useRouter();
   const isDeprecated = isLegacyEvalTarget(targetObject);
 
@@ -48,7 +51,7 @@ export function LegacyEvalCallout({
         </>
       )}
     >
-      <span>This evaluator </span>
+      <span>{t("legacy.thisEvaluator")} </span>
       <span className="text-dark-blue hover:opacity-80">
         <Link
           href="https://langfuse.com/faq/all/llm-as-a-judge-migration"

@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/src/components/ui/button";
 import {
   DialogBody,
@@ -35,12 +36,14 @@ export function ApiKeyCreateDialogContent(
   const { scope } = props;
 
   if (props.type === "detail") {
+  const { t } = useTranslation("api");
+
     const { secretKey, publicKey, baseUrl } = props;
 
     return (
       <DialogContent onPointerDownOutside={(e) => e.preventDefault()}>
         <DialogHeader>
-          <DialogTitle>API Keys</DialogTitle>
+          <DialogTitle>{t("apiKey.apiKeysTitle")}</DialogTitle>
         </DialogHeader>
         <DialogBody>
           <ApiKeyDetailContent
@@ -60,15 +63,15 @@ export function ApiKeyCreateDialogContent(
   return (
     <DialogContent onPointerDownOutside={(e) => e.preventDefault()}>
       <DialogHeader>
-        <DialogTitle>Create API Keys</DialogTitle>
+        <DialogTitle>{t("apiKey.createTitle")}</DialogTitle>
       </DialogHeader>
       <DialogBody>
         <div className="space-y-4">
           <div>
-            <Label htmlFor="note">Note (optional)</Label>
+            <Label htmlFor="note">{t("apiKey.noteOptional")}</Label>
             <Input
               id="note"
-              placeholder="Production key"
+              placeholder={t("apiKey.notePlaceholder")}
               value={note}
               onChange={(e) => onNoteChange(e.target.value)}
               onKeyDown={(e) => {

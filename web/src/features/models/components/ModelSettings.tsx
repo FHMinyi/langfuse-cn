@@ -1,10 +1,13 @@
+import { useTranslation } from "react-i18next";
 import Header from "@/src/components/layouts/header";
 import ModelTable from "@/src/components/table/use-cases/models";
 
 export function ModelsSettings(props: { projectId: string }) {
+  const { t } = useTranslation("model");
+
   return (
     <>
-      <Header title="Model Definitions" />
+      <Header title={t("settings.title")} />
       <p className="mb-2 text-sm">
         A configuration that stores pricing information for an LLM model. Model
         definitions specify the cost per input and output token, enabling

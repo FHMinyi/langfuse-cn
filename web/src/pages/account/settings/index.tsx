@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { PagedSettingsContainer } from "@/src/components/PagedSettingsContainer";
 import Header from "@/src/components/layouts/header";
 import { Card } from "@/src/components/ui/card";
@@ -65,12 +66,14 @@ function UpdateDisplayName() {
   });
 
   function onSubmit(values: z.infer<typeof displayNameSchema>) {
+  const { t } = useTranslation("pages");
+
     updateDisplayName.mutate({ name: values.name });
   }
 
   return (
     <div>
-      <Header title="Display Name" />
+      <Header title={t("account.displayName")} />
       <Card className="p-3">
         {form.getValues().name !== "" ? (
           <p className="text-primary mb-4 text-sm">
@@ -165,7 +168,7 @@ function DeleteAccountButton() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="destructive-secondary">Delete Account</Button>
+        <Button variant="destructive-secondary">{t("account.deleteAccount")}</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
@@ -269,7 +272,7 @@ const getAccountSettingsPages = (userEmail: string): AccountSettingsPage[] => [
     content: (
       <div className="flex flex-col gap-6">
         <div>
-          <Header title="Email" />
+          <Header title={t("account.email")} />
           <Card className="p-3">
             <p className="text-primary text-sm">
               Your email address: <b>{userEmail}</b>
@@ -278,7 +281,7 @@ const getAccountSettingsPages = (userEmail: string): AccountSettingsPage[] => [
         </div>
         <UpdateDisplayName />
         <div>
-          <Header title="Password" />
+          <Header title={t("account.password")} />
           <Card className="p-3">
             <p className="text-primary mb-4 text-sm">
               To change your password, we will send you a secure link to your
@@ -286,7 +289,7 @@ const getAccountSettingsPages = (userEmail: string): AccountSettingsPage[] => [
               process.
             </p>
             <Button asChild variant="secondary">
-              <Link href="/auth/reset-password">Change Password</Link>
+              <Link href="/auth/reset-password">{t("account.changePassword")}</Link>
             </Button>
           </Card>
         </div>

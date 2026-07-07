@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
 import { Input } from "@/src/components/ui/input";
@@ -520,6 +521,8 @@ export const InnerEvalTemplateForm = (props: {
       }
     } else {
       if (!defaultModel) {
+  const { t } = useTranslation("evaluation");
+
         setFormError(
           "No default evaluation model set. Set up default evaluation model or use a custom model",
         );
@@ -541,9 +544,9 @@ export const InnerEvalTemplateForm = (props: {
               render={({ field }) => (
                 <>
                   <FormItem>
-                    <FormLabel>Name</FormLabel>
+                    <FormLabel>{t("common.name")}</FormLabel>
                     <FormControl>
-                      <Input {...field} placeholder="Select a name" />
+                      <Input {...field} placeholder={t("templateForm.namePlaceholder")} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -607,7 +610,7 @@ export const InnerEvalTemplateForm = (props: {
                       />
                     </FormControl>
                     <div className="space-y-0 leading-none">
-                      <FormLabel>Use default evaluation model</FormLabel>
+                      <FormLabel>{t("templateForm.defaultModel")}</FormLabel>
                       <FormDescription className="text-xs">
                         <ManageDefaultEvalModel
                           projectId={props.projectId}
@@ -679,7 +682,7 @@ export const InnerEvalTemplateForm = (props: {
                   render={({ field }) => (
                     <>
                       <FormItem>
-                        <FormLabel>Evaluation prompt</FormLabel>
+                        <FormLabel>{t("templateForm.evalPrompt")}</FormLabel>
                         <FormDescription>
                           Define your llm-as-a-judge evaluation template. You
                           can use {"{{input}}"} and other variables to reference
@@ -710,7 +713,7 @@ export const InnerEvalTemplateForm = (props: {
                 name="scoreDataType"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Score type</FormLabel>
+                    <FormLabel>{t("templateForm.scoreType")}</FormLabel>
                     <FormDescription>
                       Choose whether the evaluator should return a numeric
                       score, a boolean verdict, or one of a fixed set of
@@ -758,7 +761,7 @@ export const InnerEvalTemplateForm = (props: {
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select a score type" />
+                          <SelectValue placeholder={t("templateForm.selectScoreType")} />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -785,7 +788,7 @@ export const InnerEvalTemplateForm = (props: {
                   render={() => (
                     <FormItem>
                       <div>
-                        <FormLabel>Categories</FormLabel>
+                        <FormLabel>{t("templateForm.categories")}</FormLabel>
                         <FormDescription>
                           Add the allowed category values the model may return.
                           Categories must be exhaustive. If you need a catch-all
@@ -859,7 +862,7 @@ export const InnerEvalTemplateForm = (props: {
                               />
                             </FormControl>
                             <div className="space-y-0.5 leading-none">
-                              <FormLabel>Allow multiple matches</FormLabel>
+                              <FormLabel>{t("templateForm.allowMultiple")}</FormLabel>
                               <FormDescription>
                                 Lets the model return more than one category.
                                 One score will be created for each selected
@@ -883,7 +886,7 @@ export const InnerEvalTemplateForm = (props: {
                 name="reasoningDescription"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Score reasoning prompt</FormLabel>
+                    <FormLabel>{t("templateForm.scoreReasoning")}</FormLabel>
                     <FormDescription>
                       Define how the LLM should explain its evaluation. The
                       explanation will be prompted before the score is returned

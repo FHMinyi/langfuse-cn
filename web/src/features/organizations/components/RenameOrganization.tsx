@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
 import { api } from "@/src/utils/api";
@@ -46,6 +47,8 @@ export default function RenameOrganization() {
   });
 
   function onSubmit(values: z.infer<typeof projectNameSchema>) {
+  const { t } = useTranslation("settings");
+
     if (!organization || !hasAccess) return;
     capture("organization_settings:rename_form_submit");
     renameOrganization
@@ -63,7 +66,7 @@ export default function RenameOrganization() {
 
   return (
     <div>
-      <Header title="Organization Name" />
+      <Header title={t("org.nameTitle")} />
       <Card className="mb-4 p-3">
         {form.getValues().name !== "" ? (
           <p className="text-primary mb-4 text-sm">
@@ -98,7 +101,7 @@ export default function RenameOrganization() {
                         disabled={!hasAccess}
                       />
                       {!hasAccess && (
-                        <span title="No access">
+                        <span title={t("common.noAccess")}>
                           <LockIcon className="text-muted absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2 transform" />
                         </span>
                       )}

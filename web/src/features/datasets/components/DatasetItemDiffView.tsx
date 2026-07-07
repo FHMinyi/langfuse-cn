@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import type { DatasetItemDomain } from "@langfuse/shared";
 import DiffViewer from "@/src/components/DiffViewer";
 import {
@@ -17,6 +18,8 @@ export const DatasetItemDiffView = ({
   selectedVersion,
   latestVersion,
 }: DatasetItemDiffViewProps) => {
+  const { t } = useTranslation("dataset");
+
   return (
     <div className="space-y-4">
       <Accordion
@@ -37,7 +40,7 @@ export const DatasetItemDiffView = ({
         </AccordionItem>
 
         <AccordionItem value="output">
-          <AccordionTrigger>Expected Output</AccordionTrigger>
+          <AccordionTrigger>{t("itemDiff.expectedOutput")}</AccordionTrigger>
           <AccordionContent>
             <DiffViewer
               oldString={stringifyDatasetItemData(

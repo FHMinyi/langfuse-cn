@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { CodeView } from "@/src/components/ui/CodeJsonViewer";
 
 export const WebhookSecretRender = ({
@@ -6,10 +7,12 @@ export const WebhookSecretRender = ({
 }: {
   webhookSecret: string;
 }) => {
+  const { t } = useTranslation("workflow");
+
   return (
     <>
       <div className="mb-4">
-        <div className="font-semibold">Webhook Secret</div>
+        <div className="font-semibold">{t("automation.webhookSecret")}</div>
         <div className="my-2 text-sm">
           This secret can only be viewed once. You can regenerate it in the
           automation settings if needed. Use this secret to verify webhook

@@ -60,6 +60,7 @@ import { api } from "@/src/utils/api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AlertCircle, TrashIcon } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -126,6 +127,8 @@ type SsoConfigRow = {
 };
 
 export const SSOSettings = ({ orgId }: { orgId: string }) => {
+  const { t } = useTranslation("ee");
+
   const hasEntitlement = useHasEntitlement("cloud-multi-tenant-sso");
   const hasAccess = useHasOrganizationAccess({
     organizationId: orgId,
@@ -134,7 +137,7 @@ export const SSOSettings = ({ orgId }: { orgId: string }) => {
 
   const heading = (
     <>
-      <Header title="SSO Configuration" />
+      <Header title={t("sso.title")} />
       <p className="text-muted-foreground mb-4 text-sm">
         Configure Single Sign-On per verified domain. Once active, every user
         signing in with that domain is redirected to your identity provider.
@@ -150,7 +153,7 @@ export const SSOSettings = ({ orgId }: { orgId: string }) => {
           {heading}
           <Alert>
             <AlertCircle className="h-4 w-4" />
-            <AlertTitle>Not available</AlertTitle>
+            <AlertTitle>{t("common.notAvailable")}</AlertTitle>
             <AlertDescription>
               Enterprise SSO is not available on your plan. Please upgrade to
               access this feature.
@@ -168,7 +171,7 @@ export const SSOSettings = ({ orgId }: { orgId: string }) => {
         <div>
           {heading}
           <Alert>
-            <AlertTitle>Access Denied</AlertTitle>
+            <AlertTitle>{t("common.accessDenied")}</AlertTitle>
             <AlertDescription>
               You do not have permission to configure SSO for this organization.
             </AlertDescription>
@@ -259,7 +262,7 @@ function SsoConfigRow({
         {config ? (
           <Badge variant="default">{providerLabel(config.authProvider)}</Badge>
         ) : (
-          <Badge variant="secondary">Not configured</Badge>
+          <Badge variant="secondary">{t("sso.notConfigured")}</Badge>
         )}
       </TableCell>
       <TableCell density="comfortable" className="hidden md:table-cell">
@@ -425,14 +428,14 @@ function SsoConfigDialog({
                   name="authProvider"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Provider</FormLabel>
+                      <FormLabel>{t("sso.provider")}</FormLabel>
                       <FormControl>
                         <Select
                           value={field.value}
                           onValueChange={field.onChange}
                         >
                           <SelectTrigger>
-                            <SelectValue placeholder="Select an SSO provider" />
+                            <SelectValue placeholder={t("sso.selectProvider")} />
                           </SelectTrigger>
                           <SelectContent>
                             {SSO_PROVIDERS.map((p) => (
@@ -456,9 +459,9 @@ function SsoConfigDialog({
                     name="authConfig.name"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Display Name</FormLabel>
+                        <FormLabel>{t("sso.displayName")}</FormLabel>
                         <FormControl>
-                          <Input placeholder="Acme SSO" {...field} />
+                          <Input placeholder={t("sso.displayNamePlaceholder")} {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -471,7 +474,7 @@ function SsoConfigDialog({
                   name="authConfig.clientId"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Client ID</FormLabel>
+                      <FormLabel>{t("sso.clientId")}</FormLabel>
                       <FormControl>
                         <Input {...field} />
                       </FormControl>
@@ -485,7 +488,7 @@ function SsoConfigDialog({
                   name="authConfig.clientSecret"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Client Secret</FormLabel>
+                      <FormLabel>{t("sso.clientSecret")}</FormLabel>
                       <FormControl>
                         <Input
                           type="password"
@@ -507,7 +510,7 @@ function SsoConfigDialog({
                     name="authConfig.issuer"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Issuer URL</FormLabel>
+                        <FormLabel>{t("sso.issuerUrl")}</FormLabel>
                         <FormControl>
                           <Input
                             placeholder="https://example.okta.com"
@@ -526,7 +529,7 @@ function SsoConfigDialog({
                     name="authConfig.tenantId"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Tenant ID</FormLabel>
+                        <FormLabel>{t("sso.tenantId")}</FormLabel>
                         <FormControl>
                           <Input {...field} />
                         </FormControl>
@@ -542,7 +545,7 @@ function SsoConfigDialog({
                     name="authConfig.baseUrl"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Base URL</FormLabel>
+                        <FormLabel>{t("sso.baseUrl")}</FormLabel>
                         <FormControl>
                           <Input
                             placeholder="https://github.acme.com"
@@ -647,7 +650,7 @@ function SsoConfigDialog({
 function CallbackUrlPanel({ callbackUrl }: { callbackUrl: string }) {
   return (
     <div>
-      <p className="mb-2 text-sm font-medium">Callback URL</p>
+      <p className="mb-2 text-sm font-medium">{t("sso.callbackUrl")}</p>
       <Card className="overflow-hidden">
         <Table>
           <TableHeader>

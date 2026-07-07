@@ -17,6 +17,7 @@ import {
 } from "@/src/features/slack/components/ChannelSelector";
 import { SlackTestMessageButton } from "@/src/features/slack/components/SlackTestMessageButton";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useHasProjectAccess } from "@/src/features/rbac/utils/checkProjectAccess";
 
 interface SlackActionFormProps {
@@ -61,6 +62,8 @@ export const SlackActionForm: React.FC<SlackActionFormProps> = ({
   // Handle connection status change
   const handleConnectionChange = (connected: boolean) => {
     if (!connected) {
+  const { t } = useTranslation("workflow");
+
       // Clear channel selection when disconnected
       form.setValue("slack.channelId", "");
       form.setValue("slack.channelName", "");
@@ -86,7 +89,7 @@ export const SlackActionForm: React.FC<SlackActionFormProps> = ({
             name="slack.channelId"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Channel</FormLabel>
+                <FormLabel>{t("slack.channel")}</FormLabel>
                 <FormControl>
                   <div className="max-w-md">
                     <ChannelSelector
@@ -95,7 +98,7 @@ export const SlackActionForm: React.FC<SlackActionFormProps> = ({
                       selectedChannel={selectedChannel}
                       onChannelSelect={handleChannelSelect}
                       disabled={disabled}
-                      placeholder="Select a channel"
+                      placeholder={t("slack.selectChannel")}
                       showRefreshButton={true}
                     />
                   </div>
