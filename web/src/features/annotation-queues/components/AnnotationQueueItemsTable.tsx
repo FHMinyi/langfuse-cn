@@ -165,6 +165,7 @@ export function AnnotationQueueItemsTable({
   projectId: string;
   queueId: string;
 }) {
+  const { t } = useTranslation("workflow");
   const [paginationState, setPaginationState] = useQueryParams({
     pageIndex: withDefault(NumberParam, 0),
     pageSize: withDefault(NumberParam, 50),
@@ -261,8 +262,6 @@ export function AnnotationQueueItemsTable({
         if (!rowData.source) return null;
 
         switch (rowData.objectType) {
-  const { t } = useTranslation("workflow");
-
           case "OBSERVATION":
             return (
               <TableLink

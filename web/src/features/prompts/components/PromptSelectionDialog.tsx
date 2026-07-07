@@ -30,13 +30,13 @@ type PromptSelectionDialogProps = {
 };
 
 export function PromptSelectionDialog({
-  const { t } = useTranslation("prompt");
 
   isOpen,
   onClose,
   onSelect,
   projectId,
 }: PromptSelectionDialogProps) {
+  const { t } = useTranslation("prompt");
   const [selectedPromptName, setSelectedPromptName] = useState<string>("");
   const [selectedTag, setSelectedTag] = useState<string>("");
   const [selectionType, setSelectionType] = useState<"version" | "label">(

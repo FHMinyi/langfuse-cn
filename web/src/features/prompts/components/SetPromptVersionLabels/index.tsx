@@ -29,7 +29,6 @@ import { TruncatedLabels } from "@/src/components/TruncatedLabels";
 import { cn } from "@/src/utils/tailwind";
 
 export function SetPromptVersionLabels({
-  const { t } = useTranslation("prompt");
 
   promptLabels,
   prompt,
@@ -47,6 +46,7 @@ export function SetPromptVersionLabels({
   showOnlyOnHover?: boolean;
   maxVisibleLabels?: number;
 }) {
+  const { t } = useTranslation("prompt");
   const projectId = useProjectIdFromURL();
   const utils = api.useUtils();
   const capture = usePostHogClientCapture();

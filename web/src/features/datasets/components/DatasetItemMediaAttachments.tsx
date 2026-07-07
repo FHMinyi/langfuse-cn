@@ -166,7 +166,6 @@ export function createMediaDropPasteExtension({
  * in flight; failures surface via toast from the upload hook.
  */
 export function DatasetItemMediaUploadButton({
-  const { t } = useTranslation("dataset");
 
   onSelectFile,
   disabled,
@@ -174,6 +173,7 @@ export function DatasetItemMediaUploadButton({
   onSelectFile: (file: File) => void | Promise<void>;
   disabled?: boolean;
 }) {
+  const { t } = useTranslation("dataset");
   const inputRef = useRef<HTMLInputElement>(null);
   const [isUploading, setIsUploading] = useState(false);
 

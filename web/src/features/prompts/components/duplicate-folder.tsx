@@ -44,8 +44,8 @@ const formSchema = z.object({
 });
 
 export function DuplicateFolder({
-  const { t } = useTranslation("prompt");
  folderPath }: { folderPath: string }) {
+  const { t } = useTranslation("prompt");
   const projectId = useProjectIdFromURL();
   const utils = api.useUtils();
   const [isOpen, setIsOpen] = useState(false);

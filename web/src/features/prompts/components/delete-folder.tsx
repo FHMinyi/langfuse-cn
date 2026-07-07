@@ -18,8 +18,8 @@ import { Trash, Folder, FileText } from "lucide-react";
 import Spinner from "@/src/components/design-system/Spinner/Spinner";
 
 export function DeleteFolder({
-  const { t } = useTranslation("prompt");
  folderPath }: { folderPath: string }) {
+  const { t } = useTranslation("prompt");
   const projectId = useProjectIdFromURL();
   const utils = api.useUtils();
   const [isOpen, setIsOpen] = useState(false);

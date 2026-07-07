@@ -267,6 +267,7 @@ export function CreateLLMApiKeyForm({
   mode = "create",
   existingKey,
 }: CreateLLMApiKeyFormProps) {
+  const { t } = useTranslation("api");
   const [showAdvancedSettings, setShowAdvancedSettings] = useState(false);
   // When the "Other model" option is selected we hide the form fields and show
   // guidance instead. This is purely UI state and never reaches the form value.
@@ -299,8 +300,6 @@ export function CreateLLMApiKeyForm({
 
   const getCustomizedBaseURL = (adapter: LLMAdapter) => {
     switch (adapter) {
-  const { t } = useTranslation("api");
-
       case LLMAdapter.OpenAI:
         return customization?.defaultBaseUrlOpenAI ?? "";
       case LLMAdapter.Azure:

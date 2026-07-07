@@ -12,8 +12,8 @@ import {
 import useProjectIdFromURL from "@/src/hooks/useProjectIdFromURL";
 
 export function DeletePrompt({
-  const { t } = useTranslation("prompt");
  promptName }: { promptName: string }) {
+  const { t } = useTranslation("prompt");
   const projectId = useProjectIdFromURL();
   const utils = api.useUtils();
   const [isOpen, setIsOpen] = useState(false);

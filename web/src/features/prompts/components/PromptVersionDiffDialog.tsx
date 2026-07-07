@@ -52,8 +52,6 @@ const createSmartDiff = (
     );
 
   return {
-  const { t } = useTranslation("prompt");
-
     oldString: formatMessages(oldPrompt.prompt as any[]),
     newString: formatMessages(newPrompt.prompt as any[]),
   };
@@ -62,6 +60,7 @@ const createSmartDiff = (
 export const PromptVersionDiffDialog: React.FC<PromptVersionDiffDialogProps> = (
   props,
 ) => {
+  const { t } = useTranslation("prompt");
   const { leftPrompt, rightPrompt, isOpen, setIsOpen } = props;
 
   return (

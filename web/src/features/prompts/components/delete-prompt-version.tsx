@@ -14,7 +14,6 @@ import useProjectIdFromURL from "@/src/hooks/useProjectIdFromURL";
 import { usePostHogClientCapture } from "@/src/features/posthog-analytics/usePostHogClientCapture";
 
 export function DeletePromptVersion({
-  const { t } = useTranslation("prompt");
 
   promptVersionId,
   version,
@@ -24,6 +23,7 @@ export function DeletePromptVersion({
   version: number;
   countVersions: number;
 }) {
+  const { t } = useTranslation("prompt");
   const capture = usePostHogClientCapture();
   const projectId = useProjectIdFromURL();
   const utils = api.useUtils();

@@ -46,12 +46,12 @@ const AddLabelFormSchema = z.object({
 type AddLabelFormSchemaType = z.infer<typeof AddLabelFormSchema>;
 
 export default function ProtectedLabelsSettings({
-  const { t } = useTranslation("prompt");
 
   projectId,
 }: {
   projectId: string;
 }) {
+  const { t } = useTranslation("prompt");
   const hasAccess = useHasProjectAccess({
     projectId,
     scope: "promptProtectedLabels:CUD",

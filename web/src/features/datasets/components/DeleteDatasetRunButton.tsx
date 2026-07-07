@@ -19,6 +19,7 @@ export const DeleteDatasetRunButton = ({
   redirectUrl?: string;
   datasetId: string;
 }) => {
+  const { t } = useTranslation("dataset");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const capture = usePostHogClientCapture();
   const hasAccess = useHasProjectAccess({
@@ -49,9 +50,7 @@ export const DeleteDatasetRunButton = ({
 
   return hasAccess ? (
     <ConfirmDialog
-      open={
-  const { t } = useTranslation("dataset");
-isDialogOpen}
+      open={isDialogOpen}
       onOpenChange={setIsDialogOpen}
       trigger={button}
       title={t("common.pleaseConfirm")}
